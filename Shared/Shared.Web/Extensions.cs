@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Common;
 using Shared.Types.Interfaces;
 using Shared.Web.Context;
 using Shared.Web.Extension;

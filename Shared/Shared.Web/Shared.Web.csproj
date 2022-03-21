@@ -15,6 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Shared.Common\Shared.Common.csproj" />
       <ProjectReference Include="..\Shared.Types\Shared.Types.csproj" />
     </ItemGroup>
 

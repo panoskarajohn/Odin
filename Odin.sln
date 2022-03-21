@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Types", "Shared\Shar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Mongo", "Shared\Shared.Mongo\Shared.Mongo.csproj", "{12DBDA34-49FF-40F5-A32B-B9BCB5814DC8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Common", "Shared\Shared.Common\Shared.Common.csproj", "{E9E57328-EBA8-4796-BAFD-9CD46EF4088D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,7 @@ Global
 		{BD965023-7AA0-40C7-B3BF-565FAD525346} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
 		{A523D379-4B6E-44BC-8BFA-E926091646A7} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
 		{12DBDA34-49FF-40F5-A32B-B9BCB5814DC8} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
+		{E9E57328-EBA8-4796-BAFD-9CD46EF4088D} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{BD965023-7AA0-40C7-B3BF-565FAD525346}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -31,5 +34,9 @@ Global
 		{12DBDA34-49FF-40F5-A32B-B9BCB5814DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12DBDA34-49FF-40F5-A32B-B9BCB5814DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12DBDA34-49FF-40F5-A32B-B9BCB5814DC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9E57328-EBA8-4796-BAFD-9CD46EF4088D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9E57328-EBA8-4796-BAFD-9CD46EF4088D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9E57328-EBA8-4796-BAFD-9CD46EF4088D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9E57328-EBA8-4796-BAFD-9CD46EF4088D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Types.Interfaces;
 
-namespace Shared.Web.Extension;
+namespace Shared.Common;
 
 public static class GenericExtensions
 {
