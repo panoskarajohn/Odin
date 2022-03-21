@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Web", "Shared\Shared.Web\Shared.Web.csproj", "{BD965023-7AA0-40C7-B3BF-565FAD525346}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Types", "Shared\Shared.Types\Shared.Types.csproj", "{A523D379-4B6E-44BC-8BFA-E926091646A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Mongo", "Shared\Shared.Mongo\Shared.Mongo.csproj", "{12DBDA34-49FF-40F5-A32B-B9BCB5814DC8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BD965023-7AA0-40C7-B3BF-565FAD525346} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
+		{A523D379-4B6E-44BC-8BFA-E926091646A7} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
+		{12DBDA34-49FF-40F5-A32B-B9BCB5814DC8} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD965023-7AA0-40C7-B3BF-565FAD525346}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD965023-7AA0-40C7-B3BF-565FAD525346}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD965023-7AA0-40C7-B3BF-565FAD525346}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD965023-7AA0-40C7-B3BF-565FAD525346}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A523D379-4B6E-44BC-8BFA-E926091646A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A523D379-4B6E-44BC-8BFA-E926091646A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A523D379-4B6E-44BC-8BFA-E926091646A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A523D379-4B6E-44BC-8BFA-E926091646A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12DBDA34-49FF-40F5-A32B-B9BCB5814DC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12DBDA34-49FF-40F5-A32B-B9BCB5814DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12DBDA34-49FF-40F5-A32B-B9BCB5814DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12DBDA34-49FF-40F5-A32B-B9BCB5814DC8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
