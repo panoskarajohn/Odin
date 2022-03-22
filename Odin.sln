@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event.Api", "Services\Event
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Domain", "Shared\Shared.Domain\Shared.Domain.csproj", "{27C80349-1BBD-4640-931D-78EE75F843D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.IdGenerator", "Shared\Shared.IdGenerator\Shared.IdGenerator.csproj", "{899EF158-A39B-4037-9ABB-8C8493026143}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,7 @@ Global
 		{46DA9C84-B55D-47FF-A388-C426117EDA7C} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
 		{A6AF4D59-AB1D-4042-B958-8DA36247A146} = {31F6434B-386A-4AF5-8EE2-9C101A11D624}
 		{27C80349-1BBD-4640-931D-78EE75F843D7} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
+		{899EF158-A39B-4037-9ABB-8C8493026143} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{BD965023-7AA0-40C7-B3BF-565FAD525346}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -89,5 +92,9 @@ Global
 		{27C80349-1BBD-4640-931D-78EE75F843D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27C80349-1BBD-4640-931D-78EE75F843D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27C80349-1BBD-4640-931D-78EE75F843D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{899EF158-A39B-4037-9ABB-8C8493026143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{899EF158-A39B-4037-9ABB-8C8493026143}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{899EF158-A39B-4037-9ABB-8C8493026143}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{899EF158-A39B-4037-9ABB-8C8493026143}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
