@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Shared.Common;
 using Shared.Types.Interfaces;
 using Shared.Web.Context;
+using Shared.Web.ErrorHandling;
 using Shared.Web.Extension;
 using Shared.Web.Options;
 
@@ -24,6 +25,13 @@ public static class Extensions
             
         return services;
     }
+    
+    public static IServiceCollection AddErrorHandling(this IServiceCollection services)
+        => services
+            .AddScoped<ErrorHandlerMiddleware>()
+            .AddSingleton<IExceptionToResponseMapper, ExceptionToResponseMapper>()
+            .AddSingleton<IExceptionCompositionRoot, ExceptionCompositionRoot>();
+
     
     /// <summary>
     /// 
@@ -75,5 +83,8 @@ public static class Extensions
     
         return app;
     }
+    
+    public static IApplicationBuilder UseErrorHandling(this IApplicationBuilder app)
+        => app.UseMiddleware<ErrorHandlerMiddleware>();
 }
 
