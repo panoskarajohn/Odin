@@ -1,8 +1,13 @@
+using Event;
 using Serilog;
 using Shared.Logging;
 using Shared.Web;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
+var env = builder.Environment;
+var host = builder.Host;
+
 
 // Add services to the container.
 
@@ -15,7 +20,9 @@ builder.Services
     .AddApplication(builder.Configuration)
     .AddErrorHandling();
 
-builder.Host.UseLogging();
+builder.Services.AddEvent(configuration);
+
+host.UseLogging();
 
 var app = builder.Build();
 
