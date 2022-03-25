@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Shared\Shared.Common\Shared.Common.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Domain\Shared.Domain.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.IdGenerator\Shared.IdGenerator.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Types\Shared.Types.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Web\Shared.Web.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.3.0" />
+    </ItemGroup>
+
+</Project>

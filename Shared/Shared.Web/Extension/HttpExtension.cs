@@ -8,10 +8,10 @@ public static class HttpContextExtensions
     private const string CorrelationIdKey = "correlation-id";
     
     public static IApplicationBuilder UseCorrelationId(this IApplicationBuilder app)
-        => app.Use((ctx, next) =>
+        => app.Use(async (ctx, next) =>
         {
             ctx.Items.Add(CorrelationIdKey, Guid.NewGuid());
-            return next();
+            await next();
         });
         
     public static Guid? TryGetCorrelationId(this HttpContext context)
