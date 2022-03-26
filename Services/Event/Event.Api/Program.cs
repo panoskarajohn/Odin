@@ -1,6 +1,7 @@
 using Event;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Serilog;
+using Shared.IdGenerator;
 using Shared.Logging;
 using Shared.Swagger;
 using Shared.Web;
@@ -10,6 +11,8 @@ var configuration = builder.Configuration;
 var env = builder.Environment;
 var host = builder.Host;
 
+//
+SnowFlakIdGenerator.Configure(1);
 
 // Add services to the container.
 
@@ -49,10 +52,9 @@ if (env.IsDevelopment())
     app.UseCustomSwagger(provider);
 }
 
-app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGet("/", e => e.Response.WriteAsync("Hello from Event.Api"));
 
 app.Run();

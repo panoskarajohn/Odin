@@ -16,6 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="NodaTime" Version="3.0.10" />
       <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.3.0" />
     </ItemGroup>
 

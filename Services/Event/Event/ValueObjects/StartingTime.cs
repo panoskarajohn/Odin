@@ -4,7 +4,7 @@ using Shared.Types.Exceptions;
 
 namespace Event.ValueObjects;
 
-public class StartingTime
+public record StartingTime
 {
     public DateTime Value { get; }
 

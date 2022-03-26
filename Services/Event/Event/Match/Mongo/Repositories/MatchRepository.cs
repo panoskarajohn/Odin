@@ -19,10 +19,10 @@ public class MatchRepository : IMatchRepository
         throw new NotImplementedException();
     }
 
-    public async Task Add(Models.Match match)
+    public Task Add(Models.Match match)
     {
         var doc = match.AsDocument();
-        await _repository.AddAsync(doc);
+        return _repository.AddAsync(doc);
     }
 
     public Task Update(Models.Match match)

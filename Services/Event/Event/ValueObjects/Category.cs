@@ -2,7 +2,7 @@
 
 namespace Event.ValueObjects;
 
-public class Category
+public record Category
 {
     private string Value { get; }
 

@@ -2,7 +2,4 @@
 
 namespace Event.Match.Features.CreateMatch;
 
-public class CreateMatchCommand : ICommand
-{
-    
-}
+public record CreateMatchCommand(string Category, DateTime StartingTime, string Home, string Away) : ICommand;
