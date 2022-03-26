@@ -1,6 +1,8 @@
-﻿namespace Event.Match.Features.CreateMatch;
+﻿using Shared.Cqrs.Commands;
 
-public class CreateMatchCommand
+namespace Event.Match.Features.CreateMatch;
+
+public class CreateMatchCommand : ICommand
 {
     
 }

@@ -1,0 +1,68 @@
+version: '3.7'
+
+services:
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    hostname: "rabbit1"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    labels:
+      NAME: "odin-rabbit"
+    networks:
+      - odin
+  
+  sqlserver:
+    image: "mcr.microsoft.com/mssql/server:2017-latest"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "pa55w0rd!"
+      MSSQL_PID: "Express"
+    ports:
+      - "1433:1433"
+    networks:
+      - odin
+  
+  redis:
+    image: redis
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    networks:
+      - odin
+    volumes:
+      - redis:/data
+  
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - odin
+    volumes:
+      - mongo:/data/db
+    restart: always
+  
+  seq:
+    image: datalust/seq
+    container_name: seq
+    restart: unless-stopped
+    networks:
+      - odin
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - 5341:80
+
+networks:
+  odin:
+    name: odin-network
+
+
+volumes:
+  redis:
+    driver: local
+  mongo:
+    driver: local

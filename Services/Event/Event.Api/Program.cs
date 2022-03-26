@@ -1,6 +1,8 @@
 using Event;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Serilog;
 using Shared.Logging;
+using Shared.Swagger;
 using Shared.Web;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,8 +20,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services
     .AddApplication(builder.Configuration)
-    .AddErrorHandling();
+    .AddErrorHandling()
+    .AddCustomSwagger(configuration, typeof(IEventMarker).Assembly)
+    .AddCustomVersioning();
 
+//Register Event
 builder.Services.AddEvent(configuration);
 
 host.UseLogging();
@@ -37,6 +42,12 @@ app
     .UseApplication()
     .UseErrorHandling()
     .UseLogging();
+
+if (env.IsDevelopment())
+{
+    var provider = app.Services.GetService<IApiVersionDescriptionProvider>();
+    app.UseCustomSwagger(provider);
+}
 
 app.UseHttpsRedirection();
 
