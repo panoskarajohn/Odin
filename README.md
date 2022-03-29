@@ -1,4 +1,6 @@
-# Odin
+# Odin 
+
+[[github.com/panoskarajohn/Odin/edit/master/Images/runes.png|alt=octocat]]
 
 # Introduction
 
