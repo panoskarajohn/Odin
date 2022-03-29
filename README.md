@@ -1,7 +1,6 @@
 # Odin 
 
-[[github.com/panoskarajohn/Odin/edit/master/Images/runes.png|alt=octocat]]
-
+[![](Images/runes.png)](https://github.com/panoskarajohn/)
 # Introduction
 
 This is a playground, trying to become a decent solution. 
