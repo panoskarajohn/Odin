@@ -1,8 +1,8 @@
-﻿using Event.ValueObjects;
+﻿using Event.Core.ValueObjects;
 using Shared.Domain;
 using Shared.IdGenerator;
 
-namespace Event.Match.Models;
+namespace Event.Core.Models;
 
 public class Match : BaseAggregateRoot<long>
 {

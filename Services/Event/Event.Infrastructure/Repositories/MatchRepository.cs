@@ -1,9 +1,10 @@
-﻿using Event.Match.Mongo.Document;
-using Event.Match.Mongo.Mapping.DomainToDocument;
-using Event.Match.Repositories;
+﻿using Event.Core.Models;
+using Event.Core.Repositories;
+using Event.Infrastructure.Mapping;
+using Event.Infrastructure.Mongo;
 using Shared.Mongo.Repositories;
 
-namespace Event.Match.Mongo.Repositories;
+namespace Event.Infrastructure.Repositories;
 
 public class MatchRepository : IMatchRepository
 {
@@ -14,18 +15,18 @@ public class MatchRepository : IMatchRepository
         _repository = repository;
     }
 
-    public Task<Models.Match> Get(long id)
+    public Task<Match> Get(long id)
     {
         throw new NotImplementedException();
     }
 
-    public Task Add(Models.Match match)
+    public Task Add(Core.Models.Match match)
     {
         var doc = match.AsDocument();
         return _repository.AddAsync(doc);
     }
 
-    public Task Update(Models.Match match)
+    public Task Update(Match match)
     {
         throw new NotImplementedException();
     }

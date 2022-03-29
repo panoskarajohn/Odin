@@ -1,4 +1,4 @@
-﻿namespace Event;
+﻿namespace Event.Application;
 
 public interface IEventMarker
 {

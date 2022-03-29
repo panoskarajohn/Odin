@@ -1,6 +1,6 @@
 ﻿using Shared.Mongo;
 
-namespace Event.Match.Mongo.Document;
+namespace Event.Infrastructure.Mongo;
 
 public class MatchDocument : IIdentifiable<long>
 {

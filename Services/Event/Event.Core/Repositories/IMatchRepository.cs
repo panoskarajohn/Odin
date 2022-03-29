@@ -1,4 +1,5 @@
-﻿namespace Event.Match.Repositories;
+﻿namespace Event.Core.Repositories;
+
 
 public interface IMatchRepository
 {

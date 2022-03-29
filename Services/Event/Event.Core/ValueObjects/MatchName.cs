@@ -1,6 +1,6 @@
-﻿using Shared.Types.Exceptions;
+﻿using Event.Core.Exceptions;
 
-namespace Event.ValueObjects;
+namespace Event.Core.ValueObjects;
 
 public record MatchName
 {
@@ -25,10 +25,3 @@ public record MatchName
     
     
 }
-
-public class InvalidTeamException : OdinException
-{
-    public InvalidTeamException(string param) : base($"{param} team should have a valid name")
-    {
-    }
-} 

@@ -1,9 +1,8 @@
-﻿using Event.Match.Repositories;
-using Event.ValueObjects;
+﻿using Event.Core.Repositories;
 using Microsoft.Extensions.Logging;
 using Shared.Cqrs.Commands;
 
-namespace Event.Match.Features.CreateMatch;
+namespace Event.Application.Match.Features.CreateMatch;
 
 public class CreateMatchCommandHandler : ICommandHandler<CreateMatchCommand>
 {
@@ -18,8 +17,7 @@ public class CreateMatchCommandHandler : ICommandHandler<CreateMatchCommand>
 
     public async Task HandleAsync(CreateMatchCommand command, CancellationToken cancellationToken = default)
     {
-        var match = Models.Match
-            .Create(command.Category, 
+        var match = Core.Models.Match.Create(command.Category, 
                     command.StartingTime, 
                       command.Home, 
                       command.Away);

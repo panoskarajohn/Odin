@@ -1,6 +1,5 @@
-using Event;
+using Event.Application;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Serilog;
 using Shared.IdGenerator;
 using Shared.Logging;
 using Shared.Swagger;
@@ -19,7 +18,6 @@ SnowFlakIdGenerator.Configure(1);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 builder.Services
     .AddApplication(builder.Configuration)
@@ -28,8 +26,9 @@ builder.Services
     .AddCustomVersioning();
 
 //Register Event
-builder.Services.AddEvent(configuration);
+builder.Services.AddEventApplication(configuration);
 
+//Integrates serilog to the application
 host.UseLogging();
 
 var app = builder.Build();

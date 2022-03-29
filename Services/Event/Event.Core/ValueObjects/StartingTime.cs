@@ -1,8 +1,7 @@
-﻿using JetBrains.Annotations;
+﻿using Event.Core.Exceptions;
 using Shared.Common;
-using Shared.Types.Exceptions;
 
-namespace Event.ValueObjects;
+namespace Event.Core.ValueObjects;
 
 public record StartingTime
 {
@@ -17,10 +16,3 @@ public record StartingTime
     public static implicit operator DateTime(StartingTime category) => category.Value;
     public static implicit operator StartingTime(DateTime value) => new(value);
 }
-
-public class InvalidStartingTimeException : OdinException
-{
-    public InvalidStartingTimeException(DateTime dateTime) : base($"{dateTime:G} is not a valid date time!")
-    {
-    }
-} 
