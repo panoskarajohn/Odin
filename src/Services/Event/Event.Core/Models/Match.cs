@@ -12,7 +12,7 @@ public class Match : BaseAggregateRoot<long>
         
     }
 
-    public static Match Create(Category category,StartingTime startingTime,string home, string away,long? id = null)
+    public static Match Create(Category category,StartingTime startingTime,string home, string away,string status = nameof(Status.Active),long? id = null)
     {
         return new()
         {
@@ -20,7 +20,7 @@ public class Match : BaseAggregateRoot<long>
             Category = category,
             StartingTime = startingTime,
             MatchName = new MatchName(home, away),
-            Status = Status.Active
+            Status = Status.FromName(status)
         };
     }
 

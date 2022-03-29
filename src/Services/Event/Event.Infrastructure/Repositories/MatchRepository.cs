@@ -15,9 +15,10 @@ public class MatchRepository : IMatchRepository
         _repository = repository;
     }
 
-    public Task<Match> Get(long id)
+    public async Task<Match> Get(long id)
     {
-        throw new NotImplementedException();
+        var doc = await _repository.GetAsync(id);
+        return doc.AsEntity();
     }
 
     public Task Add(Core.Models.Match match)
@@ -28,6 +29,7 @@ public class MatchRepository : IMatchRepository
 
     public Task Update(Match match)
     {
-        throw new NotImplementedException();
+        var doc = match.AsDocument();
+        return _repository.UpdateAsync(doc);
     }
 }

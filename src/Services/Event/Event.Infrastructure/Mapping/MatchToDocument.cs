@@ -17,6 +17,7 @@ public static class MatchToDocument
                                 document.StartingTime, 
                                   document.Home, 
                                   document.Away,
+                                document.Status,
                                   document.Id);
         return match;
     }
