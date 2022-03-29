@@ -1,6 +1,5 @@
 # Odin 
 
-[![](Images/runes.png)](https://github.com/panoskarajohn/)
 # Introduction
 
 This is a playground, trying to become a decent solution. 
@@ -16,3 +15,6 @@ https://github.com/meysamhadeli/Airline-Microservices
 https://github.com/devmentors/Pacco
 
 Inspired a lot from https://github.com/devmentors/
+
+[![](Images/runes.png)](https://github.com/panoskarajohn/)
+
