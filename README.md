@@ -1,4 +1,4 @@
-# Odin 
+# Odin [![.NET](https://github.com/panoskarajohn/Odin/actions/workflows/dotnet.yml/badge.svg)](https://github.com/panoskarajohn/Odin/actions/workflows/dotnet.yml)
 
 # Introduction
 
