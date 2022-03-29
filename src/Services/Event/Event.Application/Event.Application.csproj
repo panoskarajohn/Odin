@@ -18,8 +18,4 @@
       <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.3.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Match\Features\UpdateMatch" />
-    </ItemGroup>
-
 </Project>

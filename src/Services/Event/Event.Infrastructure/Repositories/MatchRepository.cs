@@ -15,10 +15,10 @@ public class MatchRepository : IMatchRepository
         _repository = repository;
     }
 
-    public async Task<Match> Get(long id)
+    public async Task<Match?> Get(long id)
     {
         var doc = await _repository.GetAsync(id);
-        return doc.AsEntity();
+        return doc?.AsEntity();
     }
 
     public Task Add(Core.Models.Match match)

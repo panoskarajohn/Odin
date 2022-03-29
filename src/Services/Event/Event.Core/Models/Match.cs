@@ -9,10 +9,15 @@ public class Match : BaseAggregateRoot<long>
 {
     private Match()
     {
-        
     }
 
-    public static Match Create(Category category,StartingTime startingTime,string home, string away,string status = nameof(Status.Active),long? id = null)
+    public Category Category { get; private set; }
+    public StartingTime StartingTime { get; private set; }
+    public MatchName MatchName { get; private set; }
+    public Status Status { get; private set; }
+
+    public static Match Create(Category category, StartingTime startingTime, string home, string away,
+        string status = nameof(Status.Active), long? id = null)
     {
         return new()
         {
@@ -24,8 +29,13 @@ public class Match : BaseAggregateRoot<long>
         };
     }
 
-    public Category Category { get; private set; }
-    public StartingTime StartingTime { get; private set; }
-    public MatchName MatchName { get; private set; }
-    public Status Status { get; private set; }
+    public void Suspend()
+    {
+        this.Status = Status.Suspended;
+    }
+
+    public void Complete()
+    {
+        this.Status = Status.Completed;
+    }
 }
