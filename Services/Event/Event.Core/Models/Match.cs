@@ -1,4 +1,5 @@
-﻿using Event.Core.ValueObjects;
+﻿using Event.Core.Enumerations;
+using Event.Core.ValueObjects;
 using Shared.Domain;
 using Shared.IdGenerator;
 
@@ -18,13 +19,13 @@ public class Match : BaseAggregateRoot<long>
             Id = id ?? SnowFlakIdGenerator.NewId(),
             Category = category,
             StartingTime = startingTime,
-            MatchName = new MatchName(home, away)
+            MatchName = new MatchName(home, away),
+            Status = Status.Active
         };
     }
 
     public Category Category { get; private set; }
     public StartingTime StartingTime { get; private set; }
     public MatchName MatchName { get; private set; }
-    
-    
+    public Status Status { get; private set; }
 }

@@ -1,5 +1,6 @@
 ﻿using Event.Application.Match.Dtos;
 using Event.Application.Match.Mapping;
+using Event.Core.Enumerations;
 using Event.Infrastructure.Mongo;
 using MongoDB.Driver;
 using Shared.Cqrs.Queries;
@@ -22,12 +23,16 @@ public class GetTodaySportEventQueryHandler : IQueryHandler<GetTodayMatchesQuery
         var tomorrow = today.AddDays(1);
         
         var filter = Builders<MatchDocument>.Filter;
-        var todayFilter = filter
-                              .Gte(sp => sp.StartingTime, today) &
-                          filter.Lt(sp => sp.StartingTime, tomorrow);
 
+        var activeMatches = filter
+            .Eq(md => md.Status, Status.Active.Name);
+
+        var todayFilter = filter
+                                .Gte(sp => sp.StartingTime, today) &
+                            filter.Lt(sp => sp.StartingTime, tomorrow);
+        
         var todaySportEvents = await _repository.Collection
-            .Find(todayFilter)
+            .Find(activeMatches & todayFilter)
             .SortBy(sp => sp.Category)
             .ThenBy(sp => sp.StartingTime)
             .ToListAsync(cancellationToken);

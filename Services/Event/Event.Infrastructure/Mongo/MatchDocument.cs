@@ -12,8 +12,16 @@ public class MatchDocument : IIdentifiable<long>
 
     public string Home { get; }
     public string Away { get;  }
+    
+    public string Status { get; }
 
-    public MatchDocument(long id, string category, DateTime startingTime, string matchName, string home, string away)
+    public MatchDocument(long id, 
+        string category, 
+        DateTime startingTime, 
+        string matchName, 
+        string home, 
+        string away, 
+        string status)
     {
         Id = id;
         Category = category;
@@ -21,5 +29,6 @@ public class MatchDocument : IIdentifiable<long>
         MatchName = matchName;
         Home = home;
         Away = away;
+        Status = status;
     }
 }

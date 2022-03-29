@@ -1,4 +1,5 @@
-﻿using Event.Infrastructure.Mongo;
+﻿using Event.Core.Enumerations;
+using Event.Infrastructure.Mongo;
 using Event.Core.Models;
 namespace Event.Infrastructure.Mapping;
 
@@ -7,7 +8,7 @@ public static class MatchToDocument
     public static MatchDocument AsDocument(this Match match)
     {
         (string home, string away) = match.MatchName;
-        return new(match.Id, match.Category, match.StartingTime, match.MatchName.Value, home, away);
+        return new(match.Id, match.Category, match.StartingTime, match.MatchName.Value, home, away, match.Status.Name);
     }
 
     public static Match AsEntity(this MatchDocument document)
