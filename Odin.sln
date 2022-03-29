@@ -1,30 +1,30 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "src\Shared", "{FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Web", "Shared\Shared.Web\Shared.Web.csproj", "{BD965023-7AA0-40C7-B3BF-565FAD525346}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Web", "src\Shared\Shared.Web\Shared.Web.csproj", "{BD965023-7AA0-40C7-B3BF-565FAD525346}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Types", "Shared\Shared.Types\Shared.Types.csproj", "{A523D379-4B6E-44BC-8BFA-E926091646A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Types", "src\Shared\Shared.Types\Shared.Types.csproj", "{A523D379-4B6E-44BC-8BFA-E926091646A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Mongo", "Shared\Shared.Mongo\Shared.Mongo.csproj", "{12DBDA34-49FF-40F5-A32B-B9BCB5814DC8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Mongo", "src\Shared\Shared.Mongo\Shared.Mongo.csproj", "{12DBDA34-49FF-40F5-A32B-B9BCB5814DC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Common", "Shared\Shared.Common\Shared.Common.csproj", "{E9E57328-EBA8-4796-BAFD-9CD46EF4088D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Common", "src\Shared\Shared.Common\Shared.Common.csproj", "{E9E57328-EBA8-4796-BAFD-9CD46EF4088D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{31F6434B-386A-4AF5-8EE2-9C101A11D624}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "src\Services", "{31F6434B-386A-4AF5-8EE2-9C101A11D624}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Cqrs", "Shared\Shared.Cqrs\Shared.Cqrs.csproj", "{325F0F93-A8BE-4DBD-885D-BED9F3EEC04C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Cqrs", "src\Shared\Shared.Cqrs\Shared.Cqrs.csproj", "{325F0F93-A8BE-4DBD-885D-BED9F3EEC04C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Logging", "Shared\Shared.Logging\Shared.Logging.csproj", "{46DA9C84-B55D-47FF-A388-C426117EDA7C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Logging", "src\Shared\Shared.Logging\Shared.Logging.csproj", "{46DA9C84-B55D-47FF-A388-C426117EDA7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event.Api", "Services\Event\Event.Api\Event.Api.csproj", "{A6AF4D59-AB1D-4042-B958-8DA36247A146}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event.Api", "src\Services\Event\Event.Api\Event.Api.csproj", "{A6AF4D59-AB1D-4042-B958-8DA36247A146}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Domain", "Shared\Shared.Domain\Shared.Domain.csproj", "{27C80349-1BBD-4640-931D-78EE75F843D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Domain", "src\Shared\Shared.Domain\Shared.Domain.csproj", "{27C80349-1BBD-4640-931D-78EE75F843D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.IdGenerator", "Shared\Shared.IdGenerator\Shared.IdGenerator.csproj", "{899EF158-A39B-4037-9ABB-8C8493026143}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.IdGenerator", "src\Shared\Shared.IdGenerator\Shared.IdGenerator.csproj", "{899EF158-A39B-4037-9ABB-8C8493026143}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.RabbitMq", "Shared\Shared.RabbitMq\Shared.RabbitMq.csproj", "{003A10A1-E770-46B9-83C3-8E21E702C698}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.RabbitMq", "src\Shared\Shared.RabbitMq\Shared.RabbitMq.csproj", "{003A10A1-E770-46B9-83C3-8E21E702C698}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.MessageBroker", "Shared\Shared.MessageBroker\Shared.MessageBroker.csproj", "{2157EA2A-6346-4CA4-86BF-12A743B8B1C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.MessageBroker", "src\Shared\Shared.MessageBroker\Shared.MessageBroker.csproj", "{2157EA2A-6346-4CA4-86BF-12A743B8B1C6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployments", "Deployments", "{E749287A-2C6A-4B8A-9C86-1F81C182A7C8}"
 EndProject
@@ -33,13 +33,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker-compose", "docker-co
 		Deployments\docker-compose\infrastructure.yml = Deployments\docker-compose\infrastructure.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Swagger", "Shared\Shared.Swagger\Shared.Swagger.csproj", "{18B21CD8-3BF8-4E22-8387-C1CD800F7990}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Swagger", "src\Shared\Shared.Swagger\Shared.Swagger.csproj", "{18B21CD8-3BF8-4E22-8387-C1CD800F7990}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event.Core", "Services\Event\Event.Core\Event.Core.csproj", "{399FFF2B-6C61-4E17-9C99-4692F40304AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event.Core", "src\Services\Event\Event.Core\Event.Core.csproj", "{399FFF2B-6C61-4E17-9C99-4692F40304AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event.Application", "Services\Event\Event.Application\Event.Application.csproj", "{D85AA6D0-BDD3-426C-B9EA-FAADF7702CD5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event.Application", "src\Services\Event\Event.Application\Event.Application.csproj", "{D85AA6D0-BDD3-426C-B9EA-FAADF7702CD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event.Infrastructure", "Services\Event\Event.Infrastructure\Event.Infrastructure.csproj", "{8CB974BB-FC3D-4614-9907-21A50003F9E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event.Infrastructure", "src\Services\Event\Event.Infrastructure\Event.Infrastructure.csproj", "{8CB974BB-FC3D-4614-9907-21A50003F9E7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F88AA77B-9865-47A5-AAA4-1FC774C4B661}"
 EndProject

@@ -16,7 +16,6 @@
       <ProjectReference Include="..\..\..\Shared\Shared.Swagger\Shared.Swagger.csproj" />
       <ProjectReference Include="..\..\..\Shared\Shared.Web\Shared.Web.csproj" />
       <ProjectReference Include="..\Event.Application\Event.Application.csproj" />
-      <ProjectReference Include="..\Event\Event.csproj" />
     </ItemGroup>
 
 </Project>
