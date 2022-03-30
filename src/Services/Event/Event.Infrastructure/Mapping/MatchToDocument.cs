@@ -44,6 +44,21 @@ public static class MatchToDocument
             document.Away,
             document.Status,
             document.Id);
+
+        if (document.Markets?.Any() ?? false)
+            match.AppendMarkets(document
+                .Markets.Select(m => m.AsEntity()));
+
         return match;
+    }
+
+    public static Market AsEntity(this MarketDocument document)
+    {
+        return new Market(document.Name, document.SelectionDocuments.Select(s => s.AsEntity()));
+    }
+
+    public static Selection AsEntity(this SelectionDocument document)
+    {
+        return new Selection(document.Name, document.Price);
     }
 }

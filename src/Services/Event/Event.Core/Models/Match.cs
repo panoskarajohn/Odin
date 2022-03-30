@@ -57,9 +57,30 @@ public class Match : BaseAggregateRoot<long>
     private void AppendMarket(Market market)
     {
         if (market is null) throw new NullMarketException();
-        if (_markets.Contains(market)) throw new DuplicateMarketException(market.Name);
+        if (_markets.Any(m => m.Name.Equals(market.Name, StringComparison.InvariantCultureIgnoreCase)))
+            throw new DuplicateMarketException(market.Name);
 
         _markets.Add(market);
+    }
+
+    private void RemoveMarket(string marketName)
+    {
+        var market = _markets
+            .SingleOrDefault(m => m.Name
+                .Equals(marketName, StringComparison.InvariantCultureIgnoreCase));
+
+        if (market is null)
+            throw new MarketNotFoundException(marketName);
+
+        _markets.Remove(market);
+    }
+
+    public void RemoveMarkets(IEnumerable<string> marketNames)
+    {
+        foreach (var marketName in marketNames)
+        {
+            RemoveMarket(marketName);
+        }
     }
 
     /// <summary>
