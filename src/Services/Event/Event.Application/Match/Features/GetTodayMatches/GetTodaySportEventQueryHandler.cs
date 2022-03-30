@@ -8,7 +8,7 @@ using Shared.Mongo.Repositories;
 
 namespace Event.Application.Match.Features.GetTodayMatches;
 
-public class GetTodaySportEventQueryHandler : IQueryHandler<GetTodayMatchesQuery, IEnumerable<MatchesResponseDto>>
+public class GetTodaySportEventQueryHandler : IQueryHandler<GetTodayMatchesQuery, IEnumerable<MatchResponseDto>>
 {
     private readonly IMongoRepository<MatchDocument, long> _repository;
 
@@ -17,27 +17,28 @@ public class GetTodaySportEventQueryHandler : IQueryHandler<GetTodayMatchesQuery
         _repository = repository;
     }
 
-    public async Task<IEnumerable<MatchesResponseDto>> HandleAsync(GetTodayMatchesQuery query, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<MatchResponseDto>> HandleAsync(GetTodayMatchesQuery query,
+        CancellationToken cancellationToken = default)
     {
         var today = DateTime.UtcNow.Date;
         var tomorrow = today.AddDays(1);
-        
+
         var filter = Builders<MatchDocument>.Filter;
 
         var activeMatches = filter
             .Eq(md => md.Status, Status.Active.Name);
 
         var todayFilter = filter
-                                .Gte(sp => sp.StartingTime, today) &
-                            filter.Lt(sp => sp.StartingTime, tomorrow);
-        
+                              .Gte(sp => sp.StartingTime, today) &
+                          filter.Lt(sp => sp.StartingTime, tomorrow);
+
         var todaySportEvents = await _repository.Collection
             .Find(activeMatches & todayFilter)
             .SortBy(sp => sp.Category)
             .ThenBy(sp => sp.StartingTime)
             .ToListAsync(cancellationToken);
 
-        if (todaySportEvents is null) return Enumerable.Empty<MatchesResponseDto>();
+        if (todaySportEvents is null) return Enumerable.Empty<MatchResponseDto>();
 
         return todaySportEvents.Select(t => t.ToResponse());
     }

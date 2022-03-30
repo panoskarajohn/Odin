@@ -5,11 +5,11 @@ namespace Event.Application.Match.Mapping;
 
 public static class MatchDocumentToResponse
 {
-    public static MatchesResponseDto ToResponse(this MatchDocument document)
+    public static MatchResponseDto ToResponse(this MatchDocument document)
     {
-        return new MatchesResponseDto(document.Id, 
-            document.Category, 
-            document.StartingTime, 
+        return new MatchResponseDto(document.Id,
+            document.Category,
+            document.StartingTime,
             document.MatchName);
     }
 }
