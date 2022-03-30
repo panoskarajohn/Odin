@@ -39,6 +39,6 @@ public class RegisterMarketsCommandHandler : ICommandHandler<RegisterMarketsComm
         }
 
         match.AppendMarkets(markets);
-        await _matchRepository.Add(match);
+        await _matchRepository.Update(match);
     }
 }

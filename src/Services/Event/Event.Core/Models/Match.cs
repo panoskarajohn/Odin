@@ -10,17 +10,17 @@ public class Match : BaseAggregateRoot<long>
 {
     private readonly ISet<Market> _markets = new HashSet<Market>();
 
-    private Match()
+    internal Match()
     {
     }
 
     public Category Category { get; private set; }
-    public StartingTime StartingTime { get; private set; }
+    public DateTime StartingTime { get; private set; }
     public MatchName MatchName { get; private set; }
     public Status Status { get; private set; }
     public IEnumerable<Market> Markets => _markets;
 
-    public static Match Create(Category category, StartingTime startingTime, string home, string away,
+    public static Match Create(Category category, DateTime startingTime, string home, string away,
         string status = nameof(Status.Active), long? id = null)
     {
         return new()

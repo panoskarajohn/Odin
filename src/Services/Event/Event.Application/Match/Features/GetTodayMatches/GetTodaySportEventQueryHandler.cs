@@ -32,8 +32,10 @@ public class GetTodaySportEventQueryHandler : IQueryHandler<GetTodayMatchesQuery
                               .Gte(sp => sp.StartingTime, today) &
                           filter.Lt(sp => sp.StartingTime, tomorrow);
 
+        var hasMarkets = filter.Where(md => md.Markets.Any());
+
         var todaySportEvents = await _repository.Collection
-            .Find(activeMatches & todayFilter)
+            .Find(activeMatches & todayFilter & hasMarkets)
             .SortBy(sp => sp.Category)
             .ThenBy(sp => sp.StartingTime)
             .ToListAsync(cancellationToken);
