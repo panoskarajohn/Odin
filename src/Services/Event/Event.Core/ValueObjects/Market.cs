@@ -4,16 +4,16 @@ namespace Event.Core.ValueObjects;
 
 public record Market
 {
-    public Market(string name, IEnumerable<Selection> outcomes)
+    public Market(string name, IEnumerable<Selection> selections)
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new MarketInvalidNameException();
 
         Name = name;
-        Outcomes = outcomes ?? throw new MarketShouldContainSelections();
+        Selections = selections ?? throw new MarketShouldContainSelections();
     }
 
     public string Name { get; }
 
-    public IEnumerable<Selection> Outcomes { get; }
+    public IEnumerable<Selection> Selections { get; }
 }
