@@ -1,5 +1,5 @@
 ﻿namespace Shared.MessageBroker;
 
-public class Class1
+public interface IMessage
 {
 }
