@@ -6,4 +6,14 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\Shared.MessageBroker\Shared.MessageBroker.csproj"/>
+        <ProjectReference Include="..\Shared.Web\Shared.Web.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1"/>
+        <PackageReference Include="RabbitMQ.Client" Version="6.2.4"/>
+    </ItemGroup>
+
 </Project>
