@@ -2,5 +2,6 @@
 
 public interface IMessageSubscriber
 {
-    Task SubscribeAsync<T>(string topic, Action<MessageEnvelope<T>> handler) where T : class, IMessage;
+    Task SubscribeAsync<T>(string queue, string routingKey, string exchange,
+        Func<IServiceProvider, T, object, Task> handle) where T : class, IMessage;
 }
