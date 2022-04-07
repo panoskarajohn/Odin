@@ -4,6 +4,4 @@ public interface IMessageContract
 {
     Type Type { get; }
     Func<IServiceProvider, object, object, Task> Handle { get; }
-    public string Exchange { get; }
-    public string RoutingKey { get; }
 }

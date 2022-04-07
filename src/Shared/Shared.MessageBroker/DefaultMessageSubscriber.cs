@@ -2,7 +2,6 @@
 
 internal sealed class DefaultMessageSubscriber : IMessageSubscriber
 {
-    public Task SubscribeAsync<T>(string routingKey, string exchange,
-        Func<IServiceProvider, T, object, Task> handle) where T : class, IMessage
+    public Task SubscribeAsync<T>(Func<IServiceProvider, T, object, Task> handle) where T : class, IMessage
         => Task.CompletedTask;
 }

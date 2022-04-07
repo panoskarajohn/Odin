@@ -11,11 +11,11 @@ internal class RabbitMqSubscriber : IMessageSubscriber
         _channel = channel;
     }
 
-    public Task SubscribeAsync<T>(string routingKey, string exchange, Func<IServiceProvider, T, object, Task> handle)
+    public Task SubscribeAsync<T>(Func<IServiceProvider, T, object, Task> handle)
         where T : class, IMessage
     {
         var type = typeof(T);
-        var messageContract = MessageContract.Subscribe(type, exchange, routingKey,
+        var messageContract = MessageContract.Subscribe(type,
             (provider, message, context) => handle(provider, (T) message, context));
 
         _channel.Writer.TryWrite(messageContract);

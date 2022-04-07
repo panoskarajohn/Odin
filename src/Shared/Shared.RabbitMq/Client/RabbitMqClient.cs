@@ -4,6 +4,7 @@ using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using Shared.RabbitMq.Connections;
+using Shared.RabbitMq.Conventions;
 using Shared.RabbitMq.Options;
 
 namespace Shared.RabbitMq.Client;
@@ -34,7 +35,7 @@ public class RabbitMqClient : IRabbitMqClient
     /// <param name="message"></param>
     /// <param name="messageId"></param>
     /// <param name="correlationId"></param>
-    public void Send(string exchange, string routingKey, object message, string? messageId = null,
+    public void Send(object message, IConventions conventions, string? messageId = null,
         string? correlationId = null)
     {
         var channel = GetChannel();
@@ -53,10 +54,10 @@ public class RabbitMqClient : IRabbitMqClient
         properties.Headers = new Dictionary<string, object>();
 
         _logger.LogInformation("Publishing a message with exchange: {Exchange} and Routing Key: {RoutingKey}"
-            , exchange, routingKey);
+            , conventions.Exchange, conventions.RoutingKey);
 
-        channel.ExchangeDeclare(exchange, "topic", true, false);
-        channel.BasicPublish(exchange, routingKey, properties, body.ToArray());
+        //channel.ExchangeDeclare(exchange, "topic", true, false);
+        channel.BasicPublish(conventions.Exchange, conventions.RoutingKey, properties, body.ToArray());
     }
 
     /// <summary>

@@ -19,4 +19,14 @@ public class RabbitMqOptions
     public int Port { get; set; }
 
     public IEnumerable<string> HostNames { get; set; }
+    public ExchangeOptions Exchange { get; set; }
+
+    public class ExchangeOptions
+    {
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public bool Declare { get; set; }
+        public bool Durable { get; set; }
+        public bool AutoDelete { get; set; }
+    }
 }
