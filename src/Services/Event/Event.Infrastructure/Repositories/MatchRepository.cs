@@ -29,7 +29,8 @@ public class MatchRepository : IMatchRepository
 
     public Task Update(Match match)
     {
-        var doc = match.AsDocument();
-        return _repository.UpdateAsync(doc);
+        return _repository
+            .UpdateAsync(match.AsDocument(), m
+                => m.Id == match.Id && m.Version < match.Version);
     }
 }

@@ -9,5 +9,6 @@ public interface IMongoRepository<TEntity, in TIdentifiable> where TEntity : IId
     Task<TEntity> GetAsync(TIdentifiable id);
     Task AddAsync(TEntity entity);
     Task UpdateAsync(TEntity entity);
+    Task UpdateAsync(TEntity entity, Expression<Func<TEntity, bool>> predicate);
     Task DeleteAsync(TIdentifiable id);
 }

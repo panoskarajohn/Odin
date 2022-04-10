@@ -15,7 +15,8 @@ public static class MatchToDocument
             match.StartingTime,
             match.MatchName.Value,
             home, away,
-            match.Status.Name);
+            match.Status.Name,
+            match.Version);
 
         if (match.Markets.Any())
         {

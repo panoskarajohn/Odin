@@ -10,6 +10,11 @@ public abstract class BaseAggregateRoot<TId> : Entity<TId>, IAggregate
 
     public void AddDomainEvent(IDomainEvent domainEvent)
     {
+        if (!_domainEvents.Any())
+        {
+            Version++;
+        }
+
         _domainEvents.Add(domainEvent);
     }
 
