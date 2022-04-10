@@ -5,8 +5,8 @@ namespace Shared.RabbitMq;
 
 internal class MessageSubscribersChannel
 {
-    private readonly Channel<IMessageContract> _channel = Channel.CreateUnbounded<IMessageContract>();
+    private readonly Channel<IMessageSubscriber> _channel = Channel.CreateUnbounded<IMessageSubscriber>();
 
-    public ChannelReader<IMessageContract> Reader => _channel.Reader;
-    public ChannelWriter<IMessageContract> Writer => _channel.Writer;
+    public ChannelReader<IMessageSubscriber> Reader => _channel.Reader;
+    public ChannelWriter<IMessageSubscriber> Writer => _channel.Writer;
 }

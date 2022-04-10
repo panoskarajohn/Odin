@@ -1,6 +1,4 @@
 ﻿using System.Collections.Concurrent;
-using System.Text;
-using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using Shared.RabbitMq.Connections;
@@ -9,41 +7,75 @@ using Shared.RabbitMq.Options;
 
 namespace Shared.RabbitMq.Client;
 
-public class RabbitMqClient : IRabbitMqClient
+internal sealed class RabbitMqClient : IRabbitMqClient
 {
+    private const string EmptyContext = "{}";
     private readonly ConcurrentDictionary<int, IModel> _channels = new();
-
     private readonly IConnection _connection;
+    private readonly bool _contextEnabled;
+    private readonly IContextProvider _contextProvider;
     private readonly object _lockObject = new();
-
     private readonly ILogger<RabbitMqClient> _logger;
-
+    private readonly bool _loggerEnabled;
     private readonly int _maxChannels;
+    private readonly bool _persistMessages;
+    private readonly IRabbitMqSerializer _serializer;
+    private readonly string _spanContextHeader;
+    private int _channelsCount;
 
-    public RabbitMqClient(RabbitMqOptions options, ProducerConnection connection, ILogger<RabbitMqClient> logger)
+    public RabbitMqClient(ProducerConnection connection, IContextProvider contextProvider,
+        IRabbitMqSerializer serializer,
+        RabbitMqOptions options, ILogger<RabbitMqClient> logger)
     {
         _connection = connection.Connection;
+        _contextProvider = contextProvider;
+        _serializer = serializer;
         _logger = logger;
-        _maxChannels = options.MaxChannels;
+        _contextEnabled = options.Context?.Enabled == true;
+        _loggerEnabled = options.Logger?.Enabled ?? false;
+        _spanContextHeader = options.GetSpanContextHeader();
+        _persistMessages = options?.MessagesPersisted ?? false;
+        _maxChannels = options.MaxProducerChannels <= 0 ? 1000 : options.MaxProducerChannels;
     }
 
-    /// <summary>
-    /// Publishes a message to rabbitMa
-    /// </summary>
-    /// <param name="exchange"></param>
-    /// <param name="routingKey"></param>
-    /// <param name="message"></param>
-    /// <param name="messageId"></param>
-    /// <param name="correlationId"></param>
-    public void Send(object message, IConventions conventions, string? messageId = null,
-        string? correlationId = null)
+    public void Send(object message, IConventions conventions, string messageId = null, string correlationId = null,
+        string spanContext = null, object messageContext = null, IDictionary<string, object> headers = null)
     {
-        var channel = GetChannel();
-        var json = JsonSerializer.Serialize(message);
-        var body = Encoding.UTF8.GetBytes(json);
+        var threadId = Thread.CurrentThread.ManagedThreadId;
+        if (!_channels.TryGetValue(threadId, out var channel))
+        {
+            lock (_lockObject)
+            {
+                if (_channelsCount >= _maxChannels)
+                {
+                    throw new InvalidOperationException(
+                        $"Cannot create RabbitMQ producer channel for thread: {threadId} " +
+                        $"(reached the limit of {_maxChannels} channels). " +
+                        "Modify `MaxProducerChannels` setting to allow more channels.");
+                }
 
+                channel = _connection.CreateModel();
+                _channels.TryAdd(threadId, channel);
+                _channelsCount++;
+                if (_loggerEnabled)
+                {
+                    _logger.LogTrace(
+                        $"Created a channel for thread: {threadId}, total channels: {_channelsCount}/{_maxChannels}");
+                }
+            }
+        }
+        else
+        {
+            if (_loggerEnabled)
+            {
+                _logger.LogTrace(
+                    $"Reused a channel for thread: {threadId}, total channels: {_channelsCount}/{_maxChannels}");
+            }
+        }
+
+        var body = _serializer.Serialize(message);
         var properties = channel.CreateBasicProperties();
-        properties.Persistent = true;
+        properties.Persistent = _persistMessages;
         properties.MessageId = string.IsNullOrWhiteSpace(messageId)
             ? Guid.NewGuid().ToString("N")
             : messageId;
@@ -53,48 +85,47 @@ public class RabbitMqClient : IRabbitMqClient
         properties.Timestamp = new AmqpTimestamp(DateTimeOffset.UtcNow.ToUnixTimeSeconds());
         properties.Headers = new Dictionary<string, object>();
 
-        _logger.LogInformation("Publishing a message with exchange: {Exchange} and Routing Key: {RoutingKey}"
-            , conventions.Exchange, conventions.RoutingKey);
+        if (_contextEnabled)
+        {
+            IncludeMessageContext(messageContext, properties);
+        }
 
-        //channel.ExchangeDeclare(exchange, "topic", true, false);
+        if (!string.IsNullOrWhiteSpace(spanContext))
+        {
+            properties.Headers.Add(_spanContextHeader, spanContext);
+        }
+
+        if (headers is not null)
+        {
+            foreach (var (key, value) in headers)
+            {
+                if (string.IsNullOrWhiteSpace(key) || value is null)
+                {
+                    continue;
+                }
+
+                properties.Headers.TryAdd(key, value);
+            }
+        }
+
+        if (_loggerEnabled)
+        {
+            _logger.LogTrace($"Publishing a message with routing key: '{conventions.RoutingKey}' " +
+                             $"to exchange: '{conventions.Exchange}' " +
+                             $"[id: '{properties.MessageId}', correlation id: '{properties.CorrelationId}']");
+        }
+
         channel.BasicPublish(conventions.Exchange, conventions.RoutingKey, properties, body.ToArray());
     }
 
-    /// <summary>
-    /// Tries to create a new RabbitMqChannel.
-    /// </summary>
-    /// <returns></returns>
-    /// <exception cref="InvalidOperationException"></exception>
-    private IModel GetChannel()
+    private void IncludeMessageContext(object context, IBasicProperties properties)
     {
-        var threadId = Thread.CurrentThread.ManagedThreadId;
-        var channelsCount = _channels.Count;
-
-        if (!_channels.TryGetValue(threadId, out var channel))
+        if (context is not null)
         {
-            lock (_lockObject)
-            {
-                if (channelsCount >= _maxChannels)
-                {
-                    throw new InvalidOperationException(
-                        $"Cannot create RabbitMq producer channel for thread: {threadId} "
-                        + $"reached the limit of {_maxChannels} channels. " +
-                        $"Modify {nameof(RabbitMqOptions.MaxChannels)} in rabbitMq configuration");
-                }
-
-                channel = _connection.CreateModel();
-                _channels.TryAdd(threadId, channel);
-                _logger.LogInformation(
-                    "Created a channel for threadId: {ThreadId}. Total Channels: {ChannelCount}/{MaxChannels}",
-                    threadId, channelsCount, _maxChannels);
-            }
-        }
-        else
-        {
-            _logger.LogTrace("Reused a channel for thread: {ThreadId}, total channels: {ChannelCount}/{MaxChannels}",
-                threadId, channelsCount, _maxChannels);
+            properties.Headers.Add(_contextProvider.HeaderName, _serializer.Serialize(context).ToArray());
+            return;
         }
 
-        return channel;
+        properties.Headers.Add(_contextProvider.HeaderName, EmptyContext);
     }
 }

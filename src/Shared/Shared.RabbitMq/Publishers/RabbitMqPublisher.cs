@@ -1,30 +1,27 @@
 ﻿using Shared.MessageBroker;
 using Shared.RabbitMq.Client;
 using Shared.RabbitMq.Conventions;
-using Shared.Web.Context;
 
 namespace Shared.RabbitMq.Publishers;
 
-public class RabbitMqPublisher : IMessagePublisher
+internal sealed class RabbitMqPublisher : IBusPublisher
 {
     private readonly IRabbitMqClient _client;
-    private readonly IContext _context;
     private readonly IConventionsProvider _conventionsProvider;
 
-    public RabbitMqPublisher(IRabbitMqClient client, IContext context, IConventionsProvider conventionsProvider)
+    public RabbitMqPublisher(IRabbitMqClient client, IConventionsProvider conventionsProvider)
     {
         _client = client;
-        _context = context;
         _conventionsProvider = conventionsProvider;
     }
 
-    public Task PublishAsync<T>(T message) where T : class, IMessage
+    public Task PublishAsync<T>(T message, string messageId = null, string correlationId = null,
+        string spanContext = null, object messageContext = null, IDictionary<string, object> headers = null)
+        where T : class
     {
-        _client.Send(
-            message,
-            _conventionsProvider.Get(message.GetType()),
-            _context.RequestId.ToString("N"),
-            _context.CorrelationId.ToString("N"));
+        _client.Send(message, _conventionsProvider.Get(message.GetType()), messageId, correlationId, spanContext,
+            messageContext, headers);
+
         return Task.CompletedTask;
     }
 }

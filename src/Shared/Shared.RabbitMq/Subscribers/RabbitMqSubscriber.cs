@@ -2,24 +2,25 @@
 
 namespace Shared.RabbitMq.Subscribers;
 
-internal class RabbitMqSubscriber : IMessageSubscriber
+internal sealed class RabbitMqSubscriber : IBusSubscriber
 {
-    private readonly MessageSubscribersChannel _channel;
+    private readonly MessageSubscribersChannel _messageSubscribersChannel;
 
-    public RabbitMqSubscriber(MessageSubscribersChannel channel)
+    public RabbitMqSubscriber(MessageSubscribersChannel messageSubscribersChannel)
     {
-        _channel = channel;
+        _messageSubscribersChannel = messageSubscribersChannel;
     }
 
-    public Task SubscribeAsync<T>(Func<IServiceProvider, T, object, Task> handle)
-        where T : class, IMessage
+    public IBusSubscriber Subscribe<T>(Func<IServiceProvider, T, object, Task> handle)
+        where T : class
     {
         var type = typeof(T);
-        var messageContract = MessageContract.Subscribe(type,
-            (provider, message, context) => handle(provider, (T) message, context));
+        _messageSubscribersChannel.Writer.TryWrite(MessageSubscriber.Subscribe(type,
+            (serviceProvider, message, context) => handle(serviceProvider, (T) message, context)));
+        return this;
+    }
 
-        _channel.Writer.TryWrite(messageContract);
-
-        return Task.CompletedTask;
+    public void Dispose()
+    {
     }
 }
