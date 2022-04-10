@@ -1,4 +1,5 @@
-﻿using Event.Core.Repositories;
+﻿using Event.Core.DomainEvents;
+using Event.Core.Repositories;
 using Event.Core.ValueObjects;
 using Microsoft.Extensions.Logging;
 using Shared.Cqrs.Commands;
@@ -23,6 +24,8 @@ public class CreateMatchCommandHandler : ICommandHandler<CreateMatchCommand>
             command.StartingTime,
             command.Home,
             command.Away);
+
+        match.AddDomainEvent(new NewMatchCreatedEvent());
 
         await _matchRepository.Add(match);
     }

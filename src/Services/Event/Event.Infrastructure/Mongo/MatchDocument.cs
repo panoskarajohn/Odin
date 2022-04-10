@@ -2,11 +2,8 @@
 
 namespace Event.Infrastructure.Mongo;
 
-public class MatchDocument : IIdentifiable<long>, IMongoDocument
+public class MatchDocument : IIdentifiable<long>
 {
-    private DateTime _lastModified;
-    private int? _modifiedBy;
-
     public MatchDocument(long id,
         string category,
         DateTime startingTime,
@@ -25,6 +22,7 @@ public class MatchDocument : IIdentifiable<long>, IMongoDocument
         Away = away;
         Status = status;
         LastModified = DateTime.UtcNow;
+        Version = version;
         ModifiedBy = modifiedBy;
     }
 
@@ -39,9 +37,9 @@ public class MatchDocument : IIdentifiable<long>, IMongoDocument
     public string Status { get; }
 
     public IEnumerable<MarketDocument> Markets { get; internal set; }
-    public long Id { get; }
 
-    public DateTime LastModified { get; set; }
-    public int? ModifiedBy { get; set; }
-    public long Version { get; set; }
+    public DateTime LastModified { get; }
+    public int ModifiedBy { get; }
+    public long Version { get; }
+    public long Id { get; }
 }

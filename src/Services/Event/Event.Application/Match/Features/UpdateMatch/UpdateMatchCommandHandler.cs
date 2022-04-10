@@ -1,4 +1,5 @@
 ﻿using Event.Application.Match.Exceptions;
+using Event.Core.DomainEvents;
 using Event.Core.Enumerations;
 using Event.Core.Repositories;
 using Microsoft.Extensions.Logging;
@@ -29,6 +30,8 @@ public class UpdateMatchCommandHandler : ICommandHandler<UpdateMatchCommand>
             command.Home, command.Away,
             Status.Active.Name,
             command.Id);
+
+        match.AddDomainEvent(new UpdatedEventMatch());
 
         await _matchRepository.Update(match);
     }

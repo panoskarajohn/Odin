@@ -24,6 +24,7 @@ public class SuspendMatchCommandHandler : ICommandHandler<SuspendMatchCommand>
             throw new MatchNotFoundException(command.Id);
 
         match.Suspend();
+
         await _matchRepository.Update(match);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Event.Application.Match.Exceptions;
+using Event.Core.DomainEvents;
 using Event.Core.Repositories;
 using Microsoft.Extensions.Logging;
 using Shared.Cqrs.Commands;
@@ -24,6 +25,7 @@ public class RemoveMarketCommandHandler : ICommandHandler<RemoveMarketsCommand>
             throw new MatchNotFoundException(command.MatchId);
 
         match.RemoveMarkets(command.MarketNames);
+        match.AddDomainEvent(new MarketsRemovedEvent());
 
         await _matchRepository.Update(match);
     }
