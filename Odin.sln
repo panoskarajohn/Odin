@@ -47,6 +47,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Prometheus", "src\Sh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Metrics", "src\Shared\Shared.Metrics\Shared.Metrics.csproj", "{10960A94-8336-49D1-B049-497258C07740}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prometheus", "prometheus", "{74F99983-B1AB-4464-BBE4-33590948D8E7}"
+	ProjectSection(SolutionItems) = preProject
+		prometheus\Dockerfile = prometheus\Dockerfile
+		prometheus\prometheus.yml = prometheus\prometheus.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{DEBE6467-472D-46A2-896D-2091BB004090}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		infra.yml = infra.yml
+		docker-compose.override.yml = docker-compose.override.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

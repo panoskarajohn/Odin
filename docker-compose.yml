@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  events-api:
+    container_name: events
+    image: ${REGISTRY:-odin}/event.api:${PLATFORM:-linux}-${TAG:-latest}
+    ports:
+      - "1000:80"
+    build:
+      context: .
+      dockerfile: src/Services/Event/Event.Api/Dockerfile
+    networks:
+      - odin
+
+networks:
+  odin:
+    name: odin-network

@@ -49,6 +49,8 @@ public static class MatchToDocument
             match.AppendMarkets(document
                 .Markets.Select(m => m.AsEntity()));
 
+        match.Version = document.Version;
+
         return match;
     }
 

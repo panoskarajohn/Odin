@@ -1,0 +1,8 @@
+version: '3.7'
+
+services:
+  events-api:
+    container_name: events
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "mongo:connectionString=mongodb://mongo"

@@ -9,6 +9,16 @@ services:
       - '9090:9090'
     networks:
       - odin
+  
+  grafana:
+    image: grafana/grafana
+    container_name: dev_grafana
+    networks:
+      - odin
+    ports:
+      - "30091:3000"
+    volumes:
+      - ./grafana-data/data:/var/lib/grafana
 
   rabbitmq:
     image: "rabbitmq:3-management"
