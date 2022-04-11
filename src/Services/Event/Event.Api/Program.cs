@@ -2,6 +2,8 @@ using Event.Application;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Shared.IdGenerator;
 using Shared.Logging;
+using Shared.Metrics;
+using Shared.Prometheus;
 using Shared.Swagger;
 using Shared.Web;
 
@@ -20,8 +22,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services
-    .AddApplication(builder.Configuration)
+    .AddApplication(configuration)
     .AddErrorHandling()
+    .AddMetrics(configuration)
+    .AddPrometheus(configuration)
     .AddCustomSwagger(configuration, typeof(IEventMarker).Assembly)
     .AddCustomVersioning();
 
@@ -43,7 +47,9 @@ if (app.Environment.IsDevelopment())
 app
     .UseApplication()
     .UseErrorHandling()
-    .UseLogging();
+    .UseLogging()
+    .UseMetrics()
+    .UsePrometheus();
 
 if (env.IsDevelopment())
 {

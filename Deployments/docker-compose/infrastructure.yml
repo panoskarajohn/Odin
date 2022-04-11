@@ -1,6 +1,15 @@
 version: '3.7'
 
 services:
+  prometheus:
+    build: ./prometheus
+    container_name: prometheus
+    restart: unless-stopped
+    ports:
+      - '9090:9090'
+    networks:
+      - odin
+
   rabbitmq:
     image: "rabbitmq:3-management"
     hostname: "rabbit1"
