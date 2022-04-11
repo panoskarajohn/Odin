@@ -47,6 +47,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Prometheus", "src\Sh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Metrics", "src\Shared\Shared.Metrics\Shared.Metrics.csproj", "{10960A94-8336-49D1-B049-497258C07740}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deployments", "deployments", "{B7B9325B-DB21-4420-A464-2C53D70A8402}"
+	ProjectSection(SolutionItems) = preProject
+		Deployments\docker-compose\infrastructure.yml = Deployments\docker-compose\infrastructure.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prometheus", "prometheus", "{C58F0B78-BB1F-4165-8257-42E297435604}"
+	ProjectSection(SolutionItems) = preProject
+		Deployments\docker-compose\Prometheus\Dockerfile = Deployments\docker-compose\Prometheus\Dockerfile
+		Deployments\docker-compose\Prometheus\prometheus.yml = Deployments\docker-compose\Prometheus\prometheus.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -155,6 +166,7 @@ Global
 		{A0E77E63-7FF6-4A29-B477-6F12D40C131E} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
 		{B3CD0221-A585-4525-9771-A73F8960FB35} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
 		{10960A94-8336-49D1-B049-497258C07740} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
+		{C58F0B78-BB1F-4165-8257-42E297435604} = {B7B9325B-DB21-4420-A464-2C53D70A8402}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {384772CF-3EA1-4FC3-86F3-DD05F09DF698}
