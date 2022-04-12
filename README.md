@@ -20,3 +20,6 @@ Inspired a lot from https://github.com/devmentors/
 
 [![](Images/runes.png)](https://github.com/panoskarajohn/)
 
+And since the name of the project is Odin. 
+The below image is Vegvisir also known as the Viking compass
+
