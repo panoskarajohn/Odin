@@ -60,6 +60,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{DEBE64
 		docker-compose.override.yml = docker-compose.override.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{44DB2CC8-63F8-4B06-B679-979078D281F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiGateway", "src\Services\WebApiGateway\WebApiGateway.csproj", "{8FCF8975-295B-47A8-B5C5-C5742F35016A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -142,6 +146,10 @@ Global
 		{FA46CCC3-90D7-4A1B-AFBA-B74FCD92EC42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA46CCC3-90D7-4A1B-AFBA-B74FCD92EC42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA46CCC3-90D7-4A1B-AFBA-B74FCD92EC42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FCF8975-295B-47A8-B5C5-C5742F35016A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FCF8975-295B-47A8-B5C5-C5742F35016A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FCF8975-295B-47A8-B5C5-C5742F35016A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FCF8975-295B-47A8-B5C5-C5742F35016A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -168,6 +176,8 @@ Global
 		{A0E77E63-7FF6-4A29-B477-6F12D40C131E} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
 		{B3CD0221-A585-4525-9771-A73F8960FB35} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
 		{10960A94-8336-49D1-B049-497258C07740} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
+		{44DB2CC8-63F8-4B06-B679-979078D281F7} = {31F6434B-386A-4AF5-8EE2-9C101A11D624}
+		{8FCF8975-295B-47A8-B5C5-C5742F35016A} = {44DB2CC8-63F8-4B06-B679-979078D281F7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {384772CF-3EA1-4FC3-86F3-DD05F09DF698}
