@@ -19,7 +19,7 @@ Mostly from some repositories which I really like:
 Inspired a lot from https://github.com/devmentors/
 
 And since the name of the project is Odin. 
-The below image is Vegvisir also known as the Viking compass
+The below image is Vegvisir also known as the Viking compass. May this repo guide you 😁
 [![](Images/runes.png)](https://github.com/panoskarajohn/)
 
 
