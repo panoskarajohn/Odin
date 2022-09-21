@@ -1,0 +1,83 @@
+{
+	"info": {
+		"_postman_id": "7c4242ad-2a9f-4b7c-9690-571165898c63",
+		"name": "Market",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2611472"
+	},
+	"item": [
+		{
+			"name": "Append Market to SportEvent",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"over\",\r\n  \"outcomes\": [\r\n    {\r\n      \"odds\": 1.20,\r\n      \"name\": \"Three goals\"\r\n    },\r\n    {\r\n        \"odds\": 3.20,\r\n        \"name\": \"Five goals\"\r\n    },\r\n    {\r\n        \"odds\": 5.20,\r\n        \"name\": \"Seven Goals\"\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{gateway_url}}/event/{{sport_id}}/market",
+					"host": [
+						"{{gateway_url}}"
+					],
+					"path": [
+						"event",
+						"{{sport_id}}",
+						"market"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Market from SportEvent",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{gateway_url}}/event/{{sport_id}}/market/{{market_name}}",
+					"host": [
+						"{{gateway_url}}"
+					],
+					"path": [
+						"event",
+						"{{sport_id}}",
+						"market",
+						"{{market_name}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get SportEvent Markets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{gateway_url}}/event/{{sport_id}}/market",
+					"host": [
+						"{{gateway_url}}"
+					],
+					"path": [
+						"event",
+						"{{sport_id}}",
+						"market"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

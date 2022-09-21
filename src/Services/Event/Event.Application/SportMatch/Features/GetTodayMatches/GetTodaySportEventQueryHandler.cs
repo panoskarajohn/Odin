@@ -26,7 +26,7 @@ public class GetTodaySportEventQueryHandler : IQueryHandler<GetTodayMatchesQuery
         var filter = Builders<MatchDocument>.Filter;
 
         var activeMatches = filter
-            .Eq(md => md.Status, Status.Active.Name);
+            .Eq(md => md.Status, Status.Active.Name.ToLower());
 
         var todayFilter = filter
                               .Gte(sp => sp.StartingTime, today) &

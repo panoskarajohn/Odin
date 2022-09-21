@@ -1,0 +1,185 @@
+{
+	"info": {
+		"_postman_id": "94e097c6-2e07-46af-b8bf-5d1b1f0f1263",
+		"name": "Match",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2611472"
+	},
+	"item": [
+		{
+			"name": "Create Match",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//toISOString already gets the datetime as UTC\r",
+							"const today = new Date();\r",
+							"today.setHours(today.getHours() + 4);\r",
+							"pm.environment.set(\"start_time\", today.toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"category\": \"football\",\r\n  \"startingTime\": \"{{start_time}}\",\r\n  \"home\": \"Olympiakos\",\r\n  \"away\": \"Panathinaikos\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/api/v1/match",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"match"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Todays matches",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:1000/api/v1/match",
+					"host": [
+						"localhost"
+					],
+					"port": "1000",
+					"path": [
+						"api",
+						"v1",
+						"match"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Match",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 2260924656517120,\r\n  \"category\": \"football2\",\r\n  \"startingTime\": \"{{start_time}}\",\r\n  \"home\": \"Olympiakos 2\",\r\n  \"away\": \"Panathinaikos\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:1000/api/v1/match",
+					"host": [
+						"localhost"
+					],
+					"port": "1000",
+					"path": [
+						"api",
+						"v1",
+						"match"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Suspend Match",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:1000/api/v1/match/suspend/2011905334181888",
+					"host": [
+						"localhost"
+					],
+					"port": "1000",
+					"path": [
+						"api",
+						"v1",
+						"match",
+						"suspend",
+						"2011905334181888"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register Markets to match",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"matchId\": 5971682479570944,\r\n  \"marketDtos\": [\r\n    {\r\n      \"name\": \"Win\",\r\n      \"selectionDtos\": [\r\n        {\r\n          \"name\": \"Win\",\r\n          \"price\": 1.1\r\n        },\r\n        {\r\n          \"name\": \"Draw\",\r\n          \"price\": 1.1\r\n        },\r\n        {\r\n          \"name\": \"Lose\",\r\n          \"price\": 1.1\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:1000/api/v1/match/market",
+					"host": [
+						"localhost"
+					],
+					"port": "1000",
+					"path": [
+						"api",
+						"v1",
+						"match",
+						"market"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove markets from event",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"matchId\": 2013684559249408,\r\n  \"marketNames\": [\r\n    \"win\"\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:1000/api/v1/match/market/remove",
+					"host": [
+						"localhost"
+					],
+					"port": "1000",
+					"path": [
+						"api",
+						"v1",
+						"match",
+						"market",
+						"remove"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
