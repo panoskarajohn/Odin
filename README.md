@@ -5,6 +5,12 @@
 This is a playground, trying to become a decent solution. 
 This is in progress, trying to put everything together. 
 
+## Local development
+
+infra.yml will bring up everything you need to have in order to run the app locally 
+at least for now since we have only the Event Service.
+So you can run and debug the service you develop without worrying about installing all kind of different infrastructure.
+
 # Run the app
 
 Run the following commands
@@ -15,10 +21,7 @@ docker-compose -f infra.yml up -d
 docker-compose up -d
 ```
 
-## Local development
 
-infra.yml will bring up everything you need to have in order to run the app locally 
-at least for now since we have only the Event Service
 
 You can send requests to odin/event.api
 ```
