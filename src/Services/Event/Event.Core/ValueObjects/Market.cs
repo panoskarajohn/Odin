@@ -10,7 +10,7 @@ public record Market
             throw new MarketInvalidNameException();
 
         Name = name;
-        Selections = selections ?? throw new MarketShouldContainSelections();
+        Selections = selections ?? throw new MarketShouldContainSelectionsException();
     }
 
     public string Name { get; }

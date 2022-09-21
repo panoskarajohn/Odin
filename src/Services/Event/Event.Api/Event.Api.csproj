@@ -24,4 +24,8 @@
         <ProjectReference Include="..\Event.Application\Event.Application.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="logs"/>
+    </ItemGroup>
+
 </Project>
