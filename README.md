@@ -15,6 +15,11 @@ docker-compose -f infra.yml up -d
 docker-compose up -d
 ```
 
+## Local development
+
+infra.yml will bring up everything you need to have in order to run the app locally 
+at least for now since we have only the Event Service
+
 You can send requests to odin/event.api
 ```
 ➜  Odin (master)ds                                                                                                                                                                                                                                                                                                
