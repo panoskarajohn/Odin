@@ -11,16 +11,16 @@ public static class MatchDocumentToResponse
             document.Category,
             document.StartingTime,
             document.MatchName,
-            document.Markets.Select(m => m.ToDto()));
+            document.Markets?.Select(m => m.ToDto()));
     }
 
-    public static MarketDto ToDto(this MarketDocument document)
+    static MarketDto ToDto(this MarketDocument document)
     {
         return new MarketDto(document.Name,
-            document.SelectionDocuments.Select(s => s.ToDto()));
+            document.SelectionDocuments?.Select(s => s.ToDto()));
     }
 
-    public static SelectionDto ToDto(this SelectionDocument document)
+    static SelectionDto ToDto(this SelectionDocument document)
     {
         return new SelectionDto(document.Name, document.Price);
     }
