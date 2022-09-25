@@ -72,6 +72,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Event", "Event", "{7BF80323
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionalTests", "test\Services\Event\FunctionalTests\FunctionalTests.csproj", "{44603D45-F21E-4A4E-8B78-6B538719C702}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mongo", "mongo", "{D08B2546-ACB1-4C6D-A895-657FEA824BF8}"
+	ProjectSection(SolutionItems) = preProject
+		Mongo\init.js = Mongo\init.js
+		Mongo\replica_mongo.yml = Mongo\replica_mongo.yml
+		Mongo\rs-init.sh = Mongo\rs-init.sh
+		Mongo\start_replica.sh = Mongo\start_replica.sh
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
