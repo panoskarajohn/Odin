@@ -13,15 +13,15 @@ So you can run and debug the service you develop without worrying about installi
 
 # Run the app
 
-Run the following commands
-
+Run the following commands:
 ```
 ➜  Odin (master)
+cd Mongo
+./start_replica.sh
+cd ..
 docker-compose -f infra.yml up -d
 docker-compose up -d
 ```
-
-
 
 You can send requests to odin/event.api
 ```
@@ -53,10 +53,3 @@ Mostly from some repositories which I really like:
 * https://github.com/devmentors/Pacco
 
 Inspired a lot from https://github.com/devmentors/
-
-And since the name of the project is Odin. 
-The below image is Vegvisir also known as the Viking compass. May this repo guide you 😁
-[![](Images/runes.png)](https://github.com/panoskarajohn/)
-
-
-
