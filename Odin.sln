@@ -80,6 +80,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mongo", "mongo", "{D08B2546
 		Mongo\start_replica.sh = Mongo\start_replica.sh
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{17C91101-82E2-423F-B075-F13BF933235E}"
+	ProjectSection(SolutionItems) = preProject
+		start_infra.sh = start_infra.sh
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
