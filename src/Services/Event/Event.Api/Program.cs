@@ -32,6 +32,9 @@ builder.Services
 //Register Event
 builder.Services.AddEventApplication(configuration);
 
+//Decorators
+builder.Services.AddLoggingDecorators();
+
 //Integrates serilog to the application
 host.UseLogging();
 

@@ -6,6 +6,9 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Filters;
 using Shared.Common;
+using Shared.Cqrs.Commands;
+using Shared.Cqrs.Events;
+using Shared.Logging.CqrsDecorators;
 using Shared.Logging.Options;
 using Shared.Web.Context;
 using Shared.Web.Options;
@@ -15,23 +18,30 @@ namespace Shared.Logging;
 public static class Extensions
 {
     private const string ConsoleOutputTemplate = "{Timestamp:HH:mm:ss} [{Level:u3}] {Message}{NewLine}{Exception}";
-    private const string FileOutputTemplate = "{Timestamp:HH:mm:ss} [{Level:u3}] ({SourceContext}.{Method}) {Message}{NewLine}{Exception}";
+
+    private const string FileOutputTemplate =
+        "{Timestamp:HH:mm:ss} [{Level:u3}] ({SourceContext}.{Method}) {Message}{NewLine}{Exception}";
+
     private const string AppSectionName = "app";
     private const string LoggerSectionName = "logger";
-    
+
     public static IApplicationBuilder UseLogging(this IApplicationBuilder app)
     {
         app.Use(async (ctx, next) =>
         {
             var logger = ctx.RequestServices.GetRequiredService<ILogger<IContext>>();
             var context = ctx.RequestServices.GetRequiredService<IContext>();
-            logger.LogInformation("Started processing a request [Request ID: '{RequestId}', Correlation ID: '{CorrelationId}', Trace ID: '{TraceId}', User ID: '{UserId}']...",
-                context.RequestId, context.CorrelationId, context.TraceId, context.Identity.IsAuthenticated ? context.Identity.Id : string.Empty);
-                
+            logger.LogInformation(
+                "Started processing a request [Request ID: '{RequestId}', Correlation ID: '{CorrelationId}', Trace ID: '{TraceId}', User ID: '{UserId}']...",
+                context.RequestId, context.CorrelationId, context.TraceId,
+                context.Identity.IsAuthenticated ? context.Identity.Id : string.Empty);
+
             await next();
-                
-            logger.LogInformation("Finished processing a request with status code: {StatusCode} [Request ID: '{RequestId}', Correlation ID: '{CorrelationId}', Trace ID: '{TraceId}', User ID: '{UserId}']",
-                ctx.Response.StatusCode, context.RequestId, context.CorrelationId, context.TraceId, context.Identity.IsAuthenticated ? context.Identity.Id : string.Empty);
+
+            logger.LogInformation(
+                "Finished processing a request with status code: {StatusCode} [Request ID: '{RequestId}', Correlation ID: '{CorrelationId}', Trace ID: '{TraceId}', User ID: '{UserId}']",
+                ctx.Response.StatusCode, context.RequestId, context.CorrelationId, context.TraceId,
+                context.Identity.IsAuthenticated ? context.Identity.Id : string.Empty);
         });
 
         return app;
@@ -123,4 +133,11 @@ public static class Extensions
         => Enum.TryParse<LogEventLevel>(level, true, out var logLevel)
             ? logLevel
             : LogEventLevel.Information;
+
+    public static IServiceCollection AddLoggingDecorators(this IServiceCollection services)
+    {
+        services.TryDecorate(typeof(ICommandHandler<>), typeof(LoggingCommandHandlerDecorator<>));
+        services.TryDecorate(typeof(IEventHandler<>), typeof(LoggingEventHandlerDecorator<>));
+        return services;
+    }
 }
