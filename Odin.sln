@@ -74,16 +74,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionalTests", "test\Ser
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mongo", "mongo", "{D08B2546-ACB1-4C6D-A895-657FEA824BF8}"
 	ProjectSection(SolutionItems) = preProject
-		Mongo\init.js = Mongo\init.js
-		Mongo\replica_mongo.yml = Mongo\replica_mongo.yml
-		Mongo\rs-init.sh = Mongo\rs-init.sh
-		Mongo\start_replica.sh = Mongo\start_replica.sh
+		Deployments\Mongo\init.js = Deployments\Mongo\init.js
+		Deployments\Mongo\replica_mongo.yml = Deployments\Mongo\replica_mongo.yml
+		Deployments\Mongo\rs-init.sh = Deployments\Mongo\rs-init.sh
+		Deployments\Mongo\start_replica.sh = Deployments\Mongo\start_replica.sh
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{17C91101-82E2-423F-B075-F13BF933235E}"
 	ProjectSection(SolutionItems) = preProject
-		start_infra.sh = start_infra.sh
+		start_infra.sh = Deployments\start_infra.sh
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deployments", "deployments", "{4C557662-4A9A-4436-8E0D-63E61263B804}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -206,6 +208,9 @@ Global
 		{5658761F-F05D-4A39-A36A-83476CFC50DA} = {3FB6E6A3-1BEC-4083-8454-42F7E67DCD1E}
 		{7BF80323-DAEE-492B-AC79-2ABB6E08887E} = {5658761F-F05D-4A39-A36A-83476CFC50DA}
 		{44603D45-F21E-4A4E-8B78-6B538719C702} = {7BF80323-DAEE-492B-AC79-2ABB6E08887E}
+		{DEBE6467-472D-46A2-896D-2091BB004090} = {4C557662-4A9A-4436-8E0D-63E61263B804}
+		{D08B2546-ACB1-4C6D-A895-657FEA824BF8} = {4C557662-4A9A-4436-8E0D-63E61263B804}
+		{17C91101-82E2-423F-B075-F13BF933235E} = {4C557662-4A9A-4436-8E0D-63E61263B804}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {384772CF-3EA1-4FC3-86F3-DD05F09DF698}
