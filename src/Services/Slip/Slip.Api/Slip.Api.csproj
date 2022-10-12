@@ -11,4 +11,11 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Shared\Shared.Metrics\Shared.Metrics.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Prometheus\Shared.Prometheus.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Swagger\Shared.Swagger.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Web\Shared.Web.csproj" />
+    </ItemGroup>
+
 </Project>
