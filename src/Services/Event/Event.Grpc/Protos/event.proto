@@ -1,0 +1,17 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Event.Grpc";
+
+package event.protos;
+
+service Event {
+  rpc GetEvent (GetEventRequest) returns (EventResponse);
+}
+
+message GetEventRequest {
+  int64 id = 1;
+}
+
+message EventResponse {
+  string name = 1;
+}
