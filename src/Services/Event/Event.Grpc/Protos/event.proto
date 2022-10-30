@@ -1,5 +1,7 @@
 ﻿syntax = "proto3";
 
+import "google/protobuf/timestamp.proto";
+
 option csharp_namespace = "Event.Grpc";
 
 package event.protos;
@@ -13,5 +15,19 @@ message GetEventRequest {
 }
 
 message EventResponse {
+  int64 id = 1;
+  string name = 2;
+  google.protobuf.Timestamp starting = 3;
+  string category = 4;
+  repeated Market markets = 5;
+}
+
+message Market {
   string name = 1;
+  repeated Selection selections = 2;
+}
+
+message Selection {
+  string name = 1;
+  float price = 2;
 }
