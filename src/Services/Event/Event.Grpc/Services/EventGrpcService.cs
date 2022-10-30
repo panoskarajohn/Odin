@@ -1,4 +1,5 @@
 ﻿using Event.Application.SportMatch.Features.GetMatch;
+using Event.Core.ValueObjects;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Shared.Cqrs;
@@ -39,7 +40,7 @@ internal sealed class EventGrpcService : Event.EventBase
                 Selections = { m.SelectionDtos.Select(s => new Selection()
                 {
                     Name = s.Name,
-                    Price = (float)s.Price
+                    Price = s.Price
                 }) 
                 }
             }) 
