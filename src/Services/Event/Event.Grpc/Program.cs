@@ -29,10 +29,6 @@ host.UseLogging();
 
 var app = builder.Build();
 
-//
-
-app.MapGrpcService<GreeterService>();
-
 app.MapGrpcService<EventGrpcService>();
 
 app.MapGet("/",
