@@ -8,6 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Google.Protobuf" Version="3.21.9" />
+        <PackageReference Include="Grpc.Net.Client" Version="2.49.0" />
+        <PackageReference Include="Grpc.Tools" Version="2.50.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
 
@@ -16,6 +22,10 @@
       <ProjectReference Include="..\..\..\Shared\Shared.Prometheus\Shared.Prometheus.csproj" />
       <ProjectReference Include="..\..\..\Shared\Shared.Swagger\Shared.Swagger.csproj" />
       <ProjectReference Include="..\..\..\Shared\Shared.Web\Shared.Web.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <Protobuf Include="Protos\event.proto" GrpcServices="Client" />
     </ItemGroup>
 
 </Project>
