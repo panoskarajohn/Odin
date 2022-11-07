@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Shared.Types.Exceptions;
 
 namespace Shared.Web.ErrorHandling;
 
@@ -21,6 +22,11 @@ internal sealed class ErrorHandlerMiddleware : IMiddleware
         try
         {
             await next(context);
+        }
+        catch (OdinException exception)
+        {
+            _logger.LogError(exception, exception.Message);
+            await HandleErrorAsync(context, exception);
         }
         catch (System.Exception exception)
         {

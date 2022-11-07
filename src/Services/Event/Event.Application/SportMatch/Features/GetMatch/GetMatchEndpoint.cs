@@ -12,7 +12,7 @@ public class GetMatchEndpoint : BaseController
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [SwaggerOperation(Summary = "Get match", Description = "Get match")]
-    public async Task<ActionResult<IEnumerable<MatchResponseDto>>> Get([FromRoute] long id,
+    public async Task<ActionResult<MatchResponseDto>> Get([FromRoute] long id,
         CancellationToken cancellationToken)
     {
         var query = new GetMatchQuery(id);

@@ -1,0 +1,13 @@
+﻿{
+  "profiles": {
+    "Event.Grpc": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": false,
+      "applicationUrl": "http://localhost:3000;https://localhost:3001",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
