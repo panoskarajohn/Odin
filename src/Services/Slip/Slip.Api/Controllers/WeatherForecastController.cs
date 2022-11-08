@@ -14,18 +14,19 @@ public class WeatherForecastController : ControllerBase
     };
 
     private readonly ILogger<WeatherForecastController> _logger;
+    private readonly Event.EventClient _client;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, Event.EventClient client)
     {
         _logger = logger;
+        _client = client;
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
     public async  Task<IEnumerable<WeatherForecast>> Get()
     {
-        var channel = GrpcChannel.ForAddress("https://localhost:3001");
-        var client = new Event.EventClient(channel);
-        var eventResponse = await client.GetEventAsync(new GetEventRequest() 
+        
+        var eventResponse = await _client.GetEventAsync(new GetEventRequest() 
             {Id = 6832495717777408});
         
         

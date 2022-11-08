@@ -2,6 +2,7 @@ using Shared.Metrics;
 using Shared.Prometheus;
 using Shared.Swagger;
 using Shared.Web;
+using Slip.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
 var host = builder.Host;
@@ -22,6 +23,12 @@ builder.Services
     .AddPrometheus(configuration)
     .AddCustomSwagger(configuration, typeof(ISlipMarker).Assembly)
     .AddCustomVersioning();
+
+builder.Services.AddGrpcClient<Event.EventClient>(options =>
+{
+    options.Address = new Uri(configuration["EventGrpcUrl"]);
+});
+
 
 
 var app = builder.Build();
