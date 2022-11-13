@@ -26,20 +26,10 @@ internal sealed class ExceptionCompositionRoot : IExceptionCompositionRoot
             return result;
         }
         
-
         var defaultMapper = mappers.SingleOrDefault(x => x is ExceptionToResponseMapper);
 
         if(exception is OdinException)
             return defaultMapper?.Map(exception);
-
-        var tempException = exception.InnerException;
-        while (tempException is not null)
-        {
-            if (tempException is OdinException)
-                return defaultMapper?.Map(tempException);
-
-            tempException = tempException.InnerException;
-        }
 
         return defaultMapper?.Map(exception);
     }
