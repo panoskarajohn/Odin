@@ -2,13 +2,34 @@ version: '3.7'
 
 services:
   events-api:
-    container_name: events
     image: ${REGISTRY:-odin}/event.api:${PLATFORM:-linux}-${TAG:-latest}
     ports:
       - "1000:80"
     build:
       context: .
       dockerfile: src/Services/Event/Event.Api/Dockerfile
+    networks:
+      - odin
+    
+  events-grpc:
+    image: ${REGISTRY:-odin}/event.grpc:${PLATFORM:-linux}-${TAG:-latest}
+    ports:
+      - "2000:80"
+    build:
+      context: .
+      dockerfile: src/Services/Event/Event.Grpc/Dockerfile
+    networks:
+      - odin
+    
+  slip-api:
+    image: ${REGISTRY:-odin}/slip.api:${PLATFORM:-linux}-${TAG:-latest}
+    ports:
+      - "3000:80"
+    depends_on:
+      - events-grpc
+    build:
+      context: .
+      dockerfile: src/Services/Slip/Slip.Api/Dockerfile
     networks:
       - odin
 

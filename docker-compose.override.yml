@@ -2,7 +2,19 @@ version: '3.7'
 
 services:
   events-api:
-    container_name: events
+    container_name: events-api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "mongo:connectionString=mongodb://mongo"
+      - "mongo:connectionString=mongodb://mongo1"
+
+  events-grpc:
+    container_name: events-grpc
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "mongo:connectionString=mongodb://mongo1"
+  
+  slip-api:
+    container_name: slip-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "EventGrpcUrl=events-grpc"

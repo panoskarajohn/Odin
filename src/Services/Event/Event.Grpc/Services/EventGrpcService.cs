@@ -1,5 +1,4 @@
 ﻿using Event.Application.SportMatch.Features.GetMatch;
-using Event.Core.ValueObjects;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Shared.Cqrs;
