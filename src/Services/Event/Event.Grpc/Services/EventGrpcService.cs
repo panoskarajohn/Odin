@@ -33,7 +33,7 @@ internal sealed class EventGrpcService : Event.EventBase
             Name = result.MatchName,
             Category = result.Category,
             Starting = Timestamp.FromDateTime(result.StartingTime),
-            Markets = { result.MarketDtos.Select(m => new Market()
+            Markets = { result.MarketDtos?.Select(m => new Market()
             {
                 Name = m.Name,
                 Selections = { m.SelectionDtos.Select(s => new Selection()

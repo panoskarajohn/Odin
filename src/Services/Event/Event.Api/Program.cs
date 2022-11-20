@@ -13,7 +13,6 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 var env = builder.Environment;
 var host = builder.Host;
-var webHost = builder.WebHost;
 
 //
 SnowFlakIdGenerator.Configure(1);
@@ -40,29 +39,6 @@ builder.Services.AddLoggingDecorators();
 
 //Integrates serilog to the application
 host.UseLogging();
-
-webHost.ConfigureKestrel(options =>
-{
-    var ports = GetDefinedPorts(configuration);
-
-    (int httpPort, int grpcPort) GetDefinedPorts(IConfiguration config)
-    {
-        var grpcPort = config.GetValue("GRPC_PORT", 81);
-        var port = config.GetValue("PORT", 80);
-        return (port, grpcPort);
-    }
-
-    options.Listen(IPAddress.Any, ports.httpPort, listenOptions =>
-    {
-        listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
-    });
-    options.Listen(IPAddress.Any, ports.grpcPort, listenOptions =>
-    {
-        listenOptions.Protocols = HttpProtocols.Http2;
-    });
-});
-
-
 
 var app = builder.Build();
 

@@ -6,7 +6,6 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      
     ports:
       - "1000:80"
       - "1001:443"
