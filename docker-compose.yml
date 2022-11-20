@@ -1,37 +1,31 @@
 version: '3.7'
 
 services:
-  events-api:
-    image: ${REGISTRY:-odin}/event.api:${PLATFORM:-linux}-${TAG:-latest}
-    ports:
-      - "1000:80"
+  webapigateway:
+    image: ${DOCKER_REGISTRY-}webapigateway
+    build:
+      context: .
+      dockerfile: src/Services/WebApiGateway/Dockerfile
+
+  event.api:
+    image: ${DOCKER_REGISTRY-}eventapi
     build:
       context: .
       dockerfile: src/Services/Event/Event.Api/Dockerfile
-    networks:
-      - odin
-    
-  events-grpc:
-    image: ${REGISTRY:-odin}/event.grpc:${PLATFORM:-linux}-${TAG:-latest}
-    ports:
-      - "2000:80"
+
+
+  event.grpc:
+    image: ${DOCKER_REGISTRY-}eventgrpc
     build:
       context: .
       dockerfile: src/Services/Event/Event.Grpc/Dockerfile
-    networks:
-      - odin
-    
-  slip-api:
-    image: ${REGISTRY:-odin}/slip.api:${PLATFORM:-linux}-${TAG:-latest}
-    ports:
-      - "3000:80"
-    depends_on:
-      - events-grpc
+
+
+  slip.api:
+    image: ${DOCKER_REGISTRY-}slipapi
     build:
       context: .
       dockerfile: src/Services/Slip/Slip.Api/Dockerfile
-    networks:
-      - odin
 
 networks:
   odin:

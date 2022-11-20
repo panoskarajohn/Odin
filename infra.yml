@@ -10,6 +10,20 @@ services:
     networks:
       - odin
   
+  
+  mongodb_container:
+    image: mongo:latest
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    networks:
+      - odin
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+  
   grafana:
     image: grafana/grafana
     container_name: dev_grafana
@@ -75,3 +89,4 @@ volumes:
   sqlserver-data:
   redis:
     driver: local
+  mongodb_data_container:
