@@ -18,8 +18,8 @@ jobs:
       with:
         dotnet-version: 7.0.x
     - name: Restore dependencies
-      run: dotnet restore .\Odin.sln
+      run: dotnet restore Odin.sln
     - name: Build
-      run: dotnet build --no-restore .\Odin.sln
+      run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal .\Odin.sln
+      run: dotnet test --no-build --verbosity normal
