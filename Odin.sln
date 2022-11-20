@@ -53,16 +53,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prometheus", "prometheus", 
 		prometheus\prometheus.yml = prometheus\prometheus.yml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{DEBE6467-472D-46A2-896D-2091BB004090}"
-	ProjectSection(SolutionItems) = preProject
-		docker-compose.yml = docker-compose.yml
-		infra.yml = infra.yml
-		docker-compose.override.yml = docker-compose.override.yml
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{44DB2CC8-63F8-4B06-B679-979078D281F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiGateway", "src\Services\WebApiGateway\WebApiGateway.csproj", "{8FCF8975-295B-47A8-B5C5-C5742F35016A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiGateway", "src\Services\WebApiGateway\WebApiGateway.csproj", "{8FCF8975-295B-47A8-B5C5-C5742F35016A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3FB6E6A3-1BEC-4083-8454-42F7E67DCD1E}"
 EndProject
@@ -70,30 +63,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{56
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Event", "Event", "{7BF80323-DAEE-492B-AC79-2ABB6E08887E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionalTests", "test\Services\Event\FunctionalTests\FunctionalTests.csproj", "{44603D45-F21E-4A4E-8B78-6B538719C702}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mongo", "mongo", "{D08B2546-ACB1-4C6D-A895-657FEA824BF8}"
-	ProjectSection(SolutionItems) = preProject
-		Deployments\Mongo\init.js = Deployments\Mongo\init.js
-		Deployments\Mongo\replica_mongo.yml = Deployments\Mongo\replica_mongo.yml
-		Deployments\Mongo\rs-init.sh = Deployments\Mongo\rs-init.sh
-		Deployments\Mongo\start_replica.sh = Deployments\Mongo\start_replica.sh
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{17C91101-82E2-423F-B075-F13BF933235E}"
-	ProjectSection(SolutionItems) = preProject
-		start_infra.sh = Deployments\start_infra.sh
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deployments", "deployments", "{4C557662-4A9A-4436-8E0D-63E61263B804}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunctionalTests", "test\Services\Event\FunctionalTests\FunctionalTests.csproj", "{44603D45-F21E-4A4E-8B78-6B538719C702}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Slip", "Slip", "{BA339C5E-7069-4E93-A1DD-6D0439B37733}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slip.Api", "src\Services\Slip\Slip.Api\Slip.Api.csproj", "{610DCF5E-3037-45E8-B82E-019A8ED66EB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slip.Api", "src\Services\Slip\Slip.Api\Slip.Api.csproj", "{610DCF5E-3037-45E8-B82E-019A8ED66EB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event.Grpc", "src\Services\Event\Event.Grpc\Event.Grpc.csproj", "{799304B3-F998-4FA6-879C-F16316FA1DA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Event.Grpc", "src\Services\Event\Event.Grpc\Event.Grpc.csproj", "{799304B3-F998-4FA6-879C-F16316FA1DA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Grpc", "src\Shared\Shared.Grpc\Shared.Grpc.csproj", "{0B98808E-AAFB-42DC-A96A-536FE6161D12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Grpc", "src\Shared\Shared.Grpc\Shared.Grpc.csproj", "{0B98808E-AAFB-42DC-A96A-536FE6161D12}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{CDEA0ED8-488C-498A-AA56-88D5D1B745F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -173,10 +153,6 @@ Global
 		{10960A94-8336-49D1-B049-497258C07740}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10960A94-8336-49D1-B049-497258C07740}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10960A94-8336-49D1-B049-497258C07740}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FA46CCC3-90D7-4A1B-AFBA-B74FCD92EC42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FA46CCC3-90D7-4A1B-AFBA-B74FCD92EC42}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FA46CCC3-90D7-4A1B-AFBA-B74FCD92EC42}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FA46CCC3-90D7-4A1B-AFBA-B74FCD92EC42}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8FCF8975-295B-47A8-B5C5-C5742F35016A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8FCF8975-295B-47A8-B5C5-C5742F35016A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FCF8975-295B-47A8-B5C5-C5742F35016A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -197,6 +173,10 @@ Global
 		{0B98808E-AAFB-42DC-A96A-536FE6161D12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B98808E-AAFB-42DC-A96A-536FE6161D12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B98808E-AAFB-42DC-A96A-536FE6161D12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDEA0ED8-488C-498A-AA56-88D5D1B745F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDEA0ED8-488C-498A-AA56-88D5D1B745F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDEA0ED8-488C-498A-AA56-88D5D1B745F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDEA0ED8-488C-498A-AA56-88D5D1B745F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -228,9 +208,6 @@ Global
 		{5658761F-F05D-4A39-A36A-83476CFC50DA} = {3FB6E6A3-1BEC-4083-8454-42F7E67DCD1E}
 		{7BF80323-DAEE-492B-AC79-2ABB6E08887E} = {5658761F-F05D-4A39-A36A-83476CFC50DA}
 		{44603D45-F21E-4A4E-8B78-6B538719C702} = {7BF80323-DAEE-492B-AC79-2ABB6E08887E}
-		{DEBE6467-472D-46A2-896D-2091BB004090} = {4C557662-4A9A-4436-8E0D-63E61263B804}
-		{D08B2546-ACB1-4C6D-A895-657FEA824BF8} = {4C557662-4A9A-4436-8E0D-63E61263B804}
-		{17C91101-82E2-423F-B075-F13BF933235E} = {4C557662-4A9A-4436-8E0D-63E61263B804}
 		{BA339C5E-7069-4E93-A1DD-6D0439B37733} = {31F6434B-386A-4AF5-8EE2-9C101A11D624}
 		{610DCF5E-3037-45E8-B82E-019A8ED66EB1} = {BA339C5E-7069-4E93-A1DD-6D0439B37733}
 		{799304B3-F998-4FA6-879C-F16316FA1DA9} = {8047CBC9-9A37-401B-9418-61BD025E46B3}

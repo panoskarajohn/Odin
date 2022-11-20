@@ -15,19 +15,21 @@ public class WeatherForecastController : ControllerBase
 
     private readonly ILogger<WeatherForecastController> _logger;
     private readonly Event.EventClient _client;
+    private readonly IConfiguration _configuration;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger, Event.EventClient client)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, Event.EventClient client, IConfiguration configuration)
     {
         _logger = logger;
         _client = client;
+        _configuration = configuration;
     }
 
-    [HttpGet(Name = "GetWeatherForecast")]
-    public async  Task<IEnumerable<WeatherForecast>> Get()
+    [HttpGet("{id}")]
+    public async  Task<IEnumerable<WeatherForecast>> Get([FromRoute] long id)
     {
-        
+        _logger.LogInformation($"The url to hit is {_configuration.GetValue<string>("EventGrpcUrl")} and Id: {id}");
         var eventResponse = await _client.GetEventAsync(new GetEventRequest() 
-            {Id = 6832495717777408});
+            {Id = id});
         
         
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast

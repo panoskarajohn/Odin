@@ -1,8 +1,63 @@
 version: '3.7'
 
 services:
-  events-api:
-    container_name: events
+  webapigateway:
+    container_name: api.gateway
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "mongo:connectionString=mongodb://mongo"
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "1000:80"
+      - "1001:443"
+    networks:
+      - odin
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+  
+  event.api:
+    container_name: event.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - mongo__connectionString=mongodb://root:rootpassword@mongodb
+    ports:
+      - "2000:80"
+      - "2001:443"
+    networks:
+      - odin
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  event.grpc:
+    container_name: event.grpc
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - "mongo__connectionString=mongodb://root:rootpassword@mongodb"
+      - GRPC_PORT=81
+      - PORT=80
+    ports:
+      - "3000:80"
+      - "3001:443"
+    networks:
+      - odin
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  slip.api:
+    container_name: slip.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - "EventGrpcUrl=http://event.grpc:81"
+    ports:
+      - "4000:80"
+      - "4001:443"
+    networks:
+      - odin
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
