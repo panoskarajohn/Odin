@@ -26,7 +26,7 @@ public static class DateTimeExtensions
         if (string.IsNullOrEmpty(timezone))
             throw new ArgumentNullException(nameof(timezone));
         
-        if (dateTime.Kind == DateTimeKind.Utc)
+        if (dateTime.Kind != DateTimeKind.Utc)
             throw new InvalidOperationException("Datetime is not of Universal time zone");
 
         var dateTimeZone = DateTimeZoneProviders.Tzdb[timezone];
