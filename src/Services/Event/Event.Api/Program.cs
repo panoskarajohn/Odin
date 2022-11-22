@@ -18,7 +18,16 @@ var host = builder.Host;
 SnowFlakIdGenerator.Configure(1);
 
 // Add services to the container.
-
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.Authority = "http://localhost:5000";
+        options.RequireHttpsMetadata = false;
+        options.TokenValidationParameters = new()
+        {
+            ValidateAudience = false
+        };
+    });
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -62,6 +71,7 @@ if (env.IsDevelopment())
     app.UseCustomSwagger(provider);
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

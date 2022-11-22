@@ -1,13 +1,12 @@
+using Idenity.Api;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
-services.AddIdentityServer();
-//
-//    .AddInMemoryApiResources(Config.GetApiResources())
-//    .AddInMemoryClients(Config.GetClients())
-//    .AddInMemoryIdentityResources(Config.GetIdentityResources())
-//    .AddTestUsers(Config.GetUsers())
-//    .AddDeveloperSigningCredential();
+services.AddIdentityServer()
+    .AddInMemoryClients(Config.Clients)
+    .AddInMemoryApiScopes(Config.ApiScopes)
+    .AddDeveloperSigningCredential();
 
 
 var app = builder.Build();
