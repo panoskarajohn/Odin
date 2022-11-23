@@ -2,6 +2,7 @@ using System.Net;
 using Event.Application;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.Options;
 using Shared.IdGenerator;
 using Shared.Logging;
 using Shared.Metrics;
@@ -28,6 +29,15 @@ builder.Services.AddAuthentication("Bearer")
             ValidateAudience = false
         };
     });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ClientPolicy", policy =>
+    {
+        policy.RequireClaim("client_id","eventClient");
+    });
+});
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

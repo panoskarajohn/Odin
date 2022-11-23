@@ -1,0 +1,25 @@
+﻿@model Backoffice.Models.Event
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>title</h2>
+
+<h2>@Model.MatchName</h2>
+
+@foreach(var market in Model.Markets)
+{
+    <div>
+        <h3>@market.Name</h3>
+        <ul>
+            @foreach(var selection in market.Selections)
+            {
+                <li>@selection.Name</li>
+                <li>@selection.Price</li>
+            }
+        </ul>
+    </div>
+}
+

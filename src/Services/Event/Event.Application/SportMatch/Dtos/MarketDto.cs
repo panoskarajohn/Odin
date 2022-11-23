@@ -1,3 +1,5 @@
-﻿namespace Event.Application.SportMatch.Dtos;
+﻿using System.Text.Json.Serialization;
 
-public record MarketDto(string Name, IEnumerable<SelectionDto> SelectionDtos);
+namespace Event.Application.SportMatch.Dtos;
+
+public record MarketDto(string Name, IEnumerable<SelectionDto> Selections);

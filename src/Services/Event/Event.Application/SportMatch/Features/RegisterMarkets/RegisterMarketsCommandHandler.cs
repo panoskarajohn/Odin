@@ -32,7 +32,7 @@ public class RegisterMarketsCommandHandler : ICommandHandler<RegisterMarketsComm
         foreach (var marketDto in marketDtos)
         {
             var marketSelections = marketDto
-                .SelectionDtos?
+                .Selections?
                 .Select(s => new Selection(s.Name, s.Price));
             var market = new Market(marketDto.Name, marketSelections!);
             markets.Add(market);
