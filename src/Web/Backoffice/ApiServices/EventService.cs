@@ -4,15 +4,13 @@ namespace Backoffice.ApiServices;
 
 public class EventService : IEventService
 {
-    private readonly HttpClient _httpClient;
 
-    public EventService(HttpClient httpClient)
+    public EventService()
     {
-        _httpClient = httpClient;
     }
 
     public async Task<Event> GetEventAsync(int id)
     {
-        return await _httpClient.GetFromJsonAsync<Event>($"api/events/{id}");
+        throw new NotImplementedException();
     }
 }
