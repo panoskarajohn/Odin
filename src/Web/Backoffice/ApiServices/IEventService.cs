@@ -4,5 +4,5 @@ namespace Backoffice.ApiServices;
 
 public interface IEventService
 {
-    Task<Event> GetEventAsync(int id);
+    Task<Event?> GetEventAsync(long id);
 }

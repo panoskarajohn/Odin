@@ -1,4 +1,6 @@
+using Backoffice;
 using Backoffice.ApiServices;
+using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
@@ -6,7 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 // Add services to the container.
 services.AddControllersWithViews();
+
 services.AddScoped<IEventService, EventService>();
+services.AddTransient<AuthenticationDelegateHandler>(); //Authentication Middleware
+services.AddHttpClient<IEventService, EventService>("EventApi",client =>
+{
+    client.BaseAddress = new Uri("http://localhost:2000");
+    client.DefaultRequestHeaders.Clear();
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+}).AddHttpMessageHandler<AuthenticationDelegateHandler>(); // Here we should delegate to an authentication handler
+
 services.AddAuthentication(option =>
 {
     option.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -26,6 +37,21 @@ services.AddAuthentication(option =>
         option.SaveTokens = true;
         option.GetClaimsFromUserInfoEndpoint = true;
     });
+
+services.AddHttpClient("IDPClient", client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5000");
+    client.DefaultRequestHeaders.Clear();
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
+
+services.AddSingleton(new ClientCredentialsTokenRequest()
+{
+    Address = "http://localhost:5000/connect/token",
+    ClientId = "eventClient",
+    ClientSecret = "secret",
+    Scope = "eventApi"
+});
 
 
 var app = builder.Build();

@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using Backoffice.ApiServices;
+using Backoffice.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,8 +16,9 @@ public class EventController : Controller
         _eventService = Guard.Against.Null(eventService);
     }
 
-    public IActionResult GetEvent(long id)
+    public async Task<IActionResult> GetEvent(long id = 7331125649473536)
     {
-        return View();
+        var @event = await _eventService.GetEventAsync(id);
+        return View(@event);
     }
 }
