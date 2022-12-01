@@ -27,7 +27,7 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("{id}")]
     public async  Task<IEnumerable<WeatherForecast>> Get([FromRoute] long id)
     {
-        _logger.LogInformation($"The url to hit is {_configuration.GetValue<string>("EventGrpcUrl")} and Id: {id}");
+        _logger.LogInformation($"The url to hit is {_configuration.GetValue<string>("ursl:EventGrpcUrl")} and Id: {id}");
         var eventResponse = await _client.GetEventAsync(new GetEventRequest() 
             {Id = id});
         
