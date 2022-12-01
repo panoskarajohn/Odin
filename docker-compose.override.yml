@@ -39,8 +39,8 @@ services:
       - GRPC_PORT=81
       - PORT=80
     ports:
-      - "3000:80"
-      - "3001:443"
+      - "4000:80"
+      - "4001:443"
     networks:
       - odin
     volumes:
@@ -54,8 +54,8 @@ services:
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - "EventGrpcUrl=http://event.grpc:81"
     ports:
-      - "4000:80"
-      - "4001:443"
+      - "5000:80"
+      - "5001:443"
     networks:
       - odin
     volumes:

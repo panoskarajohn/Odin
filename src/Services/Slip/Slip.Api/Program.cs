@@ -27,7 +27,7 @@ builder.Services
 
 builder.Services.AddGrpcClient<Event.EventClient>(options =>
 {
-    options.Address = new Uri(configuration["EventGrpcUrl"]);
+    options.Address = new Uri(configuration["urls:EventGrpcUrl"]);
 });
 
 host.UseLogging();
