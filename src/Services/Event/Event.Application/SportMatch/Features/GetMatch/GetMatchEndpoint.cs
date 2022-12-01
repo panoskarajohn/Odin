@@ -13,7 +13,6 @@ public class GetMatchEndpoint : BaseController
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [SwaggerOperation(Summary = "Get match", Description = "Get match")]
-    [Authorize("ClientPolicy")]
     public async Task<ActionResult<MatchResponseDto>> Get([FromRoute] long id,
         CancellationToken cancellationToken)
     {
