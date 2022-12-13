@@ -81,6 +81,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slip.Core", "src\Services\S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slip.Infrastructure", "src\Services\Slip\Slip.Infrastructure\Slip.Infrastructure.csproj", "{EFF01304-058A-4C1F-9FE5-23A45F58156E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Jwt", "src\Shared\Shared.Jwt\Shared.Jwt.csproj", "{BAABF0D0-CFD1-46DD-AE61-ED18C3F78A60}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -195,6 +197,10 @@ Global
 		{EFF01304-058A-4C1F-9FE5-23A45F58156E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFF01304-058A-4C1F-9FE5-23A45F58156E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFF01304-058A-4C1F-9FE5-23A45F58156E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAABF0D0-CFD1-46DD-AE61-ED18C3F78A60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAABF0D0-CFD1-46DD-AE61-ED18C3F78A60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAABF0D0-CFD1-46DD-AE61-ED18C3F78A60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAABF0D0-CFD1-46DD-AE61-ED18C3F78A60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -233,6 +239,7 @@ Global
 		{3D17F7F1-BDE6-4384-9F36-3F6934D20FD7} = {BA339C5E-7069-4E93-A1DD-6D0439B37733}
 		{DA9A1EEC-B70D-466B-B87D-1DD430A87323} = {BA339C5E-7069-4E93-A1DD-6D0439B37733}
 		{EFF01304-058A-4C1F-9FE5-23A45F58156E} = {BA339C5E-7069-4E93-A1DD-6D0439B37733}
+		{BAABF0D0-CFD1-46DD-AE61-ED18C3F78A60} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {384772CF-3EA1-4FC3-86F3-DD05F09DF698}
