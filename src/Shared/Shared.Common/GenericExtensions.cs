@@ -28,4 +28,17 @@ public static class GenericExtensions
         configuration.GetSection(sectionName).Bind(options);
         return options;
     }
+    
+    /// <summary>
+    /// Will bind configuration section to the object
+    /// </summary>
+    /// <param name="section"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static T BindOptions<T>(this IConfigurationSection section) where T : new()
+    {
+        var options = new T();
+        section.Bind(options);
+        return options;
+    }
 }

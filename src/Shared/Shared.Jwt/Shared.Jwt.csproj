@@ -7,13 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Duende.IdentityServer" Version="6.2.0" />
-      <PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.2.0" />
+      <PackageReference Include="Ardalis.GuardClauses" Version="4.0.1" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.Certificate" Version="7.0.1" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.1" />
+      <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="7.0.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Shared.Common\Shared.Common.csproj" />
+      <ProjectReference Include="..\Shared.Web\Shared.Web.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,7 +1,9 @@
 ﻿using Event.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Bson.Serialization;
 using Shared.Cqrs;
+using Shared.Logging;
 
 namespace Event.Application;
 
@@ -11,7 +13,7 @@ public static class Extensions
     {
         services.AddCqrs();
         services.AddEventInfrastructure(configuration);
-        
+        services.AddLoggingDecorators();
         return services;
     }
 }

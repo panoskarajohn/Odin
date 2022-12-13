@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Common;
 using Shared.Types.Interfaces;
+using Shared.Web.Clock;
 using Shared.Web.Context;
 using Shared.Web.ErrorHandling;
 using Shared.Web.Extension;
@@ -55,6 +56,7 @@ public static class Extensions
         var appOptions = configuration.GetOptions<AppOptions>("app");
         services.AddSingleton(appOptions);
         services.AddContext();
+        services.AddSingleton<IUtcClock, UtcUtcClock>();
         
         var version = appOptions.DisplayVersion ? $" {appOptions.Version}" : string.Empty;
         Console.WriteLine(Figgle.FiggleFonts.Doom.Render($"{appOptions.Name} v.{version}"));
