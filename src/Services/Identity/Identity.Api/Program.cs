@@ -1,4 +1,3 @@
-using Identity.Application;
 using Shared.IdGenerator;
 using Shared.Logging;
 using Shared.Metrics;
@@ -25,7 +24,6 @@ builder.Services
     .AddErrorHandling()
     .AddMetrics(configuration)
     .AddPrometheus(configuration)
-    .AddCustomSwagger(configuration, typeof(IIdentityMarker).Assembly)
     .AddCustomVersioning();
 
 host.UseLogging();
