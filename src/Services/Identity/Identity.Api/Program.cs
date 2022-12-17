@@ -1,3 +1,5 @@
+using Identity.Core.Commands;
+using Shared.Cqrs;
 using Shared.IdGenerator;
 using Shared.Logging;
 using Shared.Metrics;
@@ -43,6 +45,12 @@ app
     .UseLogging()
     .UseMetrics()
     .UsePrometheus();
+
+app.MapPost("/sign-up", async (SignUp command, IDispatcher dispatcher) =>
+{
+    await dispatcher.SendAsync(command with {UserId = Guid.NewGuid()});
+    return Results.NoContent();
+}).WithTags("Account").WithName("Sign up");
 
 
 
