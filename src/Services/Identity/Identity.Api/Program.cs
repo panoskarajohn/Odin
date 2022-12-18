@@ -1,4 +1,6 @@
+using Identity.Core;
 using Identity.Core.Commands;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Shared.Cqrs;
 using Shared.IdGenerator;
 using Shared.Logging;
@@ -6,6 +8,7 @@ using Shared.Metrics;
 using Shared.Prometheus;
 using Shared.Swagger;
 using Shared.Web;
+using Shared.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,9 +27,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services
     .AddApplication(configuration)
     .AddErrorHandling()
+    .AddOdinSecurity(configuration)
     .AddMetrics(configuration)
     .AddPrometheus(configuration)
+    .AddCustomSwagger(configuration, typeof(Program).Assembly)
     .AddCustomVersioning();
+
+builder.Services.AddIdentityApplication(configuration);
 
 host.UseLogging();
 
@@ -35,8 +42,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var provider = app.Services.GetService<IApiVersionDescriptionProvider>();
+    app.UseCustomSwagger(provider);
 }
 
 app
@@ -46,14 +53,12 @@ app
     .UseMetrics()
     .UsePrometheus();
 
+app.MapControllers();
+app.MapGet("/", e => e.Response.WriteAsync("Hello from Identity.Api"));
 app.MapPost("/sign-up", async (SignUp command, IDispatcher dispatcher) =>
 {
     await dispatcher.SendAsync(command with {UserId = Guid.NewGuid()});
     return Results.NoContent();
 }).WithTags("Account").WithName("Sign up");
-
-
-
-app.MapControllers();
 
 app.Run();

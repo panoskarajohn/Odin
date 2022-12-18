@@ -15,6 +15,7 @@
       <ProjectReference Include="..\..\..\Shared\Shared.Cqrs\Shared.Cqrs.csproj" />
       <ProjectReference Include="..\..\..\Shared\Shared.DAL.Postgres\Shared.DAL.Postgres.csproj" />
       <ProjectReference Include="..\..\..\Shared\Shared.Jwt\Shared.Jwt.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Logging\Shared.Logging.csproj" />
       <ProjectReference Include="..\..\..\Shared\Shared.Security\Shared.Security.csproj" />
       <ProjectReference Include="..\..\..\Shared\Shared.Web\Shared.Web.csproj" />
     </ItemGroup>

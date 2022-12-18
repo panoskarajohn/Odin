@@ -63,7 +63,7 @@ services:
 
   rabbitmq:
     image: "rabbitmq:3-management"
-    hostname: "rabbit1"
+    container_name: rabbitmq
     ports:
       - "15672:15672"
       - "5672:5672"
@@ -73,6 +73,7 @@ services:
       - odin
   
   sqlserver:
+    container_name: mssql
     image: "mcr.microsoft.com/mssql/server:2017-latest"
     volumes:
       - sqlserver-data:/var/opt/mssql/data
@@ -106,8 +107,22 @@ services:
       - ACCEPT_EULA=Y
     ports:
       - 5341:80
+   
+  postgres:
+    image: postgres:14.1-alpine
+    container_name: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes: 
+      - postgres:/var/lib/postgresql/data
   
 volumes:
+  postgres:
+    driver: local
   sqlserver-data:
   redis:
     driver: local

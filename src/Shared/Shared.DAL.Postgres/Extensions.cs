@@ -26,4 +26,7 @@ public static class Extensions
         
         return services;
     }
+    
+    public static IServiceCollection AddDataInitializer<T>(this IServiceCollection services) where T : class, IDataInitializer
+        => services.AddTransient<IDataInitializer, T>();
 }

@@ -11,7 +11,7 @@ namespace Shared.Security;
 public static class Extensions
 {
     private const string SectionName = "security";
-    public static IServiceCollection AddSecurity(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddOdinSecurity(this IServiceCollection services, IConfiguration configuration)
     {
         var section = configuration.GetSection(SectionName);
         services.Configure<SecurityOptions>(section);
