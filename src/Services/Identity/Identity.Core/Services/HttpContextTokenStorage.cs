@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.JsonWebTokens;
+using Shared.Jwt;
 
 namespace Identity.Core.Services;
 

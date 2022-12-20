@@ -26,7 +26,7 @@ internal sealed class JsonWebTokenManager : IJsonWebTokenManager
     {
         Guard.Against.Null(authOptions, nameof(authOptions));
         _clock = Guard.Against.Null(clock, nameof(clock));
-        _audience = authOptions.Value.Jwt.Authority;
+        _audience = authOptions.Value.Jwt.Audience;
         _issuer = authOptions.Value.Jwt.Issuer;
         _expiry = authOptions.Value.Jwt.Expiry ?? TimeSpan.FromHours(1);
         _signingCredentials = new SigningCredentials(securityKeyDetails.Key, securityKeyDetails.Algorithm);
