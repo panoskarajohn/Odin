@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <UserSecretsId>d64cf932-ed3a-4e1b-9113-0b2da0210a80</UserSecretsId>
+        <DockerfileContext>..\..\..\..</DockerfileContext>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.1">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Shared\Shared.IdGenerator\Shared.IdGenerator.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Logging\Shared.Logging.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Metrics\Shared.Metrics.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Prometheus\Shared.Prometheus.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Swagger\Shared.Swagger.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Web\Shared.Web.csproj" />
+      <ProjectReference Include="..\Identity.Core\Identity.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="certs\**" CopyToPublishDirectory="Always" />
+    </ItemGroup>
+    
+</Project>

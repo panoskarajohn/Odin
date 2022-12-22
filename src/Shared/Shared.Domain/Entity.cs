@@ -11,5 +11,6 @@ public abstract class Entity<TId> : IEntity<TId>
     public long Version { get; set; }
     public TId Id { get; protected set; }
     public DateTime LastModified { get; protected set; }
+    public DateTime CreatedAt { get; protected set; }
     public int? ModifiedBy { get; protected set; }
 }

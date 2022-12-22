@@ -1,11 +1,14 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Shared.Common;
 using Shared.Types.Interfaces;
+using Shared.Web.Clock;
 using Shared.Web.Context;
 using Shared.Web.ErrorHandling;
 using Shared.Web.Extension;
@@ -24,7 +27,8 @@ public static class Extensions
     {
         services.AddSingleton<ContextAccessor>();
         services.AddTransient(sp => sp.GetRequiredService<ContextAccessor>().Context);
-            
+        services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
         return services;
     }
     
@@ -53,8 +57,10 @@ public static class Extensions
     public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
     {
         var appOptions = configuration.GetOptions<AppOptions>("app");
-        services.AddSingleton(appOptions);
-        services.AddContext();
+        services = services
+            .AddSingleton(appOptions)
+            .AddContext()
+            .AddSingleton<IUtcClock, UtcUtcClock>();
         
         var version = appOptions.DisplayVersion ? $" {appOptions.Version}" : string.Empty;
         Console.WriteLine(Figgle.FiggleFonts.Doom.Render($"{appOptions.Name} v.{version}"));

@@ -12,7 +12,8 @@ services:
     build:
       context: .
       dockerfile: src/Services/Event/Event.Api/Dockerfile
-
+    depends_on:
+     - mongodb
 
   event.grpc:
     image: ${DOCKER_REGISTRY-}eventgrpc
@@ -20,12 +21,19 @@ services:
       context: .
       dockerfile: src/Services/Event/Event.Grpc/Dockerfile
 
-
   slip.api:
     image: ${DOCKER_REGISTRY-}slipapi
     build:
       context: .
       dockerfile: src/Services/Slip/Slip.Api/Dockerfile
+   
+  identity.api:
+    image: ${DOCKER_REGISTRY-}identityapi
+    build:
+      context: .
+      dockerfile: src/Services/Identity/Identity.Api/Dockerfile
+    depends_on:
+     - postgres
 
   prometheus:
     build: ./prometheus
@@ -36,8 +44,7 @@ services:
     networks:
       - odin
   
-  
-  mongodb_container:
+  mongodb:
     image: mongo:latest
     container_name: mongodb
     environment:
@@ -63,7 +70,7 @@ services:
 
   rabbitmq:
     image: "rabbitmq:3-management"
-    hostname: "rabbit1"
+    container_name: rabbitmq
     ports:
       - "15672:15672"
       - "5672:5672"
@@ -73,6 +80,7 @@ services:
       - odin
   
   sqlserver:
+    container_name: mssql
     image: "mcr.microsoft.com/mssql/server:2017-latest"
     volumes:
       - sqlserver-data:/var/opt/mssql/data
@@ -106,8 +114,25 @@ services:
       - ACCEPT_EULA=Y
     ports:
       - 5341:80
+   
+  postgres:
+    image: postgres:14.1-alpine
+    container_name: postgres
+    restart: always
+    networks:
+    - odin
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - '5432:5432'
+    volumes: 
+      - postgres:/var/lib/postgresql/data
   
 volumes:
+  postgres:
+    driver: local
   sqlserver-data:
   redis:
     driver: local
