@@ -19,6 +19,7 @@ var configuration = builder.Configuration;
 var env = builder.Environment;
 var host = builder.Host;
 
+configuration.AddEnvironmentVariables();
 // Add services to the container.
 SnowFlakIdGenerator.Configure(1);
 
@@ -57,7 +58,6 @@ app
     .UseMetrics()
     .UsePrometheus();
 
-app.MapControllers();
 app.MapGet("/", e => e.Response.WriteAsync("Hello from Identity.Api"));
 app.MapPost("/sign-up", async (SignUp command, IDispatcher dispatcher) =>
 {

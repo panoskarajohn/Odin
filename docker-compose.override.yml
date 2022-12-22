@@ -5,10 +5,9 @@ services:
     container_name: api.gateway
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=http://+:80
     ports:
       - "1000:80"
-      - "1001:443"
     networks:
       - odin
     volumes:
@@ -19,11 +18,10 @@ services:
     container_name: event.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=http://+:80
       - mongo__connectionString=mongodb://root:rootpassword@mongodb
     ports:
       - "2000:80"
-      - "2001:443"
     networks:
       - odin
     volumes:
@@ -40,7 +38,19 @@ services:
       - PORT=80
     ports:
       - "4000:80"
-      - "4001:443"
+    networks:
+      - odin
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+  
+  identity.api:
+    container_name: identity.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=docker
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "3000:80"
     networks:
       - odin
     volumes:
@@ -51,11 +61,10 @@ services:
     container_name: slip.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=http://+:80
       - "EventGrpcUrl=http://event.grpc:81"
     ports:
       - "5000:80"
-      - "5001:443"
     networks:
       - odin
     volumes:

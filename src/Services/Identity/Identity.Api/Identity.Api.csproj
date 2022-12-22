@@ -5,6 +5,8 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <UserSecretsId>d64cf932-ed3a-4e1b-9113-0b2da0210a80</UserSecretsId>
+        <DockerfileContext>..\..\..\..</DockerfileContext>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,6 +15,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     </ItemGroup>
 
@@ -26,4 +29,8 @@
       <ProjectReference Include="..\Identity.Core\Identity.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Content Include="certs\**" CopyToPublishDirectory="Always" />
+    </ItemGroup>
+    
 </Project>
