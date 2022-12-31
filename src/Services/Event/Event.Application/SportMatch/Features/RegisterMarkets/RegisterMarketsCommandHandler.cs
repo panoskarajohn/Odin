@@ -1,4 +1,5 @@
 ﻿using Event.Application.SportMatch.Exceptions;
+using Event.Core.DomainEvents;
 using Event.Core.Repositories;
 using Event.Core.ValueObjects;
 using Microsoft.Extensions.Logging;
@@ -47,6 +48,7 @@ public class RegisterMarketsCommandHandler : ICommandHandler<RegisterMarketsComm
         }
 
         match.AppendMarkets(markets);
+        match.AddDomainEvent(new MarketsRegisteredEvent());
         await _matchRepository.Update(match, _context.Identity.Id.ToString());
     }
     

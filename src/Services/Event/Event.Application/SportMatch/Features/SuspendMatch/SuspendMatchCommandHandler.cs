@@ -1,4 +1,5 @@
 ﻿using Event.Application.SportMatch.Exceptions;
+using Event.Core.DomainEvents;
 using Event.Core.Repositories;
 using Microsoft.Extensions.Logging;
 using Shared.Cqrs.Commands;
@@ -27,6 +28,7 @@ public class SuspendMatchCommandHandler : ICommandHandler<SuspendMatchCommand>
             throw new MatchNotFoundException(command.Id);
 
         match.Suspend();
+        match.AddDomainEvent(new MatchSuspendedEvent());
 
         await _matchRepository.Update(match, _context.Identity.Id.ToString());
     }
