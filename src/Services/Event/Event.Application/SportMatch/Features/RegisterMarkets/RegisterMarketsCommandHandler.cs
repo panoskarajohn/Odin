@@ -10,12 +10,14 @@ public class RegisterMarketsCommandHandler : ICommandHandler<RegisterMarketsComm
 {
     private readonly ILogger<RegisterMarketsCommandHandler> _logger;
     private readonly IMatchRepository _matchRepository;
+    private readonly IMarketTemplateRepository _marketTemplateRepository;
 
     public RegisterMarketsCommandHandler(ILogger<RegisterMarketsCommandHandler> logger,
-        IMatchRepository matchRepository)
+        IMatchRepository matchRepository, IMarketTemplateRepository marketTemplateRepository)
     {
         _logger = logger;
         _matchRepository = matchRepository;
+        _marketTemplateRepository = marketTemplateRepository;
     }
 
     public async Task HandleAsync(RegisterMarketsCommand command, CancellationToken cancellationToken = default)
@@ -25,7 +27,7 @@ public class RegisterMarketsCommandHandler : ICommandHandler<RegisterMarketsComm
         if (match is null)
             throw new MatchNotFoundException(command.MatchId);
 
-        var marketDtos = command.MarketDtos;
+        var marketDtos = command.Markets;
 
         var markets = new List<Market>();
 
@@ -35,10 +37,20 @@ public class RegisterMarketsCommandHandler : ICommandHandler<RegisterMarketsComm
                 .Selections?
                 .Select(s => new Selection(s.Name, s.Price));
             var market = new Market(marketDto.Name, marketSelections!);
+
+            var marketTemplate = await _marketTemplateRepository.Get(market.Name, match.Category);
+            UpdateLimitsFromTemplate(ref market, marketTemplate);
             markets.Add(market);
         }
 
         match.AppendMarkets(markets);
         await _matchRepository.Update(match);
+    }
+    
+    private void UpdateLimitsFromTemplate(ref Market market, Core.Models.MarketTemplate? marketTemplate)
+    {
+        if (marketTemplate is null) return;
+
+        market.WithStakeLimits(marketTemplate.StakeLimits);
     }
 }

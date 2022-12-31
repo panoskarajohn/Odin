@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Options;
 using Shared.IdGenerator;
+using Shared.Jwt;
 using Shared.Logging;
 using Shared.Metrics;
 using Shared.Prometheus;
@@ -24,6 +25,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services
+    .AddAuth(configuration)
     .AddApplication(configuration)
     .AddErrorHandling()
     .AddMetrics(configuration)
@@ -48,6 +50,8 @@ if (app.Environment.IsDevelopment())
 
 app
     .UseApplication()
+    .UseAuthorization()
+    .UseAuthorization()
     .UseErrorHandling()
     .UseLogging()
     .UseMetrics()

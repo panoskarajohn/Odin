@@ -13,7 +13,9 @@ public static class Extensions
     {
         services.AddMongo(configuration);
         services.AddMongoRepository<MatchDocument, long>("matches");
+        services.AddMongoRepository<MarketTemplateDocument, long>("marketTemplates");
         services.AddScoped<IMatchRepository, MatchRepository>();
+        services.AddScoped<IMarketTemplateRepository, MarketTemplateRepository>();
         return services;
     }
 }

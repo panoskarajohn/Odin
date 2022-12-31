@@ -1,6 +1,7 @@
 ﻿using Event.Core.Models;
 using Event.Core.Repositories;
 using Event.Infrastructure.Mapping;
+using Event.Infrastructure.Mapping.ToEntity;
 using Event.Infrastructure.Mongo;
 using Shared.Mongo.Repositories;
 

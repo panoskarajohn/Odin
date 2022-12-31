@@ -59,6 +59,7 @@ public static class Extensions
         var appOptions = configuration.GetOptions<AppOptions>("app");
         services = services
             .AddSingleton(appOptions)
+            .AddHttpContextAccessor()
             .AddContext()
             .AddSingleton<IUtcClock, UtcUtcClock>();
         
