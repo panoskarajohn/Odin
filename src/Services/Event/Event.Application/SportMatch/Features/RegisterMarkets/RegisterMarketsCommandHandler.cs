@@ -3,6 +3,7 @@ using Event.Core.Repositories;
 using Event.Core.ValueObjects;
 using Microsoft.Extensions.Logging;
 using Shared.Cqrs.Commands;
+using Shared.Web.Context;
 
 namespace Event.Application.SportMatch.Features.RegisterMarkets;
 
@@ -11,13 +12,15 @@ public class RegisterMarketsCommandHandler : ICommandHandler<RegisterMarketsComm
     private readonly ILogger<RegisterMarketsCommandHandler> _logger;
     private readonly IMatchRepository _matchRepository;
     private readonly IMarketTemplateRepository _marketTemplateRepository;
+    private readonly IContext _context;
 
     public RegisterMarketsCommandHandler(ILogger<RegisterMarketsCommandHandler> logger,
-        IMatchRepository matchRepository, IMarketTemplateRepository marketTemplateRepository)
+        IMatchRepository matchRepository, IMarketTemplateRepository marketTemplateRepository, IContext context)
     {
         _logger = logger;
         _matchRepository = matchRepository;
         _marketTemplateRepository = marketTemplateRepository;
+        _context = context;
     }
 
     public async Task HandleAsync(RegisterMarketsCommand command, CancellationToken cancellationToken = default)
@@ -44,7 +47,7 @@ public class RegisterMarketsCommandHandler : ICommandHandler<RegisterMarketsComm
         }
 
         match.AppendMarkets(markets);
-        await _matchRepository.Update(match);
+        await _matchRepository.Update(match, _context.Identity.Id.ToString());
     }
     
     private void UpdateLimitsFromTemplate(ref Market market, Core.Models.MarketTemplate? marketTemplate)

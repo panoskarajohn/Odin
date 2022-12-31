@@ -22,16 +22,16 @@ public class MatchRepository : IMatchRepository
         return doc?.AsEntity();
     }
 
-    public Task Add(Core.Models.Match match)
+    public Task Add(Core.Models.Match match, string userId)
     {
-        var doc = match.AsDocument();
+        var doc = match.AsDocument(userId);
         return _repository.AddAsync(doc);
     }
 
-    public Task Update(Match match)
+    public Task Update(Match match, string userId)
     {
         return _repository
-            .UpdateAsync(match.AsDocument(), m
+            .UpdateAsync(match.AsDocument(userId), m
                 => m.Id == match.Id && m.Version < match.Version);
     }
 }

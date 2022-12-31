@@ -6,7 +6,7 @@ namespace Event.Infrastructure.Mapping;
 
 public static class MatchToDocument
 {
-    public static MatchDocument AsDocument(this Match match)
+    public static MatchDocument AsDocument(this Match match, string userId = null)
     {
         (string home, string away) = match.MatchName;
 
@@ -15,7 +15,9 @@ public static class MatchToDocument
             match.StartingTime,
             match.MatchName.Value,
             home, away,
-            match.Status.Name, match.Version);
+            match.Status.Name, 
+            match.Version,
+            userId);
 
         if (match.Markets.Any())
         {

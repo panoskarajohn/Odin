@@ -12,7 +12,7 @@ public class MatchDocument : IIdentifiable<long>
         string away,
         string status,
         long version,
-        int modifiedBy = 0)
+        string modifiedBy = null)
     {
         Id = id;
         Category = category;
@@ -39,7 +39,7 @@ public class MatchDocument : IIdentifiable<long>
     public IEnumerable<MarketDocument> Markets { get; internal set; }
 
     public DateTime LastModified { get; }
-    public int ModifiedBy { get; }
+    public string ModifiedBy { get; }
     public long Version { get; }
     public long Id { get; }
 }
