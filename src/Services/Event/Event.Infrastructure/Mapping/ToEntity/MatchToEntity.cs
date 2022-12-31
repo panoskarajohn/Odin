@@ -26,7 +26,10 @@ public static class MatchToEntity
 
     public static Market AsEntity(this MarketDocument document)
     {
-        return new Market(document.Name, document.SelectionDocuments.Select(s => s.AsEntity()));
+        var market = new Market(document.Name, document.SelectionDocuments.Select(s => s.AsEntity()));
+        var stakeLimits = StakeLimits.Create(document.Limits.MinStake, document.Limits.MaxStake);
+        market.WithStakeLimits(stakeLimits);
+        return market;
     }
 
     public static Selection AsEntity(this SelectionDocument document)

@@ -19,7 +19,7 @@ public static class MatchToDocument
             match.Version,
             userId);
 
-        if (match.Markets.Any())
+        if (match.Markets is not null)
         {
             matchDocument.Markets = match.Markets.Select(m => m.AsDocument());
         }

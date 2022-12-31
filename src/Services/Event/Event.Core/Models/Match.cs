@@ -47,8 +47,6 @@ public class Match : BaseAggregateRoot<long>
         {
             AppendMarket(market);
         }
-
-        this.AddDomainEvent(new MarketsRegisteredEvent());
     }
 
     /// <summary>
@@ -83,8 +81,6 @@ public class Match : BaseAggregateRoot<long>
         {
             RemoveMarket(marketName);
         }
-
-        this.AddDomainEvent(new MarketsRemovedEvent());
     }
 
     /// <summary>
@@ -93,7 +89,6 @@ public class Match : BaseAggregateRoot<long>
     public void Suspend()
     {
         this.Status = Status.Suspended;
-        this.AddDomainEvent(new MatchSuspendedEvent());
     }
 
     /// <summary>
