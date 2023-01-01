@@ -33,16 +33,25 @@ internal sealed class EventGrpcService : Event.EventBase
             Name = result.MatchName,
             Category = result.Category,
             Starting = Timestamp.FromDateTime(result.StartingTime),
-            Markets = { result.Markets?.Select(m => new Market()
-            {
-                Name = m.Name,
-                Selections = { m.Selections.Select(s => new Selection()
+            Markets = 
+            { 
+                result.Markets?.Select(m => new Market()
                 {
-                    Name = s.Name,
-                    Price = s.Price
+                    Name = m.Name,
+                    StakeLimits = new StakeLimits()
+                    {
+                        MinStake = new DecimalValue(m.StakeLimits.MinStake),
+                        MaxStake = new DecimalValue(m.StakeLimits.MaxStake)
+                    },
+                    Selections = 
+                    { 
+                        m.Selections.Select(s => new Selection()
+                        {
+                            Name = s.Name,
+                            Price = s.Price
+                        }) 
+                    }
                 }) 
-                }
-            }) 
             }
         };
     }

@@ -1,4 +1,5 @@
 ﻿using Event.Application.SportMatch.Dtos;
+using Event.Core.ValueObjects;
 using Event.Infrastructure.Mongo;
 
 namespace Event.Application.SportMatch.Mapping;
@@ -17,7 +18,13 @@ public static class MatchDocumentToResponse
     static MarketDto ToDto(this MarketDocument document)
     {
         return new MarketDto(document.Name,
-            document.SelectionDocuments?.Select(s => s.ToDto()));
+            document.Limits.ToDto(),
+            document.SelectionDocuments?.Select(s => s.ToDto()) );
+    }
+    
+    static StakeLimitsDto ToDto(this MarketLimitsDocument document)
+    {
+        return new StakeLimitsDto(document.MinStake, document.MaxStake);
     }
 
     static SelectionDto ToDto(this SelectionDocument document)
