@@ -23,6 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Shared\Shared.Jwt\Shared.Jwt.csproj" />
       <ProjectReference Include="..\..\..\Shared\Shared.Logging\Shared.Logging.csproj" />
       <ProjectReference Include="..\..\..\Shared\Shared.Metrics\Shared.Metrics.csproj" />
       <ProjectReference Include="..\..\..\Shared\Shared.Prometheus\Shared.Prometheus.csproj" />
@@ -32,6 +33,10 @@
     
     <ItemGroup>
         <Protobuf Include="Protos\event.proto" GrpcServices="Client" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Controllers" />
     </ItemGroup>
 
 </Project>

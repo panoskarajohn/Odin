@@ -93,6 +93,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Security", "src\Shar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.DAL.Postgres", "src\Shared\Shared.DAL.Postgres\Shared.DAL.Postgres.csproj", "{AB4BE405-61CA-4A36-8101-F984B4CCA568}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Redis", "src\Shared\Shared.Redis\Shared.Redis.csproj", "{8C7A78E0-3B0E-4A3B-A5A6-3A5712017258}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -227,6 +229,10 @@ Global
 		{AB4BE405-61CA-4A36-8101-F984B4CCA568}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB4BE405-61CA-4A36-8101-F984B4CCA568}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB4BE405-61CA-4A36-8101-F984B4CCA568}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C7A78E0-3B0E-4A3B-A5A6-3A5712017258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C7A78E0-3B0E-4A3B-A5A6-3A5712017258}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C7A78E0-3B0E-4A3B-A5A6-3A5712017258}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C7A78E0-3B0E-4A3B-A5A6-3A5712017258}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -271,6 +277,7 @@ Global
 		{FCBECB5F-5636-48F8-993F-FBFCCB93F620} = {442BD37F-4817-4D26-AA14-4E82D3DDF02B}
 		{642A1165-F8DC-4AA5-91E4-D78B412FFBE6} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
 		{AB4BE405-61CA-4A36-8101-F984B4CCA568} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
+		{8C7A78E0-3B0E-4A3B-A5A6-3A5712017258} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {384772CF-3EA1-4FC3-86F3-DD05F09DF698}

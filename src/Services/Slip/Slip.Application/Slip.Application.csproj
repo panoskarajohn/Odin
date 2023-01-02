@@ -6,4 +6,11 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Shared\Shared.Cqrs\Shared.Cqrs.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Logging\Shared.Logging.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Web\Shared.Web.csproj" />
+      <ProjectReference Include="..\Slip.Core\Slip.Core.csproj" />
+    </ItemGroup>
+
 </Project>

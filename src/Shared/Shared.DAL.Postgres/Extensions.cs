@@ -19,7 +19,13 @@ public static class Extensions
         
         var options = section.BindOptions<PostgresOptions>();
         services.Configure<PostgresOptions>(section);
-        services.AddDbContext<T>(x => x.UseNpgsql(options.ConnectionString));
+        
+        services.AddDbContext<T>(x =>
+            x.UseNpgsql(options.ConnectionString, opt =>
+                {
+                    opt.EnableRetryOnFailure(15, TimeSpan.FromSeconds(10), errorCodesToAdd: null );
+                }));
+        
         services.AddHostedService<DatabaseInitializer<T>>();
         services.AddHostedService<DataInitializer>();
         

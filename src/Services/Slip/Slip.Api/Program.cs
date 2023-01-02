@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Shared.Jwt;
 using Shared.Logging;
 using Shared.Metrics;
 using Shared.Prometheus;
@@ -18,6 +19,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services
+    .AddAuth(configuration)
     .AddApplication(configuration)
     .AddErrorHandling()
     .AddMetrics(configuration)
@@ -36,6 +38,8 @@ var app = builder.Build();
 
 app
     .UseApplication()
+    .UseAuthorization()
+    .UseAuthorization()
     .UseErrorHandling()
     .UseLogging()
     .UseMetrics()
@@ -47,8 +51,6 @@ if (app.Environment.IsDevelopment())
     var provider = app.Services.GetService<IApiVersionDescriptionProvider>();
     app.UseCustomSwagger(provider);
 }
-
-app.UseAuthorization();
 
 app.MapControllers();
 
