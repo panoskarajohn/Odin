@@ -29,6 +29,7 @@
       <ProjectReference Include="..\..\..\Shared\Shared.Prometheus\Shared.Prometheus.csproj" />
       <ProjectReference Include="..\..\..\Shared\Shared.Swagger\Shared.Swagger.csproj" />
       <ProjectReference Include="..\..\..\Shared\Shared.Web\Shared.Web.csproj" />
+      <ProjectReference Include="..\Slip.Application\Slip.Application.csproj" />
     </ItemGroup>
     
     <ItemGroup>
