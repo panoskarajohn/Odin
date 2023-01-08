@@ -37,7 +37,9 @@
     </ItemGroup>
     
     <ItemGroup>
-      <Folder Include="Controllers" />
+      <Content Update="certs\localhost.pfx">
+        <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

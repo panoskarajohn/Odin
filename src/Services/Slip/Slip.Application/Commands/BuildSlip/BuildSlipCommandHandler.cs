@@ -1,5 +1,6 @@
 ﻿using Shared.Cqrs.Commands;
 using Shared.Web.Context;
+using Slip.Application.Exceptions;
 using Slip.Core.Repositories;
 using Slip.Core.ValueObjects;
 
@@ -19,17 +20,22 @@ public class BuildSlipCommandHandler : ICommandHandler<BuildSlipCommand>
     public async Task HandleAsync(BuildSlipCommand command, CancellationToken cancellationToken = default)
     {
         var userId = _context.Identity.Id;
-
+        
         var slip = Core.Models.Slip.Create(userId);
 
         var betsDto = command.Bets;
+
+        if (!betsDto.Any())
+            throw new NoBetsException();
         
         foreach (var betDto in betsDto)
         {
-            var bet = new Bet();
+            var bet = Bet.Create()
+                .WithStake(betDto.Stake);
+
             foreach (var betSelectionDto in betDto.Selections)
             {
-                var betSelection = new BetSelection(betSelectionDto.EventId, betSelectionDto.MarketName, betSelectionDto.Outcome, betSelectionDto.Odds);
+                var betSelection =  BetSelection.Create(betSelectionDto.EventId, betSelectionDto.MarketName, betSelectionDto.Outcome, betSelectionDto.Odds);
                 bet.AddSelection(betSelection);
             }
             

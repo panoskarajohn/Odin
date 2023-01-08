@@ -10,7 +10,7 @@ public record BetSelection
     
     public decimal Odds { get; }
 
-    public BetSelection(long eventId, string marketName, string outcome, decimal odds)
+    private BetSelection(long eventId, string marketName, string outcome, decimal odds)
     {
         if (eventId == 0)
             throw new InvalidEventIdException();
@@ -28,5 +28,10 @@ public record BetSelection
         MarketName = marketName;
         Outcome = outcome;
         Odds = odds;
+    }
+    
+    public static BetSelection Create(long eventId, string marketName, string outcome, decimal odds)
+    {
+        return new BetSelection(eventId, marketName, outcome, odds);
     }
 }

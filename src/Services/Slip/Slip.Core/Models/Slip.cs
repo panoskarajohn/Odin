@@ -1,4 +1,6 @@
-﻿using Shared.Domain;
+﻿using System.Security.Cryptography.X509Certificates;
+using System.Text.Json.Serialization;
+using Shared.Domain;
 using Slip.Core.Exceptions;
 using Slip.Core.ValueObjects;
 
@@ -6,18 +8,22 @@ namespace Slip.Core.Models;
 
 public class Slip 
 {
-    public Guid Id { get; }
     private readonly ISet<Bet> _bets = new HashSet<Bet>();
+    private readonly UserId _userId;
     
-    private IEnumerable<Bet> Bets => _bets;
+    public Guid Id { get; }
+    public IEnumerable<Bet> Bets => _bets;
 
-    public UserId UserId { get; set; }
+    public string UserId => _userId;
     
-    private Slip(Guid userId)
+    public decimal TotalStake => _bets.Sum(bet => bet.Stake);
+
+    private Slip(Guid userId, Guid id)
     {
-        Id = userId;
+        _userId = userId;
+        Id = id == default ? Guid.NewGuid() : id;
     }
-    
+
     public void AddBet(Bet bet)
     {
         if (_bets.Contains(bet))
@@ -26,5 +32,5 @@ public class Slip
         _bets.Add(bet);
     }
 
-    public static Slip Create(Guid userId) => new(userId);
+    public static Slip Create(Guid userId, Guid id = default) => new(userId, id);
 }

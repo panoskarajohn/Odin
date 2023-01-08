@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
+using Shared.Common;
+using Shared.Swagger.Filters;
 using Shared.Swagger.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -16,10 +18,72 @@ public static class ServiceCollectionExtensions
 {
     public const string HeaderName = "X-Api-Key";
 
+    #region Swagger for Minimal APIS
+
+    public static IServiceCollection AddSwaggerDocs(this IServiceCollection services, IConfiguration configuration)
+    {
+        var section = configuration.GetSection("swagger");
+        var options = section.BindOptions<SwaggerOptions>();
+        services.Configure<SwaggerOptions>(section);
+        
+        if (!options.Enabled)
+        {
+            return services;
+        }
+        
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen(swagger =>
+        {
+            swagger.SchemaFilter<ExcludePropertiesFilter>();
+            swagger.EnableAnnotations();
+            swagger.CustomSchemaIds(x => x.FullName);
+            swagger.SwaggerDoc(options.Version, new OpenApiInfo
+            {
+                Title = options.Title,
+                Version = options.Version
+            });
+        });
+
+        return services;
+    }
+    
+    public static IApplicationBuilder UseSwaggerDocs(this IApplicationBuilder app)
+    {
+        var options = app.ApplicationServices.GetRequiredService<IOptions<SwaggerOptions>>().Value;
+        if (!options.Enabled)
+        {
+            return app;
+        }
+        
+        app.UseSwagger();
+        app.UseReDoc(reDoc =>
+        {
+            reDoc.RoutePrefix = string.IsNullOrWhiteSpace(options.Route) ? "swagger" : options.Route;
+            reDoc.SpecUrl($"/swagger/{options.Version}/swagger.json");
+            reDoc.DocumentTitle = options.Title;
+        });
+
+        return app;
+    }
+
+    #endregion
+    
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
+    /// <param name="assembly"></param>
+    /// <param name="swaggerSectionName"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    [Obsolete("Use AddSwaggerDocs instead")]
     public static IServiceCollection AddCustomSwagger(this IServiceCollection services,
         IConfiguration configuration,
         Assembly assembly, string swaggerSectionName = "SwaggerOptions")
     {
+        services.AddEndpointsApiExplorer();
         services.AddVersionedApiExplorer(options =>
         {
             // add the versioned api explorer, which also adds IApiVersionDescriptionProvider service
@@ -31,7 +95,8 @@ public static class ServiceCollectionExtensions
             options.SubstituteApiVersionInUrl = true;
         });
 
-        services.AddOptions<SwaggerOptions>().Bind(configuration.GetSection(swaggerSectionName))
+        services
+            .AddOptions<SwaggerOptions>().Bind(configuration.GetSection(swaggerSectionName))
             .ValidateDataAnnotations();
 
         services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
@@ -43,6 +108,8 @@ public static class ServiceCollectionExtensions
                 options.OperationFilter<SwaggerDefaultValues>();
                 var xmlFile = XmlCommentsFilePath(assembly);
                 if (File.Exists(xmlFile)) options.IncludeXmlComments(xmlFile);
+                
+                options.EnableAnnotations();
 
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
@@ -100,9 +167,9 @@ public static class ServiceCollectionExtensions
                 });
 
                 options.DocInclusionPredicate((name, api) => true);
-
-                options.EnableAnnotations();
             });
+
+        
 
 
         return services;
@@ -115,6 +182,7 @@ public static class ServiceCollectionExtensions
         }
     }
 
+    [Obsolete("Use UseSwaggerDocs instead")]
     public static IApplicationBuilder UseCustomSwagger(this IApplicationBuilder app,
         IApiVersionDescriptionProvider provider)
     {

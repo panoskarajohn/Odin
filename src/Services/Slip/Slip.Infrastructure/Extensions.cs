@@ -10,7 +10,9 @@ public static class Extensions
 {
     public static IServiceCollection AddSlipInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        var redisKeys = new RedisKeys();
         return services
+            .AddSingleton(redisKeys)
             .AddRedis(configuration)
             .AddScoped<ISlipRepository, RedisSlipRepository>();
     }

@@ -14,6 +14,7 @@ public static class Extensions
     {
         var prometheusOptions = configuration.GetOptions<PrometheusOptions>("prometheus");
         services.AddSingleton(prometheusOptions);
+        
         if (!prometheusOptions.Enabled)
         {
             return services;

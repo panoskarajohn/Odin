@@ -48,11 +48,7 @@ host.UseLogging();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    var provider = app.Services.GetService<IApiVersionDescriptionProvider>();
-    app.UseCustomSwagger(provider);
-}
+
 
 app
     .UseApplication()
@@ -64,11 +60,14 @@ app
     .UsePrometheus();
 
 app.MapGet("/", e => e.Response.WriteAsync("Hello from Identity.Api"));
+
+
 app.MapPost("/sign-up", async (SignUp command, IDispatcher dispatcher) =>
 {
     await dispatcher.SendAsync(command with {UserId = Guid.NewGuid()});
     return Results.NoContent();
-}).WithTags("Account").WithName("Sign up");
+}).WithTags("Account").WithDisplayName("Sign up").WithName("Sign up");
+
 
 app.MapPost("/sign-in", async (SignIn command, IDispatcher dispatcher, ITokenStorage storage) =>
 {
@@ -77,11 +76,13 @@ app.MapPost("/sign-in", async (SignIn command, IDispatcher dispatcher, ITokenSto
     return Results.Ok(jwt);
 }).WithTags("Account").WithName("Sign in");
 
+
 app.MapGet("/me", async (IDispatcher dispatcher, HttpContext context) =>
 {
     var user = await dispatcher.QueryAsync(new GetUser {UserId = UserId(context)});
     return user is null ? Results.NotFound() : Results.Ok(user);
 }).RequireAuthorization().WithTags("Account").WithName("Get account");
+
 
 app.MapGet("/users/{id:guid}", async (Guid id, IDispatcher dispatcher) =>
 {
@@ -89,6 +90,14 @@ app.MapGet("/users/{id:guid}", async (Guid id, IDispatcher dispatcher) =>
     return user is null ? Results.NotFound() : Results.Ok(user);
 }).WithTags("Users").WithName("Get user");
 
+
 static Guid UserId(HttpContext context)
     => string.IsNullOrWhiteSpace(context.User.Identity?.Name) ? Guid.Empty : Guid.Parse(context.User.Identity.Name);
+
+
+if (app.Environment.IsDevelopment())
+{
+    var provider = app.Services.GetService<IApiVersionDescriptionProvider>();
+    app.UseCustomSwagger(provider);
+}
 app.Run();
