@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 using Shared.Common;
 using Shared.Types.Interfaces;
 using Shared.Web.Clock;
@@ -48,12 +49,12 @@ public static class Extensions
     {
         app.Use((ctx, next) =>
         {
-            ctx.RequestServices.GetRequiredService<ContextAccessor>().Context = new Context.Context(ctx);;
+            ctx.RequestServices.GetRequiredService<ContextAccessor>().Context = new Context.Context(ctx);
             return next();
         });
         return app;
     }
-    
+
     public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
     {
         var appOptions = configuration.GetOptions<AppOptions>("app");

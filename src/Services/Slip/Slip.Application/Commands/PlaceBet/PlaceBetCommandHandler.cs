@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Shared.Cqrs.Commands;
+using Shared.Cqrs.Events;
 using Shared.MessageBroker;
 using Shared.Web.Context;
 using Slip.Application.Events;
@@ -14,8 +15,8 @@ public class PlaceBetCommandHandler : ICommandHandler<PlaceBetCommand>
     private readonly ISlipRepository _slipRepository;
     private readonly IContext _context;
     private readonly IBusPublisher _publisher;
-    
-    public PlaceBetCommandHandler(ILogger<PlaceBetCommandHandler> logger, ISlipRepository slipRepository, IContext context, IBusPublisher publisher)
+
+    public PlaceBetCommandHandler(ILogger<PlaceBetCommandHandler> logger, ISlipRepository slipRepository, IContext context, IBusPublisher publisher, IEventDispatcher eventDispatcher)
     {
         _logger = logger;
         _slipRepository = slipRepository;
@@ -36,6 +37,7 @@ public class PlaceBetCommandHandler : ICommandHandler<PlaceBetCommand>
         
         // Publish a rabbitMq Message
         var message = new UserRequestedBetPlacement(userId, slip);
-        await _publisher.PublishAsync(message, Guid.NewGuid().ToString("N"), _context.CorrelationId.ToString());
+        await _publisher.PublishAsync(message,Guid.NewGuid().ToString("N"), _context.CorrelationId.ToString());
+
     }
 }
