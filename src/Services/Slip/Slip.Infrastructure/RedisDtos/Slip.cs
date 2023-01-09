@@ -12,7 +12,6 @@ public class Bet
 {
     public List<Selection> Selections { get; set; }
     public decimal Stake { get; set; }
-    public Guid BetId { get; set; }
     public string BetType { get; set; }
     public decimal Winnings { get; set; }
     public int NumberOfSelections { get; set; }
