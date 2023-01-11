@@ -7,7 +7,7 @@ public class UsersDbContext : DbContext
 {
     public DbSet<Role> Roles { get; set; } = null!;
     public DbSet<User> Users { get; set; } = null!;
-
+    
     public UsersDbContext(DbContextOptions<UsersDbContext> options) : base(options)
     {
         

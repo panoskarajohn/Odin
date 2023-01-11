@@ -1,19 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Shared.DAL.Postgres.Internals;
 
 public sealed class PostgresUnitOfWork<T> : IUnitOfWork where T : DbContext
 {
     private readonly T _dbContext;
+    private readonly ILogger<PostgresUnitOfWork<T>> _logger; 
 
-    public PostgresUnitOfWork(T dbContext)
+    public PostgresUnitOfWork(T dbContext, ILogger<PostgresUnitOfWork<T>> logger)
     {
         _dbContext = dbContext;
+        _logger = logger;
     }
 
     public async Task ExecuteAsync(Func<Task> action, CancellationToken cancellationToken = default)
     {
         var transaction = await _dbContext.Database.BeginTransactionAsync(cancellationToken);
+        _logger.LogInformation($"Database Transaction {transaction.TransactionId} started");
+        
         try
         {
             await action();
@@ -22,6 +27,7 @@ public sealed class PostgresUnitOfWork<T> : IUnitOfWork where T : DbContext
         }
         catch
         {
+            _logger.LogInformation($"Database Transaction {transaction.TransactionId} rolling back");
             await transaction.RollbackAsync(cancellationToken);
             throw;
         }
@@ -30,9 +36,4 @@ public sealed class PostgresUnitOfWork<T> : IUnitOfWork where T : DbContext
             await transaction.DisposeAsync();
         }
     }
-}
-
-public sealed class PostgresOptions
-{
-    public string ConnectionString { get; set; } = string.Empty;
 }

@@ -10,4 +10,8 @@
       <ProjectReference Include="..\Shared.Types\Shared.Types.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
+    </ItemGroup>
+
 </Project>

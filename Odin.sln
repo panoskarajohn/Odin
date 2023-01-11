@@ -97,6 +97,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Redis", "src\Shared\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slip.Service", "src\Services\Slip\Slip.Service\Slip.Service.csproj", "{903B84B2-CC26-4FB4-8711-497860A5AC92}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.DAL.Transactions", "src\Shared\Shared.DAL.Transactions\Shared.DAL.Transactions.csproj", "{9C638E6C-2116-4254-8BE1-65BC32DE65E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -239,6 +241,10 @@ Global
 		{903B84B2-CC26-4FB4-8711-497860A5AC92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{903B84B2-CC26-4FB4-8711-497860A5AC92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{903B84B2-CC26-4FB4-8711-497860A5AC92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C638E6C-2116-4254-8BE1-65BC32DE65E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C638E6C-2116-4254-8BE1-65BC32DE65E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C638E6C-2116-4254-8BE1-65BC32DE65E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C638E6C-2116-4254-8BE1-65BC32DE65E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -285,6 +291,7 @@ Global
 		{AB4BE405-61CA-4A36-8101-F984B4CCA568} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
 		{8C7A78E0-3B0E-4A3B-A5A6-3A5712017258} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
 		{903B84B2-CC26-4FB4-8711-497860A5AC92} = {BA339C5E-7069-4E93-A1DD-6D0439B37733}
+		{9C638E6C-2116-4254-8BE1-65BC32DE65E9} = {FE1C2334-17CC-475F-83A8-E9A6EFFE8F19}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {384772CF-3EA1-4FC3-86F3-DD05F09DF698}

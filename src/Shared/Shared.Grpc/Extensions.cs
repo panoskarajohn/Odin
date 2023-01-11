@@ -10,5 +10,7 @@ public static class Extensions
         {   
             options.Interceptors.Add<ExceptionInterceptor>();
         });
+
+        services.AddSingleton<ExceptionInterceptor>();
     }
 }

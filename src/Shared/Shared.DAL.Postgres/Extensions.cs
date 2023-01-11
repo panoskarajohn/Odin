@@ -21,13 +21,11 @@ public static class Extensions
         services.Configure<PostgresOptions>(section);
         
         services.AddDbContext<T>(x =>
-            x.UseNpgsql(options.ConnectionString, opt =>
-                {
-                    opt.EnableRetryOnFailure(15, TimeSpan.FromSeconds(10), errorCodesToAdd: null );
-                }));
+            x.UseNpgsql(options.ConnectionString));
         
         services.AddHostedService<DatabaseInitializer<T>>();
         services.AddHostedService<DataInitializer>();
+        services.AddScoped<IUnitOfWork, PostgresUnitOfWork<T>>();
         
         return services;
     }

@@ -15,4 +15,8 @@
       <ProjectReference Include="..\Slip.Infrastructure\Slip.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
+    </ItemGroup>
+
 </Project>

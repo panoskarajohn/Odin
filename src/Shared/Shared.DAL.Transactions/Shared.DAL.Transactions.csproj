@@ -7,8 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Shared\Shared.Redis\Shared.Redis.csproj" />
-      <ProjectReference Include="..\Slip.Core\Slip.Core.csproj" />
+      <ProjectReference Include="..\Shared.Cqrs\Shared.Cqrs.csproj" />
+      <ProjectReference Include="..\Shared.DAL.Postgres\Shared.DAL.Postgres.csproj" />
+      <ProjectReference Include="..\Shared.Types\Shared.Types.csproj" />
     </ItemGroup>
 
     <ItemGroup>

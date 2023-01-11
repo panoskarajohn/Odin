@@ -1,0 +1,49 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Slip.Service.Protos";
+
+import "google/protobuf/timestamp.proto";
+
+
+package event.protos;
+
+service Event {
+  rpc GetEvent (GetEventRequest) returns (EventResponse);
+}
+
+message GetEventRequest {
+  int64 id = 1;
+}
+
+message EventResponse {
+  int64 id = 1;
+  string name = 2;
+  google.protobuf.Timestamp starting = 3;
+  string category = 4;
+  repeated Market markets = 5;
+}
+
+message Market {
+  string name = 1;
+  StakeLimits stake_limits = 2;
+  repeated Selection selections = 3;
+}
+
+message StakeLimits {
+  DecimalValue minStake = 1;
+  DecimalValue maxStake = 2;
+}
+
+message Selection {
+  string name = 1;
+  DecimalValue price = 2;
+}
+
+message DecimalValue {
+  // Whole units part of the amount
+  int64 units = 1;
+
+  //Nano units of the amount (10^-9)
+  //Must be the same sign as units
+  sfixed32 nanos = 2;
+}
