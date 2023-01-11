@@ -27,4 +27,8 @@
         <ProjectReference Include="..\Event.Application\Event.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Content Include="certs\**" CopyToPublishDirectory="Always" />
+    </ItemGroup>
+
 </Project>

@@ -69,6 +69,17 @@ public static class Extensions
         
         return services;
     }
+
+    public static IServiceCollection AddHostApplication(this IServiceCollection services, IConfiguration configuration)
+    {
+        var appOptions = configuration.GetOptions<AppOptions>("app");
+        services = services
+            .AddSingleton(appOptions);
+        var version = appOptions.DisplayVersion ? $" {appOptions.Version}" : string.Empty;
+        Console.WriteLine(Figgle.FiggleFonts.Doom.Render($"{appOptions.Name} v.{version}"));
+        
+        return services;
+    }
     
     public static void AddCustomVersioning(this IServiceCollection services,
         Action<ApiVersioningOptions> configurator = null)

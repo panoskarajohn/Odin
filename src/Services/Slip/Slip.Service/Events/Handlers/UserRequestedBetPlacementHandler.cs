@@ -41,7 +41,7 @@ public class UserRequestedBetPlacementHandler : IEventHandler<UserRequestedBetPl
 
         await _slipContext.Slips.AddAsync(slip, cancellationToken);
     }
-
+    
     private async Task<bool> ValidateBets(IEnumerable<Bet> bets)
     {
         try

@@ -26,7 +26,13 @@ services:
     build:
       context: .
       dockerfile: src/Services/Slip/Slip.Api/Dockerfile
-   
+  
+  slip.worker:
+    image: ${DOCKER_REGISTRY-}slipworker
+    build:
+      context: .
+      dockerfile: src/Services/Slip/Slip.Service/Dockerfile
+  
   identity.api:
     image: ${DOCKER_REGISTRY-}identityapi
     build:

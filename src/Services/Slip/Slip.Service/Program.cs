@@ -20,7 +20,6 @@ IHost host = Host.CreateDefaultBuilder(args)
     {
         var configuration = hostContext.Configuration;
         services.AddHostedService<Worker>();
-        services.AddCustomGrpc();
 
         services.AddGrpcClient<Event.EventClient>(options =>
         {
@@ -28,7 +27,7 @@ IHost host = Host.CreateDefaultBuilder(args)
         }).AddPolicyHandler(RetryPolicy.RetryFunc);
 
         services
-            .AddApplication(configuration)
+            .AddHostApplication(configuration)
             .AddCqrs()
             .AddLogging()
             .AddPostgres<SlipContext>(configuration)

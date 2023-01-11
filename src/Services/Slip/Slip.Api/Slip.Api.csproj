@@ -36,11 +36,9 @@
     <ItemGroup>
         <Protobuf Include="Protos\event.proto" GrpcServices="Client" />
     </ItemGroup>
-    
+
     <ItemGroup>
-      <Content Update="certs\localhost.pfx">
-        <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-      </Content>
+        <Content Include="certs\**" CopyToPublishDirectory="Always" />
     </ItemGroup>
 
 </Project>
