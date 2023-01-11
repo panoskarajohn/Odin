@@ -25,7 +25,14 @@ message EventResponse {
 
 message Market {
   string name = 1;
-  repeated Selection selections = 2;
+  StakeLimits stake_limits = 2;
+  repeated Selection selections = 3;
+}
+
+message StakeLimits
+{
+  DecimalValue minStake = 1;
+  DecimalValue maxStake = 2;
 }
 
 message Selection {

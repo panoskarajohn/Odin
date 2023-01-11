@@ -6,4 +6,17 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Shared\Shared.Cqrs\Shared.Cqrs.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Logging\Shared.Logging.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.RabbitMq\Shared.RabbitMq.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Web\Shared.Web.csproj" />
+      <ProjectReference Include="..\Slip.Core\Slip.Core.csproj" />
+      <ProjectReference Include="..\Slip.Infrastructure\Slip.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
+    </ItemGroup>
+
 </Project>

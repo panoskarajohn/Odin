@@ -1,3 +1,5 @@
-﻿namespace Event.Infrastructure.Mongo;
+﻿using Event.Core.ValueObjects;
 
-public record MarketDocument(string Name, IEnumerable<SelectionDocument> SelectionDocuments);
+namespace Event.Infrastructure.Mongo;
+
+public record MarketDocument(string Name, IEnumerable<SelectionDocument> SelectionDocuments, MarketLimitsDocument Limits);

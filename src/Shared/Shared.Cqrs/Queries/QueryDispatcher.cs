@@ -18,7 +18,7 @@ internal sealed partial class QueryDispatcher : IQueryDispatcher
         var handler = scope.ServiceProvider.GetRequiredService(handlerType);
         // ReSharper disable once PossibleNullReferenceException
         return await (Task<TResult>) handlerType
-            .GetMethod(nameof(IQueryHandler<IQuery<TResult>, TResult>.HandleAsync))?
+            .GetMethod(nameof(IQueryHandler<IQuery<TResult>, TResult>.HandleAsync))
             .Invoke(handler, new object[] {query, cancellationToken});
     }
 

@@ -11,7 +11,7 @@ public record Category
         if (string.IsNullOrWhiteSpace(value))
             throw new InvalidCategoryException();
         
-        Value = value;
+        Value = value.ToLower();
     }
 
     public static implicit operator string(Category category) => category.Value;

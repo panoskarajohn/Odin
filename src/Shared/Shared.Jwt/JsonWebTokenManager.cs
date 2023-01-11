@@ -32,6 +32,14 @@ internal sealed class JsonWebTokenManager : IJsonWebTokenManager
         _signingCredentials = new SigningCredentials(securityKeyDetails.Key, securityKeyDetails.Algorithm);
     }
     
+    /// <summary>
+    /// Creates a new JWT token
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="email"></param>
+    /// <param name="role"></param>
+    /// <param name="claims"></param>
+    /// <returns></returns>
     public JsonWebToken CreateToken(string userId, string? email = null, string? role = null, IDictionary<string, IEnumerable<string>>? claims = null)
     {
         var now = _clock.Current();

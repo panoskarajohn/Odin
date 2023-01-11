@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Web;
 using Swashbuckle.AspNetCore.Annotations;
@@ -9,6 +10,7 @@ namespace Event.Application.SportMatch.Features.CreateMatch;
 public class CreateMatchEndpoint : BaseController
 {
     [HttpPost]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [SwaggerOperation(Summary = "Create new match", Description = "Create new match")]

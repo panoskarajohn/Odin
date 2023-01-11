@@ -47,8 +47,6 @@ public class Match : BaseAggregateRoot<long>
         {
             AppendMarket(market);
         }
-
-        this.AddDomainEvent(new MarketsRegisteredEvent());
     }
 
     /// <summary>
@@ -60,7 +58,7 @@ public class Match : BaseAggregateRoot<long>
     private void AppendMarket(Market market)
     {
         if (market is null) throw new NullMarketException();
-        if (_markets.Any(m => m.Name.Equals(market.Name, StringComparison.InvariantCultureIgnoreCase)))
+        if (_markets.Any(m => m.Name == market.Name))
             throw new DuplicateMarketException(market.Name);
 
         _markets.Add(market);
@@ -69,8 +67,7 @@ public class Match : BaseAggregateRoot<long>
     private void RemoveMarket(string marketName)
     {
         var market = _markets
-            .SingleOrDefault(m => m.Name
-                .Equals(marketName, StringComparison.InvariantCultureIgnoreCase));
+            .SingleOrDefault(m => m.Name == marketName);
 
         if (market is null)
             throw new MarketNotFoundException(marketName);
@@ -84,8 +81,6 @@ public class Match : BaseAggregateRoot<long>
         {
             RemoveMarket(marketName);
         }
-
-        this.AddDomainEvent(new MarketsRemovedEvent());
     }
 
     /// <summary>
@@ -94,7 +89,6 @@ public class Match : BaseAggregateRoot<long>
     public void Suspend()
     {
         this.Status = Status.Suspended;
-        this.AddDomainEvent(new MatchSuspendedEvent());
     }
 
     /// <summary>

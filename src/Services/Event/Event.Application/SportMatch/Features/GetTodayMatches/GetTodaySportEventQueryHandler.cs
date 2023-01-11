@@ -8,7 +8,7 @@ using Shared.Mongo.Repositories;
 
 namespace Event.Application.SportMatch.Features.GetTodayMatches;
 
-public class GetTodaySportEventQueryHandler : IQueryHandler<GetTodayMatchesQuery, IEnumerable<MatchResponseDto>>
+public class GetTodaySportEventQueryHandler : IQueryHandler<GetTodayMatchesQuery, IEnumerable<GetTodayMatchesResponse.MatchResponseDto>>
 {
     private readonly IMongoRepository<MatchDocument, long> _repository;
 
@@ -17,7 +17,7 @@ public class GetTodaySportEventQueryHandler : IQueryHandler<GetTodayMatchesQuery
         _repository = repository;
     }
 
-    public async Task<IEnumerable<MatchResponseDto>> HandleAsync(GetTodayMatchesQuery query,
+    public async Task<IEnumerable<GetTodayMatchesResponse.MatchResponseDto>> HandleAsync(GetTodayMatchesQuery query,
         CancellationToken cancellationToken = default)
     {
         var today = DateTime.UtcNow.Date;
@@ -40,8 +40,8 @@ public class GetTodaySportEventQueryHandler : IQueryHandler<GetTodayMatchesQuery
             .ThenBy(sp => sp.StartingTime)
             .ToListAsync(cancellationToken);
 
-        if (todaySportEvents is null) return Enumerable.Empty<MatchResponseDto>();
+        if (todaySportEvents is null) return Enumerable.Empty<GetTodayMatchesResponse.MatchResponseDto>();
 
-        return todaySportEvents.Select(t => t.ToResponse());
+        return todaySportEvents.Select(t => t.ToTodayMatchesResponse());
     }
 }

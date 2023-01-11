@@ -3,6 +3,7 @@ using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using Shared.Common;
@@ -195,4 +196,7 @@ public static class Extensions
 
     public static IBusSubscriber UseRabbitMq(this IApplicationBuilder app)
         => new RabbitMqSubscriber(app.ApplicationServices.GetRequiredService<MessageSubscribersChannel>());
+    
+    public static IBusSubscriber UseRabbitMq(this IHost host)
+        => new RabbitMqSubscriber(host.Services.GetRequiredService<MessageSubscribersChannel>());
 }

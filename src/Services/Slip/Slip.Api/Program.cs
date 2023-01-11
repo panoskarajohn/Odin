@@ -1,9 +1,19 @@
+using System.Net;
+using Grpc.Core;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Polly;
+using Shared.Cqrs;
+using Shared.Jwt;
 using Shared.Logging;
 using Shared.Metrics;
 using Shared.Prometheus;
+using Shared.RabbitMq;
 using Shared.Swagger;
 using Shared.Web;
+using Slip.Application;
+using Slip.Application.Commands.BuildSlip;
+using Slip.Application.Commands.PlaceBet;
 using Slip.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,12 +28,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services
+    .AddAuth(configuration)
     .AddApplication(configuration)
     .AddErrorHandling()
     .AddMetrics(configuration)
     .AddPrometheus(configuration)
-    .AddCustomSwagger(configuration, typeof(ISlipMarker).Assembly)
+    .AddSwaggerDocs(configuration)
+    .AddRabbitMq(configuration)
     .AddCustomVersioning();
+
+builder.Services.AddSlipApplication(configuration);
 
 builder.Services.AddGrpcClient<Event.EventClient>(options =>
 {
@@ -36,19 +50,35 @@ var app = builder.Build();
 
 app
     .UseApplication()
+    .UseAuthorization()
+    .UseAuthorization()
     .UseErrorHandling()
     .UseLogging()
     .UseMetrics()
-    .UsePrometheus();
+    .UseSwaggerDocs()
+    .UsePrometheus()
+    .UseRabbitMq();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.MapGet("/", e => e.Response.WriteAsync("Hello from Slip.Api"));
+app.MapPost("/buildSlip", async (BuildSlipCommand buildSlipCommand, CancellationToken cancellationToken ,IDispatcher dispatcher) =>
 {
-    var provider = app.Services.GetService<IApiVersionDescriptionProvider>();
-    app.UseCustomSwagger(provider);
-}
+    await dispatcher.SendAsync(buildSlipCommand, cancellationToken);
+    return Results.NoContent();
+})
+    .RequireAuthorization()
+    .WithTags("Slip")
+    .WithName("Build Slip");
 
-app.UseAuthorization();
+app.MapPost("/placeBet",
+    async (CancellationToken cancellationToken, IDispatcher dispatcher) =>
+    {
+        var placeBetCommand = new PlaceBetCommand();
+        await dispatcher.SendAsync(placeBetCommand, cancellationToken);
+        return Results.NoContent();
+    })
+    .RequireAuthorization()
+    .WithTags("Slip")
+    .WithName("Place Bet");
 
 app.MapControllers();
 
