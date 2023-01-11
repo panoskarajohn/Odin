@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shared.IdGenerator;
 using Shared.Web;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -16,7 +17,9 @@ public class CreateMatchEndpoint : BaseController
     [SwaggerOperation(Summary = "Create new match", Description = "Create new match")]
     public async Task<ActionResult> Create([FromBody] CreateMatchCommand command, CancellationToken cancellationToken)
     {
+        //Not best since we always will create two objects
+        command = command with {EventId = SnowFlakIdGenerator.NewId()};
         await Dispatcher.SendAsync(command, cancellationToken);
-        return NoContent();
+        return Created(BaseApiPath + "/match", new { EventId = command.EventId });
     }
 }
