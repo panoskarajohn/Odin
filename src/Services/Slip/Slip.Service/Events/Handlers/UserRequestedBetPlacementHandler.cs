@@ -50,6 +50,7 @@ public class UserRequestedBetPlacementHandler : IEventHandler<UserRequestedBetPl
             {
                 foreach (var betSelection in bet.Selections)
                 {
+                    _logger.LogInformation("Validating bet event {EventId}", betSelection.EventId);
                     var request = new GetEventRequest() { Id = betSelection.EventId };
                     var @event = await _eventGrpcClient.GetEventAsync(request);
                     if (@event is null)

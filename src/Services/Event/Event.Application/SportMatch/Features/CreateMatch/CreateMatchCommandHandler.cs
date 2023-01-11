@@ -1,4 +1,5 @@
 ﻿using Event.Core.DomainEvents;
+using Event.Core.Enumerations;
 using Event.Core.Repositories;
 using Event.Core.ValueObjects;
 using Microsoft.Extensions.Logging;
@@ -26,7 +27,9 @@ public class CreateMatchCommandHandler : ICommandHandler<CreateMatchCommand>
         var match = Core.Models.Match.Create(command.Category,
             command.StartingTime,
             command.Home,
-            command.Away);
+            command.Away,
+            Status.Active.ToString(),
+            command.EventId);
 
         match.AddDomainEvent(new NewMatchCreatedEvent());
 
