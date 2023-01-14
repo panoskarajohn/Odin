@@ -72,6 +72,8 @@ services:
  
   slip.worker:
     container_name: slip.worker
+    depends_on:
+      - slip.api
     environment:
       - DOTNET_ENVIRONMENT=docker
     networks:
