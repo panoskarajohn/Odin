@@ -12,8 +12,21 @@ public static class DateTimeExtensions
     {
         var dateTimeUtc = dateTime.ToUniversalTime();
         var utcNow = DateTime.UtcNow;
+        return utcNow < dateTimeUtc;
+    }
+    
+    /// <summary>
+    /// Checks if dateTime is from the past
+    /// </summary>
+    /// <param name="dateTime"></param>
+    public static bool UtcTimeIsFromPast(this DateTime dateTime)
+    {
+        var dateTimeUtc = dateTime.ToUniversalTime();
+        var utcNow = DateTime.UtcNow;
         return utcNow > dateTimeUtc;
     }
+    
+    
 
     /// <summary>
     /// Converts UTC to timezone 

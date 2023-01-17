@@ -18,6 +18,7 @@ public class UserRequestedBetPlacementHandler : IEventHandler<UserRequestedBetPl
         _slipContext = slipContext;
         _eventGrpcClient = eventGrpcClient;
     }
+    
     public async Task HandleAsync(UserRequestedBetPlacement @event, CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("User {UserId} requested bet placement for Slip {SlipId}", @event.UserId, @event.Slip.Id);

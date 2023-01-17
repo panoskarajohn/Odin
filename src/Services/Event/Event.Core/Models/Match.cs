@@ -16,7 +16,7 @@ public class Match : BaseAggregateRoot<long>
     }
 
     public Category Category { get; private set; }
-    public DateTime StartingTime { get; private set; }
+    public StartingTime StartingTime { get; private set; }
     public MatchName MatchName { get; private set; }
     public Status Status { get; private set; }
     public IEnumerable<Market> Markets => _markets;

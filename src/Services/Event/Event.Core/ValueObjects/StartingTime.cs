@@ -7,9 +7,12 @@ public record StartingTime
 {
     public StartingTime(DateTime value)
     {
-        if (value.UtcTimeIsFromFuture()) throw new InvalidStartingTimeException(value);
+        if (value.UtcTimeIsFromPast()) throw new InvalidStartingTimeException(value);
         Value = value;
     }
 
     public DateTime Value { get; }
+    
+    public static implicit operator DateTime(StartingTime category) => category.Value;
+    public static implicit operator StartingTime(DateTime value) => new(value);
 }
