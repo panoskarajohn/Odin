@@ -2,12 +2,14 @@ import React from "react";
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import logo from '../../images/rune.png'
+import avatar from '../../images/avatar.jpg'
 
 const navigation = [
-    { name: 'Dashboard', href: '#', current: true },
-    { name: 'Team', href: '#', current: false },
-    { name: 'Projects', href: '#', current: false },
-    { name: 'Calendar', href: '#', current: false },
+    { name: 'Betting', href: '#', current: true },
+    { name: 'Live Betting', href: '#', current: false },
+    { name: 'Casino', href: '#', current: false },
+    { name: 'Virtuals', href: '#', current: false },
   ]
 
 function classNames(...classes:string[]) {
@@ -37,12 +39,12 @@ class Nav extends React.Component {
                 <div className="flex flex-shrink-0 items-center">
                   <img
                     className="block h-8 w-auto lg:hidden"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                    src={logo}
                     alt="Your Company"
                   />
                   <img
                     className="hidden h-8 w-auto lg:block"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                    src={logo}
                     alt="Your Company"
                   />
                 </div>
@@ -80,8 +82,8 @@ class Nav extends React.Component {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
+                        src={avatar}
+                        alt="Avatar image"
                       />
                     </Menu.Button>
                   </div>
