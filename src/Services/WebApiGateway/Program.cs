@@ -8,11 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 var host = builder.Host;
 var conf = builder.Configuration;
 
+conf.AddJsonFile("yarp.json", false);
+
 builder.Services.AddApplication(conf);
 
 builder.Services
     .AddReverseProxy()
-    .LoadFromConfig(conf.GetSection("yarp"))
+    .LoadFromConfig(conf.GetSection("reverseProxy"))
     .AddTransforms(transforms =>
     {
         transforms.AddRequestTransform(transform =>
