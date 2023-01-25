@@ -104,6 +104,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{4BD953C6-104
 		src\Web\Readme.md = src\Web\Readme.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "loadtest", "loadtest", "{80620008-452F-4317-84C3-99CA220928BE}"
+	ProjectSection(SolutionItems) = preProject
+		loadtest\load_test.js = loadtest\load_test.js
+		loadtest\sample_test.js = loadtest\sample_test.js
+		loadtest\soak_test.js = loadtest\soak_test.js
+		loadtest\spike_test.js = loadtest\spike_test.js
+		loadtest\stress_test.js = loadtest\stress_test.js
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
