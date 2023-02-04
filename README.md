@@ -5,33 +5,11 @@
 This is a playground, trying to become a decent solution.
 This is in progress, trying to put everything together.
 
-## Local development
-
-In order to bring up all the infrastructure you need to first start replication of Mongo.
-So you can run and debug the service you develop without worrying about installing all kind of different infrastructure.
-Everything is dependent on Docker :).
-
-# Bring up the infrastructure
-
-Run the following commands:
-
-```
-➜  Odin (master) ./start_infra.yml
-```
-
-Then running the applications can be enough for local testing and debugging
-BUT
-You can bring up the apps as containers as well
+# Bring up the infrastructure and applications
 
 ```
 ➜  Odin (master) docker-compose up -d
 ```
-
-You can send requests to odin/event.api
-## Send Requests
-
-I have attached some postman requests on the root of the project
-Have fun! :)
 
 # Community:
 
