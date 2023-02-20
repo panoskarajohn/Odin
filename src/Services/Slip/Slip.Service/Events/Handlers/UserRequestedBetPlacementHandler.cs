@@ -3,6 +3,7 @@ using Shared.Cqrs.Events;
 using Slip.Service.DAL;
 using Slip.Service.Domain;
 using Slip.Service.Events.Externals;
+using Slip.Service.Mapper;
 using Slip.Service.Protos;
 
 namespace Slip.Service.Events.Handlers;
@@ -23,7 +24,7 @@ public class UserRequestedBetPlacementHandler : IEventHandler<UserRequestedBetPl
     {
         _logger.LogInformation("User {UserId} requested bet placement for Slip {SlipId}", @event.UserId, @event.Slip.Id);
 
-        var slip = @event.Slip;
+        var slip = @event.Slip.ToDomain();
 
         var slipExists = await 
             _slipContext.Slips

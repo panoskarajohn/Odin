@@ -11,10 +11,9 @@ public class Bet
     public string BetType { get; set; }
     public decimal Winnings { get; set; }
     public int NumberOfSelections { get; set; }
-    
+
     public List<BetSelection> Selections { get; set; }
-    [JsonIgnore]
-    public virtual Slip Slip { get; set; }
-    [JsonIgnore]
+    public string BetStatus { get; set; }
+    public Slip Slip { get; set; }
     public string SlipId { get; set; }
 }

@@ -43,6 +43,10 @@ public class RegisterMarketsCommandHandler : ICommandHandler<RegisterMarketsComm
             var market = new Market(marketDto.Name, marketSelections!);
 
             var marketTemplate = await _marketTemplateRepository.Get(market.Name, match.Category);
+
+            if (marketTemplate is null)
+                throw new TemplateNotFound(market.Name, match.Category);
+            
             UpdateLimitsFromTemplate(ref market, marketTemplate);
             markets.Add(market);
         }

@@ -1,8 +1,6 @@
-using Grpc.Net.Client.Configuration;
 using Shared.Cqrs;
 using Shared.DAL.Postgres;
 using Shared.DAL.Transactions;
-using Shared.Grpc;
 using Shared.Logging;
 using Shared.MessageBroker.Cqrs;
 using Shared.RabbitMq;
@@ -11,7 +9,6 @@ using Slip.Service;
 using Slip.Service.DAL;
 using Slip.Service.Events.Externals;
 using Slip.Service.Protos;
-using Polly;
 using RetryPolicy = Shared.Grpc.Polly.RetryPolicy;
 
 

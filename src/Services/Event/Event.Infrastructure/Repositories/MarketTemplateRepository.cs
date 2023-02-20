@@ -23,12 +23,14 @@ public class MarketTemplateRepository : IMarketTemplateRepository
         return document.ToEntity();
     }
 
-    public async Task<MarketTemplate> Get(string marketName, string category)
+    public async Task<MarketTemplate?> Get(string marketName, string category)
     {
         var filter = Builders<MarketTemplateDocument>.Filter.Eq(x => x.MarketName, marketName) &
                      Builders<MarketTemplateDocument>.Filter.Eq(x => x.Category, category);
         var document = await _repository.Collection.FindAsync(filter).ConfigureAwait(false);
-        return document.SingleOrDefault().ToEntity();
+        return document
+            .SingleOrDefault()?
+            .ToEntity();
     }
 
     public Task Add(MarketTemplate marketTemplate)

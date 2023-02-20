@@ -11,9 +11,6 @@ using Shared.Metrics;
 using Shared.Prometheus;
 using Shared.Swagger;
 using Shared.Web;
-using System.Text;
-using Identity.Core.Entities;
-using Newtonsoft.Json;
 using Shared.Security;
 
 var builder = WebApplication.CreateBuilder(args);

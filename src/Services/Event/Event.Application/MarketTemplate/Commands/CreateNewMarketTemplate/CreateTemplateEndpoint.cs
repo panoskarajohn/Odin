@@ -5,7 +5,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Event.Application.MarketTemplate.Commands.CreateNewMarketTemplate;
 
-[Route(BaseApiPath + "match/template")]
+[Route(BaseApiPath + "/match/template")]
 public class CreateTemplateEndpoint : BaseController
 {
     [HttpPost]
