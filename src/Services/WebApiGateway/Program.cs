@@ -1,20 +1,23 @@
 using System.Diagnostics;
 using Shared.Logging;
 using Shared.Web;
+using Shared.Jwt;
 using Shared.Web.Extension;
+using WebApiGateway;
+using Yarp.ReverseProxy.Configuration;
 using Yarp.ReverseProxy.Transforms;
+
 
 var builder = WebApplication.CreateBuilder(args);
 var host = builder.Host;
+var services = builder.Services;
 var conf = builder.Configuration;
 
-conf.AddJsonFile("yarp.json", false);
-
-builder.Services.AddApplication(conf);
-
-builder.Services
+services
+    .AddApplication(conf)
+    .AddAuth(conf)
     .AddReverseProxy()
-    .LoadFromConfig(conf.GetSection("reverseProxy"))
+    .LoadFromMemory(RouterConfiguration.Routes, ClusterConfiguration.Clusters)
     .AddTransforms(transforms =>
     {
         transforms.AddRequestTransform(transform =>
@@ -25,13 +28,14 @@ builder.Services
 
             return ValueTask.CompletedTask;
         });
-    });
+    });;
 
 host.UseLogging();
 
 var app = builder.Build();
 app
     .UseApplication()
+    .UseAuthorization()
     .UseLogging();
 
 app.MapGet("/", () => "Odin Gateway");

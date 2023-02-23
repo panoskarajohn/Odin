@@ -11,7 +11,7 @@ namespace Event.Application.SportMatch.Features.GetMatch;
 public class GetMatchEndpoint : BaseController
 {
     [HttpGet("{id}")]
-    [Authorize]
+    [Authorize(Roles = "user")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [SwaggerOperation(Summary = "Get match", Description = "Get match")]
     public async Task<ActionResult<MatchResponseDto>> Get([FromRoute] long id,

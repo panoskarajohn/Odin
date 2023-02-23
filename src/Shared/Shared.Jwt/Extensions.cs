@@ -193,6 +193,11 @@ public static class Extensions
             {
                 p.AddAuthenticationSchemes(CertificateAuthenticationDefaults.AuthenticationScheme).RequireAuthenticatedUser();
             });
+            
+            a.AddPolicy("jwt", p =>
+            {
+                p.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser();
+            });
         });
 
         return services;
