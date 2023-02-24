@@ -66,5 +66,6 @@ if (env.IsDevelopment())
 
 app.MapControllers();
 app.MapGet("/", e => e.Response.WriteAsync("Hello from Event.Api"));
+app.MapGet("/ping", () => "pong").WithTags("API").WithName("Pong");
 
 app.Run();

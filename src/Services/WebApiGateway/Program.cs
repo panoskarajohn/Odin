@@ -39,6 +39,7 @@ app
     .UseLogging();
 
 app.MapGet("/", () => "Odin Gateway");
+app.MapGet("/ping", () => "pong").WithTags("API").WithName("Pong");
 app.MapReverseProxy();
 
 app.Run();

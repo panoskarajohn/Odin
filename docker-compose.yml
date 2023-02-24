@@ -154,8 +154,33 @@ services:
       - '5432:5432'
     volumes: 
       - postgres:/var/lib/postgresql/data
+    
+  consul:
+    image: consul
+    container_name: consul
+    restart: unless-stopped
+    networks:
+      - odin
+    ports:
+      - 8500:8500
+    volumes:
+      - consul:/consul/data
+    
+  fabio:
+    image: fabiolb/fabio
+    container_name: fabio
+    restart: unless-stopped
+    environment:
+    - FABIO_REGISTRY_CONSUL_ADDR=consul:8500
+    networks:
+      - odin
+    ports:
+    - 9998:9998
+    - 9999:9999
   
 volumes:
+  consul:
+    driver: local
   postgres:
     driver: local
   sqlserver-data:
