@@ -7,13 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Shared.Cqrs\Shared.Cqrs.csproj" />
-      <ProjectReference Include="..\Shared.DAL.Postgres\Shared.DAL.Postgres.csproj" />
-      <ProjectReference Include="..\Shared.Types\Shared.Types.csproj" />
+        <ProjectReference Include="..\Shared.Cqrs\Shared.Cqrs.csproj"/>
+        <ProjectReference Include="..\Shared.DAL.Postgres\Shared.DAL.Postgres.csproj"/>
+        <ProjectReference Include="..\Shared.Types\Shared.Types.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
+        <PackageReference Include="Polly.Extensions.Http" Version="3.0.0"/>
     </ItemGroup>
 
 </Project>

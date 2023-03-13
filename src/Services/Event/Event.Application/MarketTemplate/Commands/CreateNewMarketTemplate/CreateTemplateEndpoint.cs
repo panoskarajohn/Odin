@@ -12,7 +12,8 @@ public class CreateTemplateEndpoint : BaseController
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [SwaggerOperation(Summary = "Create new market template", Description = "Create new market template")]
-    public async Task<ActionResult> Create([FromBody] CreateMarketTemplateCommand command, CancellationToken cancellationToken)
+    public async Task<ActionResult> Create([FromBody] CreateMarketTemplateCommand command,
+        CancellationToken cancellationToken)
     {
         await Dispatcher.SendAsync(command, cancellationToken);
         return NoContent();

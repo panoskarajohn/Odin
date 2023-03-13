@@ -3,26 +3,44 @@ using Yarp.ReverseProxy.Configuration;
 
 namespace WebApiGateway;
 
-public static class RouterConfiguration
+public class RouterConfiguration
 {
-    const string CatchAll = "{**catch-all}";
-    const string EventPathTransform = $"/api/{EventApi.V1}/match/{CatchAll}";
-    public static RouteConfig[] Routes => new []
+    private const string CatchAll = "{**catch-all}";
+
+    public RouteConfig[] Routes => new[]
     {
-        new RouteConfig()
+        new RouteConfig
         {
-            RouteId = ClusterConfiguration.EventClusterId,
-            ClusterId = ClusterConfiguration.EventClusterId,
-            Match = new RouteMatch()
+            RouteId = ApiInfo.EventApi.EventClusterId,
+            ClusterId = ApiInfo.EventApi.EventClusterId,
+            Match = new RouteMatch
             {
                 Path = "event/{**catch-all}",
-                Methods = new[] {"GET", "POST", "PUT", "DELETE"},
+                Methods = new[] {"GET", "POST", "PUT", "DELETE"}
             },
             Transforms = new[]
             {
-                new Dictionary<string, string>()
+                new Dictionary<string, string>
                 {
-                    {"PathPattern", EventPathTransform}
+                    {"PathPattern", ApiInfo.EventApi.EventV1PathTransform}
+                }
+            },
+            AuthorizationPolicy = "jwt"
+        },
+        new RouteConfig
+        {
+            RouteId = ApiInfo.IdentityApi.IdentityClusterId,
+            ClusterId = ApiInfo.IdentityApi.IdentityClusterId,
+            Match = new RouteMatch
+            {
+                Path = "identity/{**catch-all}",
+                Methods = new[] {"GET", "POST", "PUT", "DELETE"}
+            },
+            Transforms = new[]
+            {
+                new Dictionary<string, string>
+                {
+                    {"PathPattern", ApiInfo.IdentityApi.IdentityV1PathTransform}
                 }
             },
             AuthorizationPolicy = "jwt"

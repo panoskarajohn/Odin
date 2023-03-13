@@ -22,7 +22,7 @@ public class MatchRepository : IMatchRepository
         return doc?.AsEntity();
     }
 
-    public Task Add(Core.Models.Match match, string userId)
+    public Task Add(Match match, string userId)
     {
         var doc = match.AsDocument(userId);
         return _repository.AddAsync(doc);

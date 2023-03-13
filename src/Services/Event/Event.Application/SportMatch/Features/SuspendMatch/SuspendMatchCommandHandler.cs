@@ -9,11 +9,12 @@ namespace Event.Application.SportMatch.Features.SuspendMatch;
 
 public class SuspendMatchCommandHandler : ICommandHandler<SuspendMatchCommand>
 {
+    private readonly IContext _context;
     private readonly ILogger<SuspendMatchCommandHandler> _logger;
     private readonly IMatchRepository _matchRepository;
-    private readonly IContext _context;
 
-    public SuspendMatchCommandHandler(IMatchRepository matchRepository, ILogger<SuspendMatchCommandHandler> logger, IContext context)
+    public SuspendMatchCommandHandler(IMatchRepository matchRepository, ILogger<SuspendMatchCommandHandler> logger,
+        IContext context)
     {
         _matchRepository = matchRepository;
         _logger = logger;

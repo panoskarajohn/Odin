@@ -15,8 +15,12 @@ internal sealed class ServiceBusMessageDispatcher : ICommandDispatcher, IEventDi
     }
 
     public Task SendAsync<T>(T command, CancellationToken cancellationToken = default) where T : class, ICommand
-        => _busPublisher.SendAsync(command, _accessor.CorrelationContext);
+    {
+        return _busPublisher.SendAsync(command, _accessor.CorrelationContext);
+    }
 
     public Task PublishAsync<T>(T @event, CancellationToken cancellationToken = default) where T : class, IEvent
-        => _busPublisher.PublishAsync(@event, _accessor.CorrelationContext);
+    {
+        return _busPublisher.PublishAsync(@event, _accessor.CorrelationContext);
+    }
 }

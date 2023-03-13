@@ -1,50 +1,55 @@
-﻿using Yarp.ReverseProxy.Configuration;
+﻿using WebApiGateway.Config;
+using WebApiGateway.Versions;
+using Yarp.ReverseProxy.Configuration;
 
 namespace WebApiGateway;
 
-public static class ClusterConfiguration
+public class ClusterConfiguration
 {
-    public const string EventClusterId = "event";
-    public const string IdentityClusterId = "identity";
-    public const string SlipClusterId = "slip";
+    private readonly UrlsConfig _urlsConfig;
 
-    public static ClusterConfig[] Clusters => new[]
+    public ClusterConfiguration(UrlsConfig urlsConfig)
     {
-        new ClusterConfig()
+        _urlsConfig = urlsConfig;
+    }
+
+    public ClusterConfig[] Clusters => new[]
+    {
+        new ClusterConfig
         {
-            ClusterId = EventClusterId,
-            Destinations = new Dictionary<string, DestinationConfig>()
+            ClusterId = ApiInfo.EventApi.EventClusterId,
+            Destinations = new Dictionary<string, DestinationConfig>
             {
                 {
-                    EventClusterId, new DestinationConfig()
+                    ApiInfo.EventApi.EventClusterId, new DestinationConfig
                     {
-                        Address = "http://localhost:2000"
+                        Address = _urlsConfig.EventService
                     }
                 }
             }
         },
-        new ClusterConfig()
+        new ClusterConfig
         {
-            ClusterId = IdentityClusterId,
-            Destinations = new Dictionary<string, DestinationConfig>()
+            ClusterId = ApiInfo.IdentityApi.IdentityClusterId,
+            Destinations = new Dictionary<string, DestinationConfig>
             {
                 {
-                    IdentityClusterId, new DestinationConfig()
+                    ApiInfo.IdentityApi.IdentityClusterId, new DestinationConfig
                     {
-                        Address = "http://localhost:3000"
+                        Address = _urlsConfig.IdentityService
                     }
                 }
             }
         },
-        new ClusterConfig()
+        new ClusterConfig
         {
-            ClusterId = SlipClusterId,
-            Destinations = new Dictionary<string, DestinationConfig>()
+            ClusterId = ApiInfo.SlipApi.SlipClusterId,
+            Destinations = new Dictionary<string, DestinationConfig>
             {
                 {
-                    SlipClusterId, new DestinationConfig()
+                    ApiInfo.SlipApi.SlipClusterId, new DestinationConfig
                     {
-                        Address = "http://localhost:5000"
+                        Address = _urlsConfig.SlipService
                     }
                 }
             }

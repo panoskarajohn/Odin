@@ -4,5 +4,4 @@ namespace Shared.Mongo.Initializers;
 
 public interface IMongoInitializer : IInitializer
 {
-    
 }

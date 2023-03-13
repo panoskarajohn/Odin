@@ -27,8 +27,11 @@ public static class SnowFlakIdGenerator
     }
 
     /// <summary>
-    /// Make sure the <see cref="SnowFlakIdGenerator.Configure"/> method has been called.
+    ///     Make sure the <see cref="SnowFlakIdGenerator.Configure" /> method has been called.
     /// </summary>
     /// <returns></returns>
-    public static long NewId() => _generator!.CreateId();
+    public static long NewId()
+    {
+        return _generator!.CreateId();
+    }
 }

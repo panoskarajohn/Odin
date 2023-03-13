@@ -8,7 +8,8 @@ namespace Slip.Infrastructure;
 
 public static class Extensions
 {
-    public static IServiceCollection AddSlipInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddSlipInfrastructure(this IServiceCollection services,
+        IConfiguration configuration)
     {
         var redisKeys = new RedisKeys();
         return services

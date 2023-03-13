@@ -15,10 +15,16 @@ internal class RoleRepository : IRoleRepository
         _roles = context.Roles;
     }
 
-    public Task<Role?> GetAsync(string name) => _roles.SingleOrDefaultAsync(x => x.Name == name);
+    public Task<Role?> GetAsync(string name)
+    {
+        return _roles.SingleOrDefaultAsync(x => x.Name == name);
+    }
 
-    public async Task<IReadOnlyList<Role>> GetAllAsync() => await _roles.ToListAsync();
-        
+    public async Task<IReadOnlyList<Role>> GetAllAsync()
+    {
+        return await _roles.ToListAsync();
+    }
+
     public async Task AddAsync(Role role)
     {
         await _roles.AddAsync(role);

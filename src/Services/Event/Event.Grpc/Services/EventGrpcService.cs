@@ -7,8 +7,8 @@ namespace Event.Grpc.Services;
 
 internal sealed class EventGrpcService : Event.EventBase
 {
-    private readonly ILogger<EventGrpcService> _logger;
     private readonly IDispatcher _dispatcher;
+    private readonly ILogger<EventGrpcService> _logger;
 
     public EventGrpcService(ILogger<EventGrpcService> logger, IDispatcher dispatcher)
     {
@@ -22,36 +22,33 @@ internal sealed class EventGrpcService : Event.EventBase
         var query = new GetMatchQuery(request.Id);
         var result = await _dispatcher.QueryAsync(query);
 
-        if (result is null)
-        {
-            throw new RpcException(new Status(StatusCode.NotFound, "Event not found"));
-        }
+        if (result is null) throw new RpcException(new Status(StatusCode.NotFound, "Event not found"));
 
-        return new EventResponse()
+        return new EventResponse
         {
             Id = result.Id,
             Name = result.MatchName,
             Category = result.Category,
             Starting = Timestamp.FromDateTime(result.StartingTime),
-            Markets = 
-            { 
-                result.Markets?.Select(m => new Market()
+            Markets =
+            {
+                result.Markets?.Select(m => new Market
                 {
                     Name = m.Name,
-                    StakeLimits = new StakeLimits()
+                    StakeLimits = new StakeLimits
                     {
                         MinStake = new DecimalValue(m.StakeLimits.MinStake),
                         MaxStake = new DecimalValue(m.StakeLimits.MaxStake)
                     },
-                    Selections = 
-                    { 
-                        m.Selections.Select(s => new Selection()
+                    Selections =
+                    {
+                        m.Selections.Select(s => new Selection
                         {
                             Name = s.Name,
                             Price = s.Price
-                        }) 
+                        })
                     }
-                }) 
+                })
             }
         };
     }

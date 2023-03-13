@@ -1,6 +1,6 @@
-﻿using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Security.Cryptography.X509Certificates;
 using Consul;
+using Figgle;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Http;
 using Polly;
 using Polly.Extensions.Http;
@@ -28,7 +27,6 @@ namespace Shared.Web;
 public static class Extensions
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
@@ -40,13 +38,15 @@ public static class Extensions
 
         return services;
     }
-    
+
     public static IServiceCollection AddErrorHandling(this IServiceCollection services)
-        => services
+    {
+        return services
             .AddScoped<ErrorHandlerMiddleware>()
             .AddSingleton<IExceptionToResponseMapper, ExceptionToResponseMapper>()
             .AddSingleton<IExceptionCompositionRoot, ExceptionCompositionRoot>();
-    
+    }
+
     public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
     {
         var appOptions = configuration.GetOptions<AppOptions>("app");
@@ -62,27 +62,22 @@ public static class Extensions
             .AddHttpClient(configuration)
             .AddConsulHandler()
             .AddFabioHandler();
-        
+
         var version = appOptions.DisplayVersion ? $" {appOptions.Version}" : string.Empty;
-        Console.WriteLine(Figgle.FiggleFonts.Doom.Render($"{appOptions.Name} v.{version}"));
-        
+        Console.WriteLine(FiggleFonts.Doom.Render($"{appOptions.Name} v.{version}"));
+
         return services;
     }
-    
+
     private static IServiceCollection AddConsul(this IServiceCollection services, IConfiguration configuration)
     {
         var section = configuration.GetSection("consul");
         var options = section.BindOptions<ConsulOptions>();
         services.Configure<ConsulOptions>(section);
-        if (!options.Enabled)
-        {
-            return services;
-        }
+        if (!options.Enabled) return services;
 
         if (string.IsNullOrWhiteSpace(options.Url))
-        {
             throw new ArgumentException("Consul URL cannot be empty.", nameof(options.Url));
-        }
 
         services.AddTransient<ConsulHttpHandler>();
         services.AddHostedService<ConsulRegistrationService>();
@@ -96,25 +91,22 @@ public static class Extensions
     }
 
     private static IHttpClientBuilder AddConsulHandler(this IHttpClientBuilder builder)
-        => builder.AddHttpMessageHandler<ConsulHttpHandler>();
-    
-    
+    {
+        return builder.AddHttpMessageHandler<ConsulHttpHandler>();
+    }
+
+
     private static IServiceCollection AddFabio(this IServiceCollection services, IConfiguration configuration)
     {
         var section = configuration.GetSection("fabio");
         var options = section.BindOptions<FabioOptions>();
         services.Configure<FabioOptions>(section);
 
-        if (!options.Enabled)
-        {
-            return services;
-        }
+        if (!options.Enabled) return services;
 
         if (string.IsNullOrWhiteSpace(options.Url))
-        {
             throw new ArgumentException("Fabio URL cannot be empty.", nameof(options.Url));
-        }
-        
+
         services.AddTransient<FabioHttpHandler>();
         services.AddSingleton<IServiceDiscoveryRegistration, FabioServiceDiscoveryRegistration>();
 
@@ -122,8 +114,10 @@ public static class Extensions
     }
 
     private static IHttpClientBuilder AddFabioHandler(this IHttpClientBuilder builder)
-        => builder.AddHttpMessageHandler<FabioHttpHandler>();
-    
+    {
+        return builder.AddHttpMessageHandler<FabioHttpHandler>();
+    }
+
     private static IHttpClientBuilder AddHttpClient(this IServiceCollection services, IConfiguration configuration)
     {
         var httpClientSection = configuration.GetSection("httpClient");
@@ -154,14 +148,10 @@ public static class Extensions
         }
 
         if (httpClientOptions.RequestMasking.Enabled)
-        {
-            builder.Services.Replace(ServiceDescriptor.Singleton<IHttpMessageHandlerBuilderFilter, HttpLoggingFilter>());
-        }
+            builder.Services.Replace(ServiceDescriptor
+                .Singleton<IHttpMessageHandlerBuilderFilter, HttpLoggingFilter>());
 
-        if (string.IsNullOrWhiteSpace(httpClientOptions.Type))
-        {
-            return builder;
-        }
+        if (string.IsNullOrWhiteSpace(httpClientOptions.Type)) return builder;
 
         return httpClientOptions.Type.ToLowerInvariant() switch
         {
@@ -170,18 +160,18 @@ public static class Extensions
             _ => throw new InvalidOperationException($"Unsupported HTTP client type: '{httpClientOptions.Type}'.")
         };
     }
-    
+
     public static IServiceCollection AddHostApplication(this IServiceCollection services, IConfiguration configuration)
     {
         var appOptions = configuration.GetOptions<AppOptions>("app");
         services = services
             .AddSingleton(appOptions);
         var version = appOptions.DisplayVersion ? $" {appOptions.Version}" : string.Empty;
-        Console.WriteLine(Figgle.FiggleFonts.Doom.Render($"{appOptions.Name} v.{version}"));
-        
+        Console.WriteLine(FiggleFonts.Doom.Render($"{appOptions.Name} v.{version}"));
+
         return services;
     }
-    
+
     public static void AddCustomVersioning(this IServiceCollection services,
         Action<ApiVersioningOptions> configurator = null)
     {
@@ -209,7 +199,6 @@ public static class Extensions
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
@@ -222,11 +211,9 @@ public static class Extensions
         });
         return app;
     }
-    
-    
+
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
@@ -234,22 +221,20 @@ public static class Extensions
     {
         app.UseContext();
         app.UseCorrelationId();
-        
+
         using var scope = app.ApplicationServices.CreateScope();
         var initializer = scope.ServiceProvider.GetServices<IInitializer>();
-        
+
         Task.Run(() =>
         {
-            foreach (var initializer1 in initializer)
-            {
-                initializer1.InitAsync().GetAwaiter().GetResult();
-            }
+            foreach (var initializer1 in initializer) initializer1.InitAsync().GetAwaiter().GetResult();
         });
-    
+
         return app;
     }
-    
-    public static IApplicationBuilder UseErrorHandling(this IApplicationBuilder app)
-        => app.UseMiddleware<ErrorHandlerMiddleware>();
-}
 
+    public static IApplicationBuilder UseErrorHandling(this IApplicationBuilder app)
+    {
+        return app.UseMiddleware<ErrorHandlerMiddleware>();
+    }
+}

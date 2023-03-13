@@ -3,6 +3,7 @@
 public sealed class ConsulOptions
 {
     public bool Enabled { get; set; }
+    public bool IsGrpc { get; set; }
     public string Url { get; set; } = string.Empty;
     public ServiceRegistration Service { get; set; } = new();
     public HealthCheckRegistration HealthCheck { get; set; } = new();

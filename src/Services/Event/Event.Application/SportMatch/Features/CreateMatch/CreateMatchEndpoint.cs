@@ -20,6 +20,6 @@ public class CreateMatchEndpoint : BaseController
         //Not best since we always will create two objects
         command = command with {EventId = SnowFlakIdGenerator.NewId()};
         await Dispatcher.SendAsync(command, cancellationToken);
-        return Created(BaseApiPath + "/match", new { EventId = command.EventId });
+        return Created(BaseApiPath + "/match", new {command.EventId});
     }
 }

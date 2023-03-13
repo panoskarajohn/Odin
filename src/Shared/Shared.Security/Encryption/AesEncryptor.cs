@@ -12,13 +12,11 @@ public class AesEncryptor : IEncryptor
     {
         _defaultKey = options.Value.Encryption.Key;
     }
-    
+
     public string Encrypt(string data, string? key = null)
     {
         if (string.IsNullOrWhiteSpace(data))
-        {
             throw new InvalidOperationException("Data to be encrypted cannot be empty.");
-        }
 
         key = GetKey(key);
 
@@ -39,9 +37,7 @@ public class AesEncryptor : IEncryptor
     public string Decrypt(string data, string? key = null)
     {
         if (string.IsNullOrWhiteSpace(data))
-        {
             throw new InvalidOperationException("Data to be decrypted cannot be empty.");
-        }
 
         key = GetKey(key);
 
@@ -59,16 +55,11 @@ public class AesEncryptor : IEncryptor
     private string GetKey(string? key)
     {
         key = string.IsNullOrWhiteSpace(key) ? _defaultKey : key;
-        
-        if (string.IsNullOrWhiteSpace(key))
-        {
-            throw new InvalidOperationException("Encryption key cannot be empty.");
-        }
-        
+
+        if (string.IsNullOrWhiteSpace(key)) throw new InvalidOperationException("Encryption key cannot be empty.");
+
         if (key.Length != 32)
-        {
             throw new InvalidOperationException($"Invalid encryption key length: {key.Length} (required: 32 chars).");
-        }
 
         return key;
     }

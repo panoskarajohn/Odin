@@ -31,18 +31,13 @@ public static class Extensions
         Func<IRabbitMqPluginsRegistry, IRabbitMqPluginsRegistry> plugins = null,
         Action<ConnectionFactory> connectionFactoryConfigurator = null, IRabbitMqSerializer serializer = null)
     {
-        if (string.IsNullOrWhiteSpace(sectionName))
-        {
-            sectionName = SectionName;
-        }
+        if (string.IsNullOrWhiteSpace(sectionName)) sectionName = SectionName;
 
         var options = configuration.GetOptions<RabbitMqOptions>(sectionName);
         services.AddSingleton(options);
 
         if (options.HostNames is null || !options.HostNames.Any())
-        {
             throw new ArgumentException("RabbitMQ hostnames are not specified.", nameof(options.HostNames));
-        }
 
 
         ILogger<IRabbitMqClient> logger;
@@ -65,13 +60,9 @@ public static class Extensions
         services.AddInitializer<RabbitMqExchangeInitializer>();
 
         if (serializer is not null)
-        {
             services.AddSingleton(serializer);
-        }
         else
-        {
             services.AddSingleton<IRabbitMqSerializer, SystemTextJsonJsonRabbitMqSerializer>();
-        }
 
         var pluginsRegistry = new RabbitMqPluginsRegistry();
         services.AddSingleton<IRabbitMqPluginsRegistryAccessor>(pluginsRegistry);
@@ -133,22 +124,13 @@ public static class Extensions
                         $"server: '{options.Ssl.ServerName}', client certificate: '{options.Ssl.CertificatePath}', " +
                         $"CA certificate: '{options.Ssl.CaCertificatePath}'.");
 
-        if (string.IsNullOrWhiteSpace(options.Ssl.CaCertificatePath))
-        {
-            return;
-        }
+        if (string.IsNullOrWhiteSpace(options.Ssl.CaCertificatePath)) return;
 
         connectionFactory.Ssl.CertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) =>
         {
-            if (sslPolicyErrors == SslPolicyErrors.None)
-            {
-                return true;
-            }
+            if (sslPolicyErrors == SslPolicyErrors.None) return true;
 
-            if (chain is null)
-            {
-                return false;
-            }
+            if (chain is null) return false;
 
             chain = new X509Chain();
             var certificate2 = new X509Certificate2(certificate);
@@ -171,10 +153,8 @@ public static class Extensions
             var isValid = statuses.All(chainStatus => chainStatus.Status == X509ChainStatusFlags.NoError
                                                       || ignoredStatuses.Contains(chainStatus.Status));
             if (!isValid)
-            {
                 logger.LogError(string.Join(Environment.NewLine,
                     statuses.Select(s => $"{s.Status} - {s.StatusInformation}")));
-            }
 
             return isValid;
         };
@@ -195,8 +175,12 @@ public static class Extensions
     }
 
     public static IBusSubscriber UseRabbitMq(this IApplicationBuilder app)
-        => new RabbitMqSubscriber(app.ApplicationServices.GetRequiredService<MessageSubscribersChannel>());
-    
+    {
+        return new RabbitMqSubscriber(app.ApplicationServices.GetRequiredService<MessageSubscribersChannel>());
+    }
+
     public static IBusSubscriber UseRabbitMq(this IHost host)
-        => new RabbitMqSubscriber(host.Services.GetRequiredService<MessageSubscribersChannel>());
+    {
+        return new RabbitMqSubscriber(host.Services.GetRequiredService<MessageSubscribersChannel>());
+    }
 }

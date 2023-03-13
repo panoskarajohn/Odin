@@ -11,15 +11,9 @@ public class MessagePropertiesAccessor : IMessagePropertiesAccessor
         set
         {
             var holder = Holder.Value;
-            if (holder != null)
-            {
-                holder.Properties = null;
-            }
+            if (holder != null) holder.Properties = null;
 
-            if (value != null)
-            {
-                Holder.Value = new MessageContextHolder {Properties = value};
-            }
+            if (value != null) Holder.Value = new MessageContextHolder {Properties = value};
         }
     }
 

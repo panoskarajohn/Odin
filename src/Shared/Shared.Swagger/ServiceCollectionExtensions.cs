@@ -18,59 +18,8 @@ public static class ServiceCollectionExtensions
 {
     public const string HeaderName = "X-Api-Key";
 
-    #region Swagger for Minimal APIS
 
-    public static IServiceCollection AddSwaggerDocs(this IServiceCollection services, IConfiguration configuration)
-    {
-        var section = configuration.GetSection("swagger");
-        var options = section.BindOptions<SwaggerOptions>();
-        services.Configure<SwaggerOptions>(section);
-        
-        if (!options.Enabled)
-        {
-            return services;
-        }
-        
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen(swagger =>
-        {
-            swagger.SchemaFilter<ExcludePropertiesFilter>();
-            swagger.EnableAnnotations();
-            swagger.CustomSchemaIds(x => x.FullName);
-            swagger.SwaggerDoc(options.Version, new OpenApiInfo
-            {
-                Title = options.Title,
-                Version = options.Version
-            });
-        });
-
-        return services;
-    }
-    
-    public static IApplicationBuilder UseSwaggerDocs(this IApplicationBuilder app)
-    {
-        var options = app.ApplicationServices.GetRequiredService<IOptions<SwaggerOptions>>().Value;
-        if (!options.Enabled)
-        {
-            return app;
-        }
-        
-        app.UseSwagger();
-        app.UseReDoc(reDoc =>
-        {
-            reDoc.RoutePrefix = string.IsNullOrWhiteSpace(options.Route) ? "swagger" : options.Route;
-            reDoc.SpecUrl($"/swagger/{options.Version}/swagger.json");
-            reDoc.DocumentTitle = options.Title;
-        });
-
-        return app;
-    }
-
-    #endregion
-    
-    
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="services"></param>
     /// <param name="configuration"></param>
@@ -108,7 +57,7 @@ public static class ServiceCollectionExtensions
                 options.OperationFilter<SwaggerDefaultValues>();
                 var xmlFile = XmlCommentsFilePath(assembly);
                 if (File.Exists(xmlFile)) options.IncludeXmlComments(xmlFile);
-                
+
                 options.EnableAnnotations();
 
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -169,8 +118,6 @@ public static class ServiceCollectionExtensions
                 options.DocInclusionPredicate((name, api) => true);
             });
 
-        
-
 
         return services;
 
@@ -197,4 +144,48 @@ public static class ServiceCollectionExtensions
 
         return app;
     }
+
+    #region Swagger for Minimal APIS
+
+    public static IServiceCollection AddSwaggerDocs(this IServiceCollection services, IConfiguration configuration)
+    {
+        var section = configuration.GetSection("swagger");
+        var options = section.BindOptions<SwaggerOptions>();
+        services.Configure<SwaggerOptions>(section);
+
+        if (!options.Enabled) return services;
+
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen(swagger =>
+        {
+            swagger.SchemaFilter<ExcludePropertiesFilter>();
+            swagger.EnableAnnotations();
+            swagger.CustomSchemaIds(x => x.FullName);
+            swagger.SwaggerDoc(options.Version, new OpenApiInfo
+            {
+                Title = options.Title,
+                Version = options.Version
+            });
+        });
+
+        return services;
+    }
+
+    public static IApplicationBuilder UseSwaggerDocs(this IApplicationBuilder app)
+    {
+        var options = app.ApplicationServices.GetRequiredService<IOptions<SwaggerOptions>>().Value;
+        if (!options.Enabled) return app;
+
+        app.UseSwagger();
+        app.UseReDoc(reDoc =>
+        {
+            reDoc.RoutePrefix = string.IsNullOrWhiteSpace(options.Route) ? "swagger" : options.Route;
+            reDoc.SpecUrl($"/swagger/{options.Version}/swagger.json");
+            reDoc.DocumentTitle = options.Title;
+        });
+
+        return app;
+    }
+
+    #endregion
 }

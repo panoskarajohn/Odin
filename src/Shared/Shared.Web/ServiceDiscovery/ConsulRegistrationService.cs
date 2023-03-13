@@ -9,39 +9,34 @@ namespace Shared.Web.ServiceDiscovery;
 
 public class ConsulRegistrationService : IHostedService
 {
-
     private readonly IConsulClient _client;
-    private readonly IServiceDiscoveryRegistration _serviceDiscoveryRegistration;
     private readonly ILogger<ConsulRegistrationService> _logger;
-    private readonly string _serviceId;
-    private readonly Uri _serviceUrl;
-    private readonly string _serviceName;
     private readonly ConsulOptions _options;
+    private readonly IServiceDiscoveryRegistration _serviceDiscoveryRegistration;
+    private readonly string _serviceId;
+    private readonly string _serviceName;
+    private readonly Uri _serviceUrl;
 
-    public ConsulRegistrationService(IConsulClient client, 
-        IServiceDiscoveryRegistration serviceDiscoveryRegistration, 
-        ILogger<ConsulRegistrationService> logger,  
+    public ConsulRegistrationService(IConsulClient client,
+        IServiceDiscoveryRegistration serviceDiscoveryRegistration,
+        ILogger<ConsulRegistrationService> logger,
         IOptions<ConsulOptions> options)
     {
         if (string.IsNullOrWhiteSpace(options.Value.Service.Name))
-        {
             throw new ArgumentException("Service name is required.", nameof(options.Value.Service.Name));
-        }
-        
+
         if (string.IsNullOrWhiteSpace(options.Value.Service.Url))
-        {
             throw new ArgumentException("Service url is required.", nameof(options.Value.Service.Url));
-        }
-        
+
         _client = client;
         _serviceDiscoveryRegistration = serviceDiscoveryRegistration;
         _logger = logger;
         _options = options.Value;
         _serviceUrl = new Uri(options.Value.Service.Url);
         _serviceName = options.Value.Service.Name;
-        _serviceId  = $"{_serviceName}-{Guid.NewGuid():N}";
+        _serviceId = $"{_serviceName}-{Guid.NewGuid():N}";
     }
-    
+
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation($"Registering a service: '{_serviceId}' in Consul...");
@@ -64,8 +59,9 @@ public class ConsulRegistrationService : IHostedService
             _logger.LogInformation($"Registered a service: '{_serviceId}' in Consul.");
             return;
         }
-        
-        _logger.LogError($"There was an error: {result.StatusCode} when registering a service: '{_serviceId}' in Consul.");
+
+        _logger.LogError(
+            $"There was an error: {result.StatusCode} when registering a service: '{_serviceId}' in Consul.");
     }
 
     public async Task StopAsync(CancellationToken cancellationToken)
@@ -77,7 +73,8 @@ public class ConsulRegistrationService : IHostedService
             _logger.LogInformation($"Deregistered a service: '{_serviceId}' in Consul.");
             return;
         }
-        
-        _logger.LogError($"There was an error: {result.StatusCode} when deregistering a service: '{_serviceId}' in Consul.");
+
+        _logger.LogError(
+            $"There was an error: {result.StatusCode} when deregistering a service: '{_serviceId}' in Consul.");
     }
 }

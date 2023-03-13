@@ -9,7 +9,8 @@ namespace Event.Infrastructure;
 
 public static class Extensions
 {
-    public static IServiceCollection AddEventInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddEventInfrastructure(this IServiceCollection services,
+        IConfiguration configuration)
     {
         services.AddMongo(configuration);
         services.AddMongoRepository<MatchDocument, long>("matches");

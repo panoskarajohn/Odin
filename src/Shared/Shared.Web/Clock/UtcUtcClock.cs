@@ -2,5 +2,8 @@
 
 public class UtcUtcClock : IUtcClock
 {
-    public DateTime Current() => DateTime.UtcNow;
+    public DateTime Current()
+    {
+        return DateTime.UtcNow;
+    }
 }

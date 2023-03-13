@@ -10,8 +10,12 @@ public abstract class RabbitMqPlugin : IRabbitMqPlugin, IRabbitMqPluginAccessor
         BasicDeliverEventArgs args);
 
     void IRabbitMqPluginAccessor.SetSuccessor(Func<object, object, BasicDeliverEventArgs, Task> successor)
-        => _successor = successor;
+    {
+        _successor = successor;
+    }
 
     public Task Next(object message, object correlationContext, BasicDeliverEventArgs args)
-        => _successor(message, correlationContext, args);
+    {
+        return _successor(message, correlationContext, args);
+    }
 }

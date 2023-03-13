@@ -18,10 +18,7 @@ internal sealed class HttpLoggingFilter : IHttpMessageHandlerBuilderFilter
 
     public Action<HttpMessageHandlerBuilder> Configure(Action<HttpMessageHandlerBuilder> next)
     {
-        if (next is null)
-        {
-            throw new ArgumentNullException(nameof(next));
-        }
+        if (next is null) throw new ArgumentNullException(nameof(next));
 
         return builder =>
         {

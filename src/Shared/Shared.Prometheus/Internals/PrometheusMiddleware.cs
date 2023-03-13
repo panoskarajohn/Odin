@@ -19,26 +19,14 @@ internal sealed class PrometheusMiddleware : IMiddleware
     public Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         var request = context.Request;
-        if (context.Request.Path != _endpoint)
-        {
-            return next(context);
-        }
+        if (context.Request.Path != _endpoint) return next(context);
 
-        if (string.IsNullOrWhiteSpace(_apiKey))
-        {
-            return next(context);
-        }
+        if (string.IsNullOrWhiteSpace(_apiKey)) return next(context);
 
-        if (request.Query.TryGetValue("apiKey", out var apiKey) && apiKey == _apiKey)
-        {
-            return next(context);
-        }
+        if (request.Query.TryGetValue("apiKey", out var apiKey) && apiKey == _apiKey) return next(context);
 
         var host = context.Request.Host.Host;
-        if (_allowedHosts.Contains(host))
-        {
-            return next(context);
-        }
+        if (_allowedHosts.Contains(host)) return next(context);
 
         if (!request.Headers.TryGetValue("x-forwarded-for", out var forwardedFor))
         {
@@ -46,10 +34,7 @@ internal sealed class PrometheusMiddleware : IMiddleware
             return Task.CompletedTask;
         }
 
-        if (_allowedHosts.Contains(forwardedFor))
-        {
-            return next(context);
-        }
+        if (_allowedHosts.Contains(forwardedFor)) return next(context);
 
         context.Response.StatusCode = 404;
         return Task.CompletedTask;

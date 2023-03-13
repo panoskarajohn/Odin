@@ -1,5 +1,4 @@
 import http from 'k6/http';
-import { sleep } from 'k6';
 
 
 export let options = {
@@ -19,10 +18,10 @@ export default function () {
         "role": "user"
     };
 
-    const headers = { 'Content-Type': 'application/json' };
+    const headers = {'Content-Type': 'application/json'};
 
     http.post(url, JSON.stringify(data),
-    {
-        headers: headers
-    });
+        {
+            headers: headers
+        });
 }

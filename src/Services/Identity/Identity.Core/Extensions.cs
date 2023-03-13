@@ -8,14 +8,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Cqrs;
 using Shared.DAL.Postgres;
-using Shared.Jwt;
 using Shared.Logging;
 
 namespace Identity.Core;
 
 public static class Extensions
 {
-    public static IServiceCollection AddIdentityApplication(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddIdentityApplication(this IServiceCollection services,
+        IConfiguration configuration)
     {
         return services
             .AddCqrs()

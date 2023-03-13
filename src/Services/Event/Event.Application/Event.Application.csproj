@@ -7,17 +7,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Shared\Shared.Cqrs\Shared.Cqrs.csproj" />
-      <ProjectReference Include="..\..\..\Shared\Shared.Logging\Shared.Logging.csproj" />
-      <ProjectReference Include="..\..\..\Shared\Shared.Web\Shared.Web.csproj" />
-      <ProjectReference Include="..\Event.Infrastructure\Event.Infrastructure.csproj" />
-      <ProjectReference Include="..\Event.Core\Event.Core.csproj" />
+        <ProjectReference Include="..\..\..\Shared\Shared.Cqrs\Shared.Cqrs.csproj"/>
+        <ProjectReference Include="..\..\..\Shared\Shared.Logging\Shared.Logging.csproj"/>
+        <ProjectReference Include="..\..\..\Shared\Shared.Web\Shared.Web.csproj"/>
+        <ProjectReference Include="..\Event.Infrastructure\Event.Infrastructure.csproj"/>
+        <ProjectReference Include="..\Event.Core\Event.Core.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
-      <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
-      <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.4.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0"/>
+        <PackageReference Include="Polly.Extensions.Http" Version="3.0.0"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.4.0"/>
     </ItemGroup>
 
 </Project>

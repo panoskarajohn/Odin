@@ -14,10 +14,7 @@ internal sealed class ExcludePropertiesFilter : ISchemaFilter
 
     public void Apply(OpenApiSchema schema, SchemaFilterContext context)
     {
-        if (schema.Properties.Count == 0)
-        {
-            return;
-        }
+        if (schema.Properties.Count == 0) return;
 
         if (Properties.TryGetValue(context.Type, out var properties))
         {
@@ -31,12 +28,8 @@ internal sealed class ExcludePropertiesFilter : ISchemaFilter
             .Select(x => x.Name.Camelize());
 
         foreach (var excludedProperty in excludedProperties)
-        {
             if (schema.Properties.ContainsKey(excludedProperty))
-            {
                 schema.Properties.Remove(excludedProperty);
-            }
-        }
 
         Properties.TryAdd(context.Type, schema.Properties);
     }

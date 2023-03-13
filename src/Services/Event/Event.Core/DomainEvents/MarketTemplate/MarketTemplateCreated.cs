@@ -4,5 +4,4 @@ namespace Event.Core.DomainEvents.MarketTemplate;
 
 public class MarketTemplateCreated : IDomainEvent
 {
-    
 }

@@ -5,7 +5,6 @@ using Shared.Types.Exceptions;
 
 namespace Shared.Grpc;
 
-
 public class ExceptionInterceptor : Interceptor
 {
     private readonly ILogger<ExceptionInterceptor> _logger;
@@ -14,8 +13,9 @@ public class ExceptionInterceptor : Interceptor
     {
         _logger = logger;
     }
-    
-    public override async Task<TResponse> UnaryServerHandler<TRequest, TResponse>(TRequest request, ServerCallContext context, UnaryServerMethod<TRequest, TResponse> continuation)
+
+    public override async Task<TResponse> UnaryServerHandler<TRequest, TResponse>(TRequest request,
+        ServerCallContext context, UnaryServerMethod<TRequest, TResponse> continuation)
     {
         try
         {

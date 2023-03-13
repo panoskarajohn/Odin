@@ -18,7 +18,7 @@ public class ConventionsBuilder : IConventionsBuilder
     public string GetRoutingKey(Type type)
     {
         var attribute = GeAttribute(type);
-        string routingKey = attribute.RoutingKey;
+        var routingKey = attribute.RoutingKey;
         return WithCasing(routingKey);
     }
 
@@ -48,12 +48,20 @@ public class ConventionsBuilder : IConventionsBuilder
         return WithCasing(queue);
     }
 
-    private string WithCasing(string value) => SnakeCase(value);
+    private string WithCasing(string value)
+    {
+        return SnakeCase(value);
+    }
 
     private static string SnakeCase(string value)
-        => string.Concat(value.Select((x, i) =>
+    {
+        return string.Concat(value.Select((x, i) =>
                 i > 0 && value[i - 1] != '.' && value[i - 1] != '/' && char.IsUpper(x) ? "_" + x : x.ToString()))
             .ToLowerInvariant();
+    }
 
-    private static MessageAttribute GeAttribute(MemberInfo type) => type.GetCustomAttribute<MessageAttribute>()!;
+    private static MessageAttribute GeAttribute(MemberInfo type)
+    {
+        return type.GetCustomAttribute<MessageAttribute>()!;
+    }
 }

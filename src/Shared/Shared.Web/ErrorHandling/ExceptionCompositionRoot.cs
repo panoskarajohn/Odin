@@ -11,8 +11,8 @@ internal sealed class ExceptionCompositionRoot : IExceptionCompositionRoot
     {
         _serviceProvider = serviceProvider;
     }
-        
-    public ExceptionResponse Map(System.Exception exception)
+
+    public ExceptionResponse Map(Exception exception)
     {
         using var scope = _serviceProvider.CreateScope();
         var mappers = scope.ServiceProvider.GetServices<IExceptionToResponseMapper>().ToArray();
@@ -21,14 +21,11 @@ internal sealed class ExceptionCompositionRoot : IExceptionCompositionRoot
             .Select(x => x.Map(exception))
             .SingleOrDefault(x => x is not null);
 
-        if (result is not null)
-        {
-            return result;
-        }
-        
+        if (result is not null) return result;
+
         var defaultMapper = mappers.SingleOrDefault(x => x is ExceptionToResponseMapper);
 
-        if(exception is OdinException)
+        if (exception is OdinException)
             return defaultMapper?.Map(exception);
 
         return defaultMapper?.Map(exception);

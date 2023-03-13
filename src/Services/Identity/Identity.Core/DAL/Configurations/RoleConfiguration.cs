@@ -14,7 +14,7 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
         builder
             .Property(x => x.Permissions)
             .HasConversion(x => string.Join(',', x), x => x.Split(',', StringSplitOptions.None));
-            
+
         builder
             .Property(x => x.Permissions).Metadata.SetValueComparer(
                 new ValueComparer<IEnumerable<string>>(

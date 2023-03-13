@@ -14,11 +14,8 @@ public static class Extensions
     {
         var prometheusOptions = configuration.GetOptions<PrometheusOptions>("prometheus");
         services.AddSingleton(prometheusOptions);
-        
-        if (!prometheusOptions.Enabled)
-        {
-            return services;
-        }
+
+        if (!prometheusOptions.Enabled) return services;
 
         services.AddHostedService<PrometheusJob>();
         services.AddSingleton<PrometheusMiddleware>();
@@ -30,10 +27,7 @@ public static class Extensions
     public static IApplicationBuilder UsePrometheus(this IApplicationBuilder app)
     {
         var options = app.ApplicationServices.GetRequiredService<PrometheusOptions>();
-        if (!options.Enabled)
-        {
-            return app;
-        }
+        if (!options.Enabled) return app;
 
         var endpoint = string.IsNullOrWhiteSpace(options.Endpoint) ? "/metrics" :
             options.Endpoint.StartsWith("/") ? options.Endpoint : $"/{options.Endpoint}";

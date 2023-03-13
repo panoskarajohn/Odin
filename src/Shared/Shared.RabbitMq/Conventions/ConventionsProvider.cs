@@ -14,14 +14,14 @@ public class ConventionsProvider : IConventionsProvider
         _builder = builder;
     }
 
-    public IConventions Get<T>() => Get(typeof(T));
+    public IConventions Get<T>()
+    {
+        return Get(typeof(T));
+    }
 
     public IConventions Get(Type type)
     {
-        if (_conventions.TryGetValue(type, out var conventions))
-        {
-            return conventions;
-        }
+        if (_conventions.TryGetValue(type, out var conventions)) return conventions;
 
         conventions = new MessageConventions(type, _builder.GetRoutingKey(type),
             _builder.GetExchange(type), _builder.GetQueue(type));

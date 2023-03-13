@@ -23,10 +23,7 @@ internal sealed class LoggingScopeHttpMessageHandler : DelegatingHandler
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
         CancellationToken cancellationToken)
     {
-        if (request is null)
-        {
-            throw new ArgumentNullException(nameof(request));
-        }
+        if (request is null) throw new ArgumentNullException(nameof(request));
 
         using (Log.BeginRequestPipelineScope(_logger, request, _maskedUrlParts, _maskTemplate))
         {
@@ -40,12 +37,6 @@ internal sealed class LoggingScopeHttpMessageHandler : DelegatingHandler
 
     private static class Log
     {
-        private static class EventIds
-        {
-            public static readonly EventId PipelineStart = new(100, "RequestPipelineStart");
-            public static readonly EventId PipelineEnd = new(101, "RequestPipelineEnd");
-        }
-
         private static readonly Func<ILogger, HttpMethod, Uri?, IDisposable> RequestPipelineScope =
             LoggerMessage.DefineScope<HttpMethod, Uri?>("HTTP {HttpMethod} {Uri}");
 
@@ -78,35 +69,29 @@ internal sealed class LoggingScopeHttpMessageHandler : DelegatingHandler
 
         private static Uri? MaskUri(Uri? uri, ISet<string> maskedRequestUrlParts, string maskTemplate)
         {
-            if (uri is null)
-            {
-                return uri;
-            }
-            
-            if (!maskedRequestUrlParts.Any())
-            {
-                return uri;
-            }
-                
+            if (uri is null) return uri;
+
+            if (!maskedRequestUrlParts.Any()) return uri;
+
             var requestUri = uri.OriginalString;
             var hasMatch = false;
             foreach (var part in maskedRequestUrlParts)
             {
-                if (string.IsNullOrWhiteSpace(part))
-                {
-                    continue;
-                }
-                    
-                if (!requestUri.Contains(part))
-                {
-                    continue;
-                }
-                    
+                if (string.IsNullOrWhiteSpace(part)) continue;
+
+                if (!requestUri.Contains(part)) continue;
+
                 requestUri = requestUri.Replace(part, maskTemplate);
                 hasMatch = true;
             }
 
             return hasMatch ? new Uri(requestUri) : uri;
+        }
+
+        private static class EventIds
+        {
+            public static readonly EventId PipelineStart = new(100, "RequestPipelineStart");
+            public static readonly EventId PipelineEnd = new(101, "RequestPipelineEnd");
         }
     }
 }

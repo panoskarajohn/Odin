@@ -18,9 +18,18 @@ public sealed class SystemTextJsonJsonRabbitMqSerializer : IRabbitMqSerializer
         };
     }
 
-    public ReadOnlySpan<byte> Serialize(object value) => JsonSerializer.SerializeToUtf8Bytes(value, _options);
+    public ReadOnlySpan<byte> Serialize(object value)
+    {
+        return JsonSerializer.SerializeToUtf8Bytes(value, _options);
+    }
 
-    public object Deserialize(ReadOnlySpan<byte> value, Type type) => JsonSerializer.Deserialize(value, type, _options);
+    public object Deserialize(ReadOnlySpan<byte> value, Type type)
+    {
+        return JsonSerializer.Deserialize(value, type, _options);
+    }
 
-    public object Deserialize(ReadOnlySpan<byte> value) => JsonSerializer.Deserialize(value, typeof(object), _options);
+    public object Deserialize(ReadOnlySpan<byte> value)
+    {
+        return JsonSerializer.Deserialize(value, typeof(object), _options);
+    }
 }

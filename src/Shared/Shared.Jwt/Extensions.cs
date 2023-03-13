@@ -26,7 +26,7 @@ public static class Extensions
 
         Guard.Against.Null(options.Jwt, nameof(options.Jwt));
 
-        var tokenValidationParameters = new TokenValidationParameters()
+        var tokenValidationParameters = new TokenValidationParameters
         {
             RequireAudience = options.Jwt.RequireAudience,
             ValidIssuer = options.Jwt.ValidIssuer,
@@ -76,10 +76,7 @@ public static class Extensions
 
             if (certificate is not null)
             {
-                if (string.IsNullOrWhiteSpace(options.Algorithm))
-                {
-                    algorithm = SecurityAlgorithms.RsaSha256;
-                }
+                if (string.IsNullOrWhiteSpace(options.Algorithm)) algorithm = SecurityAlgorithms.RsaSha256;
 
                 hasCertificate = true;
                 securityKey = new X509SecurityKey(certificate);
@@ -92,14 +89,9 @@ public static class Extensions
         if (!hasCertificate)
         {
             if (string.IsNullOrWhiteSpace(options.Jwt.IssuerSigningKey))
-            {
                 throw new InvalidOperationException("Missing issuer signing key.");
-            }
 
-            if (string.IsNullOrWhiteSpace(options.Algorithm))
-            {
-                algorithm = SecurityAlgorithms.HmacSha256;
-            }
+            if (string.IsNullOrWhiteSpace(options.Algorithm)) algorithm = SecurityAlgorithms.HmacSha256;
 
             var rawKey = Encoding.UTF8.GetBytes(options.Jwt.IssuerSigningKey);
             securityKey = new SymmetricSecurityKey(rawKey);
@@ -108,19 +100,13 @@ public static class Extensions
         }
 
         if (!string.IsNullOrWhiteSpace(options.Jwt.AuthenticationType))
-        {
             tokenValidationParameters.AuthenticationType = options.Jwt.AuthenticationType;
-        }
 
         if (!string.IsNullOrWhiteSpace(options.Jwt.NameClaimType))
-        {
             tokenValidationParameters.NameClaimType = options.Jwt.NameClaimType;
-        }
 
         if (!string.IsNullOrWhiteSpace(options.Jwt.RoleClaimType))
-        {
             tokenValidationParameters.RoleClaimType = options.Jwt.RoleClaimType;
-        }
 
         services
             .AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme)
@@ -150,7 +136,7 @@ public static class Extensions
 
                         return Task.CompletedTask;
                     },
-                    OnAuthenticationFailed = context => Task.CompletedTask,
+                    OnAuthenticationFailed = context => Task.CompletedTask
                 };
             })
             .AddCertificateCache(cache =>
@@ -175,11 +161,9 @@ public static class Extensions
                 jwtBearerOptions.IncludeErrorDetails = options.Jwt.IncludeErrorDetails;
                 jwtBearerOptions.TokenValidationParameters = tokenValidationParameters;
                 if (!string.IsNullOrWhiteSpace(options.Jwt.Challenge))
-                {
                     jwtBearerOptions.Challenge = options.Jwt.Challenge;
-                }
             });
-        
+
         if (securityKey is not null)
         {
             services.AddSingleton(new SecurityKeyDetails(securityKey, algorithm));
@@ -189,18 +173,20 @@ public static class Extensions
         services.AddSingleton(tokenValidationParameters);
         services.AddAuthorization(a =>
         {
-            a.AddPolicy("cert", p =>
-            {
-                p.AddAuthenticationSchemes(CertificateAuthenticationDefaults.AuthenticationScheme).RequireAuthenticatedUser();
-            });
-            
-            a.AddPolicy("jwt", p =>
-            {
-                p.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser();
-            });
+            a.AddPolicy("cert",
+                p =>
+                {
+                    p.AddAuthenticationSchemes(CertificateAuthenticationDefaults.AuthenticationScheme)
+                        .RequireAuthenticatedUser();
+                });
+
+            a.AddPolicy("jwt",
+                p =>
+                {
+                    p.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser();
+                });
         });
 
         return services;
     }
-
 }

@@ -1,5 +1,4 @@
-﻿
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Shared.Cqrs.Commands;
 using Shared.Cqrs.Events;
 using Shared.Cqrs.Queries;
@@ -20,7 +19,7 @@ public static class Extensions
 
         return services;
     }
-    
+
     private static IServiceCollection AddEvents(this IServiceCollection services)
     {
         services.AddSingleton<IEventDispatcher, EventDispatcher>();
@@ -33,7 +32,7 @@ public static class Extensions
 
         return services;
     }
-    
+
     private static IServiceCollection AddQueries(this IServiceCollection services)
     {
         services.AddSingleton<IQueryDispatcher, QueryDispatcher>();

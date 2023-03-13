@@ -100,9 +100,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.DAL.Transactions", "src\Shared\Shared.DAL.Transactions\Shared.DAL.Transactions.csproj", "{9C638E6C-2116-4254-8BE1-65BC32DE65E9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{4BD953C6-1042-47D7-9CC1-D55985BDAB66}"
-	ProjectSection(SolutionItems) = preProject
-		src\Web\Readme.md = src\Web\Readme.md
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "loadtest", "loadtest", "{80620008-452F-4317-84C3-99CA220928BE}"
 	ProjectSection(SolutionItems) = preProject
