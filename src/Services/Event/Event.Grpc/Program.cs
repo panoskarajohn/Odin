@@ -2,6 +2,7 @@ using System.Net;
 using Event.Application;
 using Event.Grpc.Services;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Shared.Grpc;
 using Shared.Logging;
 using Shared.Metrics;
@@ -27,8 +28,6 @@ builder.Services
     .AddCustomGrpc();
 
 builder.Services.AddEventApplication(configuration);
-host.UseLogging();
-
 webHost.ConfigureKestrel(options =>
 {
     var ports = GetDefinedPorts(configuration);
@@ -44,15 +43,12 @@ webHost.ConfigureKestrel(options =>
         listenOptions => { listenOptions.Protocols = HttpProtocols.Http1AndHttp2; });
     options.Listen(IPAddress.Any, ports.grpcPort, listenOptions => { listenOptions.Protocols = HttpProtocols.Http2; });
 });
+host.UseLogging();
 
 var app = builder.Build();
 
 app.MapGrpcService<EventGrpcService>();
-
-app.MapGet("/",
-    () =>
-        "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
-app.MapGet("/ping", () => "pong").WithTags("API").WithName("Pong");
+app.MapGrpcHealthChecksService();
 
 app
     .UseApplication()

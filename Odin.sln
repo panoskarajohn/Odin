@@ -119,6 +119,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "datasources", "datasources"
 		grafana\provisioning\datasources\datasource_prometheus.yml = grafana\provisioning\datasources\datasource_prometheus.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{5171E32F-4E60-4A6D-B16A-10908ABB8FA6}"
+	ProjectSection(SolutionItems) = preProject
+		k8s\mongo.yaml = k8s\mongo.yaml
+		k8s\mongo-secret.yaml = k8s\mongo-secret.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

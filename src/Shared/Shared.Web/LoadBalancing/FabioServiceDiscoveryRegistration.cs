@@ -9,7 +9,17 @@ internal sealed class FabioServiceDiscoveryRegistration : IServiceDiscoveryRegis
     public FabioServiceDiscoveryRegistration(IOptions<ConsulOptions> options)
     {
         var serviceName = options.Value.Service.Name;
-        Tags = new[] {$"urlprefix-/{serviceName} strip=/{serviceName}"};
+        bool isGrpc = options.Value.IsGrpc;
+
+        if (isGrpc)
+        {
+            Tags = new []{$"urlprefix-/{serviceName} proto=grpc strip=/{serviceName}"};
+        }
+        else
+        {
+            Tags = new[] { $"urlprefix-/{serviceName} strip=/{serviceName}" };    
+        }
+         
     }
 
     public IEnumerable<string> Tags { get; }
