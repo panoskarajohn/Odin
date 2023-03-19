@@ -4,7 +4,7 @@ services:
   webapigateway:
     container_name: api.gateway
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=docker
       - ASPNETCORE_URLS=http://+:80
     ports:
       - "1000:80"
@@ -17,7 +17,7 @@ services:
   event.api:
     container_name: event.api
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=docker
       - ASPNETCORE_URLS=http://+:80
       - mongo__connectionString=mongodb://root:rootpassword@mongodb
     ports:
@@ -31,13 +31,14 @@ services:
   event.grpc:
     container_name: event.grpc
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=docker
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - "mongo__connectionString=mongodb://root:rootpassword@mongodb"
       - GRPC_PORT=81
       - PORT=80
     ports:
       - "4000:80"
+      - "4081:81"
     networks:
       - odin
     volumes:

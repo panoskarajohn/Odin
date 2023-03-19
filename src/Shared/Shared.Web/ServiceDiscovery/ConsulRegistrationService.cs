@@ -65,16 +65,12 @@ public class ConsulRegistrationService : IHostedService
                 Check = AgentServiceCheck,
             };
         
-        //TODO: Temporary solution for grpc
-        var host = _serviceUrl.OriginalString.Split(":")[0];
-        int port = int.Parse(_serviceUrl.OriginalString.Split(":")[1]);
-
         return new AgentServiceRegistration()
         {
             ID = _serviceId,
             Name = _serviceName,
-            Address = host,
-            Port = port,
+            Address = _serviceUrl.Host,
+            Port = _serviceUrl.Port,
             Tags = _serviceDiscoveryRegistration.Tags.ToArray(),
             Check = AgentServiceCheck,
         };
@@ -83,7 +79,7 @@ public class ConsulRegistrationService : IHostedService
     private AgentServiceCheck AgentServiceCheck => _options.IsGrpc
         ? new AgentServiceCheck
         {
-            GRPC = _serviceUrl.ToString(),
+            GRPC = $"{_serviceUrl.Host}:{_serviceUrl.Port}",
             GRPCUseTLS = false,
             Name = _serviceId,
             Interval = _options.HealthCheck.Interval,
@@ -92,7 +88,7 @@ public class ConsulRegistrationService : IHostedService
         }
         : new AgentServiceCheck
         {
-            HTTP = $"{_serviceUrl}{_options.HealthCheck.Endpoint}",
+            HTTP = $"{_serviceUrl}:{_serviceUrl.Port}",
             Interval = _options.HealthCheck.Interval,
             DeregisterCriticalServiceAfter = _options.HealthCheck.DeregisterInterval,
             Timeout = TimeSpan.FromSeconds(10)

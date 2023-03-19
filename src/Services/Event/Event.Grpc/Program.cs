@@ -34,8 +34,8 @@ webHost.ConfigureKestrel(options =>
 
     (int httpPort, int grpcPort) GetDefinedPorts(IConfiguration config)
     {
-        var grpcPort = config.GetValue("GRPC_PORT", 4081);
-        var port = config.GetValue("PORT", 4000);
+        var grpcPort = config.GetValue("GRPC_PORT", 81);
+        var port = config.GetValue("PORT", 80);
         return (port, grpcPort);
     }
 
@@ -49,7 +49,7 @@ var app = builder.Build();
 
 app.MapGrpcService<EventGrpcService>();
 app.MapGrpcHealthChecksService();
-
+app.MapGet("",() => "Hello World!");
 app
     .UseApplication()
     .UseLogging()
