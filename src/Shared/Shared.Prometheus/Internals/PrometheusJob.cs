@@ -20,7 +20,6 @@ internal sealed class PrometheusJob : IHostedService
     public Task StartAsync(CancellationToken cancellationToken)
     {
         if (_enabled)
-        {
             _collector = DotNetRuntimeStatsBuilder
                 .Customize()
                 .WithContentionStats()
@@ -30,7 +29,6 @@ internal sealed class PrometheusJob : IHostedService
                 .WithGcStats()
                 .WithExceptionStats()
                 .StartCollecting();
-        }
 
         return Task.CompletedTask;
     }

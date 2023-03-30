@@ -1,7 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using Slip.Service.Domain;
-
-namespace Slip.Service.Contract;
+﻿namespace Slip.Service.Contract;
 
 public class SlipContract
 {

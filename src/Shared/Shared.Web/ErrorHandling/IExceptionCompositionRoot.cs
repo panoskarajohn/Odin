@@ -2,5 +2,5 @@
 
 public interface IExceptionCompositionRoot
 {
-    ExceptionResponse Map(System.Exception exception);
+    ExceptionResponse Map(Exception exception);
 }

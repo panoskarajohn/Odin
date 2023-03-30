@@ -9,10 +9,12 @@ namespace Event.Application.SportMatch.Features.RemoveMarkets;
 
 public class RemoveMarketCommandHandler : ICommandHandler<RemoveMarketsCommand>
 {
+    private readonly IContext _context;
     private readonly ILogger<RemoveMarketCommandHandler> _logger;
     private readonly IMatchRepository _matchRepository;
-    private readonly IContext _context;
-    public RemoveMarketCommandHandler(ILogger<RemoveMarketCommandHandler> logger, IMatchRepository matchRepository, IContext context)
+
+    public RemoveMarketCommandHandler(ILogger<RemoveMarketCommandHandler> logger, IMatchRepository matchRepository,
+        IContext context)
     {
         _logger = logger;
         _matchRepository = matchRepository;

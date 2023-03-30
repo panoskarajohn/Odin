@@ -11,24 +11,24 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.1">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="7.0.2" />
-        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
-        <PackageReference Include="Polly" Version="7.2.3" />
-        <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="7.0.2"/>
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0"/>
+        <PackageReference Include="Polly" Version="7.2.3"/>
+        <PackageReference Include="Polly.Extensions.Http" Version="3.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos\event.proto" GrpcServices="Client" />
+        <Protobuf Include="Protos\event.proto" GrpcServices="Client"/>
     </ItemGroup>
-    
+
     <ItemGroup>
-        <PackageReference Include="Google.Protobuf" Version="3.21.9" />
-        <PackageReference Include="Grpc.Net.Client" Version="2.49.0" />
-        <PackageReference Include="Grpc.Net.ClientFactory" Version="2.49.0" />
+        <PackageReference Include="Google.Protobuf" Version="3.21.9"/>
+        <PackageReference Include="Grpc.Net.Client" Version="2.49.0"/>
+        <PackageReference Include="Grpc.Net.ClientFactory" Version="2.49.0"/>
         <PackageReference Include="Grpc.Tools" Version="2.50.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -36,11 +36,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Shared\Shared.DAL.Postgres\Shared.DAL.Postgres.csproj" />
-      <ProjectReference Include="..\..\..\Shared\Shared.DAL.Transactions\Shared.DAL.Transactions.csproj" />
-      <ProjectReference Include="..\..\..\Shared\Shared.Grpc\Shared.Grpc.csproj" />
-      <ProjectReference Include="..\..\..\Shared\Shared.Logging\Shared.Logging.csproj" />
-      <ProjectReference Include="..\..\..\Shared\Shared.MessageBroker.Cqrs\Shared.MessageBroker.Cqrs.csproj" />
-      <ProjectReference Include="..\..\..\Shared\Shared.RabbitMq\Shared.RabbitMq.csproj" />
+        <ProjectReference Include="..\..\..\Shared\Shared.DAL.Postgres\Shared.DAL.Postgres.csproj"/>
+        <ProjectReference Include="..\..\..\Shared\Shared.DAL.Transactions\Shared.DAL.Transactions.csproj"/>
+        <ProjectReference Include="..\..\..\Shared\Shared.Grpc\Shared.Grpc.csproj"/>
+        <ProjectReference Include="..\..\..\Shared\Shared.Logging\Shared.Logging.csproj"/>
+        <ProjectReference Include="..\..\..\Shared\Shared.MessageBroker.Cqrs\Shared.MessageBroker.Cqrs.csproj"/>
+        <ProjectReference Include="..\..\..\Shared\Shared.RabbitMq\Shared.RabbitMq.csproj"/>
     </ItemGroup>
 </Project>

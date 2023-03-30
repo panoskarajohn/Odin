@@ -28,15 +28,9 @@ public static class Extensions
     public static IServiceCollection AddMetrics(this IServiceCollection services, IConfiguration configuration,
         string metricsSectionName = MetricsSectionName, string appSectionName = AppSectionName)
     {
-        if (string.IsNullOrWhiteSpace(metricsSectionName))
-        {
-            metricsSectionName = MetricsSectionName;
-        }
+        if (string.IsNullOrWhiteSpace(metricsSectionName)) metricsSectionName = MetricsSectionName;
 
-        if (string.IsNullOrWhiteSpace(appSectionName))
-        {
-            appSectionName = AppSectionName;
-        }
+        if (string.IsNullOrWhiteSpace(appSectionName)) appSectionName = AppSectionName;
 
         var metricsOptions = configuration.GetOptions<MetricsOptions>(metricsSectionName);
         var appOptions = configuration.GetOptions<AppOptions>(AppSectionName);
@@ -49,10 +43,7 @@ public static class Extensions
     public static IServiceCollection AddMetrics(this IServiceCollection services, IConfiguration configuration,
         Func<IMetricsOptionsBuilder, IMetricsOptionsBuilder> buildOptions, string appSectionName = AppSectionName)
     {
-        if (string.IsNullOrWhiteSpace(appSectionName))
-        {
-            appSectionName = AppSectionName;
-        }
+        if (string.IsNullOrWhiteSpace(appSectionName)) appSectionName = AppSectionName;
 
         var metricsOptions = buildOptions(new MetricsOptionsBuilder()).Build();
         var appOptions = configuration.GetOptions<AppOptions>(appSectionName);
@@ -77,10 +68,7 @@ public static class Extensions
         var metricsBuilder = new MetricsBuilder().Configuration.Configure(cfg =>
         {
             var tags = metricsOptions.Tags;
-            if (tags is null)
-            {
-                return;
-            }
+            if (tags is null) return;
 
             tags.TryGetValue("app", out var app);
             tags.TryGetValue("env", out var env);
@@ -88,32 +76,19 @@ public static class Extensions
             cfg.AddAppTag(string.IsNullOrWhiteSpace(app) ? appOptions.Service : app);
             cfg.AddEnvTag(string.IsNullOrWhiteSpace(env) ? null : env);
             cfg.AddServerTag(string.IsNullOrWhiteSpace(server) ? null : server);
-            if (!string.IsNullOrWhiteSpace(appOptions.Instance))
-            {
-                cfg.GlobalTags.Add("instance", appOptions.Instance);
-            }
+            if (!string.IsNullOrWhiteSpace(appOptions.Instance)) cfg.GlobalTags.Add("instance", appOptions.Instance);
 
-            if (!string.IsNullOrWhiteSpace(appOptions.Version))
-            {
-                cfg.GlobalTags.Add("version", appOptions.Version);
-            }
+            if (!string.IsNullOrWhiteSpace(appOptions.Version)) cfg.GlobalTags.Add("version", appOptions.Version);
 
             foreach (var tag in tags)
             {
-                if (cfg.GlobalTags.ContainsKey(tag.Key))
-                {
-                    cfg.GlobalTags.Remove(tag.Key);
-                }
+                if (cfg.GlobalTags.ContainsKey(tag.Key)) cfg.GlobalTags.Remove(tag.Key);
 
-                if (!cfg.GlobalTags.ContainsKey(tag.Key))
-                {
-                    cfg.GlobalTags.TryAdd(tag.Key, tag.Value);
-                }
+                if (!cfg.GlobalTags.ContainsKey(tag.Key)) cfg.GlobalTags.TryAdd(tag.Key, tag.Value);
             }
         });
 
         if (metricsOptions.InfluxEnabled)
-        {
             metricsBuilder.Report.ToInfluxDb(o =>
             {
                 o.InfluxDb.Database = metricsOptions.Database;
@@ -121,7 +96,6 @@ public static class Extensions
                 o.InfluxDb.CreateDataBaseIfNotExists = true;
                 o.FlushInterval = TimeSpan.FromSeconds(metricsOptions.Interval);
             });
-        }
 
         var metrics = metricsBuilder.Build();
         var metricsWebHostOptions = GetMetricsWebHostOptions(metricsOptions);
@@ -147,15 +121,9 @@ public static class Extensions
     {
         var options = new MetricsWebHostOptions();
 
-        if (!metricsOptions.Enabled)
-        {
-            return options;
-        }
+        if (!metricsOptions.Enabled) return options;
 
-        if (!metricsOptions.PrometheusEnabled)
-        {
-            return options;
-        }
+        if (!metricsOptions.PrometheusEnabled) return options;
 
         options.EndpointOptions = endpointOptions =>
         {

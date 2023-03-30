@@ -20,14 +20,23 @@ internal class MongoRepository<TEntity, TIdentifiable> : IMongoRepository<TEntit
             .SingleOrDefaultAsync();
     }
 
-    public Task AddAsync(TEntity entity) => Collection.InsertOneAsync(entity);
+    public Task AddAsync(TEntity entity)
+    {
+        return Collection.InsertOneAsync(entity);
+    }
 
     public Task UpdateAsync(TEntity entity)
-        => Collection.ReplaceOneAsync(e => e.Id.Equals(entity.Id), entity);
+    {
+        return Collection.ReplaceOneAsync(e => e.Id.Equals(entity.Id), entity);
+    }
 
     public Task UpdateAsync(TEntity entity, Expression<Func<TEntity, bool>> predicate)
-        => Collection.ReplaceOneAsync(predicate, entity);
+    {
+        return Collection.ReplaceOneAsync(predicate, entity);
+    }
 
     public Task DeleteAsync(TIdentifiable id)
-        => Collection.DeleteOneAsync(e => e.Id.Equals(id));
+    {
+        return Collection.DeleteOneAsync(e => e.Id.Equals(id));
+    }
 }

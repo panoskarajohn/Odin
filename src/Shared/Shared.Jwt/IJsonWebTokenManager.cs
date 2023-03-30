@@ -1,6 +1,4 @@
-﻿using Microsoft.IdentityModel.JsonWebTokens;
-
-namespace Shared.Jwt;
+﻿namespace Shared.Jwt;
 
 public interface IJsonWebTokenManager
 {

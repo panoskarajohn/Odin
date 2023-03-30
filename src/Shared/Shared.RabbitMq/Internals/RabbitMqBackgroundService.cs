@@ -73,15 +73,9 @@ internal sealed class RabbitMqBackgroundService : BackgroundService
         _retryInterval = _options.RetryInterval > 0 ? _options.RetryInterval : 2;
         _qosOptions = _options.Qos ?? new RabbitMqOptions.QosOptions();
         _requeueFailedMessages = _options.RequeueFailedMessages;
-        if (_qosOptions.PrefetchCount < 1)
-        {
-            _qosOptions.PrefetchCount = 1;
-        }
+        if (_qosOptions.PrefetchCount < 1) _qosOptions.PrefetchCount = 1;
 
-        if (!_loggerEnabled || _options.Logger?.LogConnectionStatus is not true)
-        {
-            return;
-        }
+        if (!_loggerEnabled || _options.Logger?.LogConnectionStatus is not true) return;
 
         _consumerConnection.CallbackException += ConnectionOnCallbackException;
         _consumerConnection.ConnectionShutdown += ConnectionOnConnectionShutdown;
@@ -97,7 +91,6 @@ internal sealed class RabbitMqBackgroundService : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         await foreach (var messageSubscriber in _messageSubscribersChannel.Reader.ReadAllAsync(stoppingToken))
-        {
             try
             {
                 switch (messageSubscriber.Action)
@@ -117,17 +110,13 @@ internal sealed class RabbitMqBackgroundService : BackgroundService
                 _logger.LogError($"There was an error during RabbitMQ action: '{messageSubscriber.Action}'.");
                 _logger.LogError(exception, exception.Message);
             }
-        }
     }
 
     private void Subscribe(IMessageSubscriber messageSubscriber)
     {
         var conventions = _conventionsProvider.Get(messageSubscriber.Type);
         var channelKey = GetChannelKey(conventions);
-        if (_channels.ContainsKey(channelKey))
-        {
-            return;
-        }
+        if (_channels.ContainsKey(channelKey)) return;
 
         var channel = _consumerConnection.CreateModel();
         var channelInfoLog = $"exchange: '{conventions.Exchange}', queue: '{conventions.Queue}', " +
@@ -158,16 +147,14 @@ internal sealed class RabbitMqBackgroundService : BackgroundService
         if (declare)
         {
             if (_loggerEnabled)
-            {
                 _logger.LogInformation($"Declaring a queue: '{conventions.Queue}' with routing key: " +
                                        $"'{conventions.RoutingKey}' for an exchange: '{conventions.Exchange}'.");
-            }
 
             var queueArguments = deadLetterEnabled
                 ? new Dictionary<string, object>
                 {
                     {"x-dead-letter-exchange", deadLetterExchange},
-                    {"x-dead-letter-routing-key", deadLetterQueue},
+                    {"x-dead-letter-routing-key", deadLetterQueue}
                 }
                 : new Dictionary<string, object>();
             channel.QueueDeclare(conventions.Queue, durable, exclusive, autoDelete, queueArguments);
@@ -182,16 +169,13 @@ internal sealed class RabbitMqBackgroundService : BackgroundService
             {
                 var ttl = _options.DeadLetter.Ttl.HasValue
                     ? _options.DeadLetter.Ttl <= 0 ? 86400000 : _options.DeadLetter.Ttl
-                    : null;
+                    : 86400000;
                 var deadLetterArgs = new Dictionary<string, object>
                 {
                     {"x-dead-letter-exchange", conventions.Exchange},
                     {"x-dead-letter-routing-key", conventions.Queue}
                 };
-                if (ttl.HasValue)
-                {
-                    deadLetterArgs["x-message-ttl"] = ttl.Value;
-                }
+                if (ttl.HasValue) deadLetterArgs["x-message-ttl"] = ttl.Value;
 
                 _logger.LogInformation($"Declaring a dead letter queue: '{deadLetterQueue}' " +
                                        $"for an exchange: '{deadLetterExchange}'{(ttl.HasValue ? $", message TTL: {ttl} ms." : ".")}");
@@ -228,8 +212,10 @@ internal sealed class RabbitMqBackgroundService : BackgroundService
                 var correlationContext = BuildCorrelationContext(scope, args);
 
                 Task Next(object m, object ctx, BasicDeliverEventArgs a)
-                    => TryHandleAsync(channel, m, messageId, correlationId, ctx, a,
+                {
+                    return TryHandleAsync(channel, m, messageId, correlationId, ctx, a,
                         messageSubscriber.Handle, deadLetterEnabled);
+                }
 
                 await _pluginsExecutor.ExecuteAsync(Next, message, correlationContext, args);
             }
@@ -276,20 +262,15 @@ internal sealed class RabbitMqBackgroundService : BackgroundService
             try
             {
                 if (_loggerEnabled)
-                {
                     _logger.LogInformation("Handling a message: {MessageName} with ID: {MessageId}, " +
                                            "Correlation ID: {CorrelationId}, retry: {MessageRetry}",
                         messageName, messageId, correlationId, currentRetry);
-                }
 
                 if (_options.MessageProcessingTimeout.HasValue)
                 {
                     var task = handle(_serviceProvider, message, messageContext);
                     var result = await Task.WhenAny(task, Task.Delay(_options.MessageProcessingTimeout.Value));
-                    if (result != task)
-                    {
-                        throw new RabbitMqMessageProcessingTimeoutException(messageId, correlationId);
-                    }
+                    if (result != task) throw new RabbitMqMessageProcessingTimeoutException(messageId, correlationId);
                 }
                 else
                 {
@@ -300,11 +281,9 @@ internal sealed class RabbitMqBackgroundService : BackgroundService
                 await Task.Yield();
 
                 if (_loggerEnabled)
-                {
                     _logger.LogInformation("Handled a message: {MessageName} with ID: {MessageId}, " +
                                            "Correlation ID: {CorrelationId}, retry: {MessageRetry}",
                         messageName, messageId, correlationId, currentRetry);
-                }
             }
             catch (Exception ex)
             {
@@ -324,10 +303,7 @@ internal sealed class RabbitMqBackgroundService : BackgroundService
                 {
                     // This is a fallback to the previous mechanism in order to avoid the legacy related issues
                     var rejectedEvent = _exceptionToMessageMapper.Map(ex, message);
-                    if (rejectedEvent is not null)
-                    {
-                        failedMessage = new FailedMessage(rejectedEvent, false);
-                    }
+                    if (rejectedEvent is not null) failedMessage = new FailedMessage(rejectedEvent, false);
                 }
 
                 if (failedMessage?.Message is not null && (!failedMessage.ShouldRetry || !hasNextRetry))
@@ -338,12 +314,10 @@ internal sealed class RabbitMqBackgroundService : BackgroundService
                         messageContext: messageContext);
                     _logger.LogError(ex, ex.Message);
                     if (_loggerEnabled)
-                    {
                         _logger.LogWarning(
                             "Published a failed messaged: {FailedMessageName} with ID: {FailedMessageId}, " +
                             "Correlation ID: {CorrelationId}, for the message: {MessageName} with ID: {MessageId}",
                             failedMessageName, failedMessageId, correlationId, messageName, messageId);
-                    }
 
                     if (!deadLetterEnabled || !failedMessage.MoveToDeadLetter)
                     {
@@ -360,10 +334,7 @@ internal sealed class RabbitMqBackgroundService : BackgroundService
 
                     _logger.LogError(errorMessage);
 
-                    if (hasNextRetry)
-                    {
-                        throw new Exception(errorMessage, ex);
-                    }
+                    if (hasNextRetry) throw new Exception(errorMessage, ex);
                 }
 
                 _logger.LogError("Handling a message: {MessageName} with ID: {MessageId}, Correlation ID: " +
@@ -377,10 +348,8 @@ internal sealed class RabbitMqBackgroundService : BackgroundService
                 }
 
                 if (deadLetterEnabled)
-                {
                     _logger.LogError("Message: {MessageName} with ID: {MessageId}, Correlation ID: " +
                                      "{CorrelationId} will be moved to DLX", messageName, messageId, correlationId);
-                }
 
                 channel.BasicNack(args.DeliveryTag, false, _requeueFailedMessages);
                 await Task.Yield();
@@ -393,10 +362,7 @@ internal sealed class RabbitMqBackgroundService : BackgroundService
         var type = messageSubscriber.Type;
         var conventions = _conventionsProvider.Get(type);
         var channelKey = GetChannelKey(conventions);
-        if (!_channels.TryRemove(channelKey, out var channel))
-        {
-            return;
-        }
+        if (!_channels.TryRemove(channelKey, out var channel)) return;
 
         channel.Dispose();
         _logger.LogTrace($"Removed channel: {channel.ChannelNumber}, " +
@@ -405,7 +371,9 @@ internal sealed class RabbitMqBackgroundService : BackgroundService
     }
 
     private static string GetChannelKey(IConventions conventions)
-        => $"{conventions.Exchange}:{conventions.Queue}:{conventions.RoutingKey}";
+    {
+        return $"{conventions.Exchange}:{conventions.Queue}:{conventions.RoutingKey}";
+    }
 
     public override void Dispose()
     {
@@ -444,15 +412,10 @@ internal sealed class RabbitMqBackgroundService : BackgroundService
     private void ConnectionOnCallbackException(object sender, CallbackExceptionEventArgs eventArgs)
     {
         _logger.LogError("RabbitMQ callback exception occured.");
-        if (eventArgs.Exception is not null)
-        {
-            _logger.LogError(eventArgs.Exception, eventArgs.Exception.Message);
-        }
+        if (eventArgs.Exception is not null) _logger.LogError(eventArgs.Exception, eventArgs.Exception.Message);
 
         if (eventArgs.Detail is not null)
-        {
             _logger.LogError(JsonSerializer.Serialize(eventArgs.Detail, SerializerOptions));
-        }
     }
 
     private void ConnectionOnConnectionShutdown(object sender, ShutdownEventArgs eventArgs)
@@ -473,11 +436,17 @@ internal sealed class RabbitMqBackgroundService : BackgroundService
 
     private class EmptyExceptionToMessageMapper : IExceptionToMessageMapper
     {
-        public object Map(Exception exception, object message) => null;
+        public object Map(Exception exception, object message)
+        {
+            return null;
+        }
     }
 
     private class EmptyExceptionToFailedMessageMapper : IExceptionToFailedMessageMapper
     {
-        public FailedMessage Map(Exception exception, object message) => null;
+        public FailedMessage Map(Exception exception, object message)
+        {
+            return null;
+        }
     }
 }

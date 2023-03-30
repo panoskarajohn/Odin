@@ -1,14 +1,14 @@
 import http from 'k6/http';
-import { sleep } from 'k6';
+import {sleep} from 'k6';
 
 export let options = {
     insecureSkipTLSVerify: true,
     noConnectionReuse: false,
     stages: [
-        { duration: '2m',  target: 400 },
-        { duration: '3h56m',  target: 400 },
-        { duration: '2m',  target: 0 },
-       ]
+        {duration: '2m', target: 400},
+        {duration: '3h56m', target: 400},
+        {duration: '2m', target: 0},
+    ]
 }
 
 export default function () {
@@ -21,12 +21,12 @@ export default function () {
         "role": "user"
     };
 
-    const headers = { 'Content-Type': 'application/json' };
+    const headers = {'Content-Type': 'application/json'};
 
     http.post(url, JSON.stringify(data),
-    {
-        headers: headers
-    });
+        {
+            headers: headers
+        });
 
     sleep(1);
 }

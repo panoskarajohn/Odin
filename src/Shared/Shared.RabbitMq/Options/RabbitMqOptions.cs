@@ -3,7 +3,7 @@
 #nullable disable
 
 /// <summary>
-/// This is an options class for setting up the RabbitMQ
+///     This is an options class for setting up the RabbitMQ
 /// </summary>
 public class RabbitMqOptions
 {
@@ -41,7 +41,9 @@ public class RabbitMqOptions
     public bool RequeueFailedMessages { get; set; }
 
     public string GetSpanContextHeader()
-        => string.IsNullOrWhiteSpace(SpanContextHeader) ? "span_context" : SpanContextHeader;
+    {
+        return string.IsNullOrWhiteSpace(SpanContextHeader) ? "span_context" : SpanContextHeader;
+    }
 
     public class LoggerOptions
     {

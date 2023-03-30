@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.Design;
+﻿using Slip.Service.Contract;
+using Slip.Service.Domain;
 
 namespace Slip.Service.Mapper;
 
 public static class ContractToDomain
 {
-    public static Domain.Slip ToDomain(this Contract.SlipContract contract)
+    public static Domain.Slip ToDomain(this SlipContract contract)
     {
         return new Domain.Slip
         {
@@ -15,9 +16,9 @@ public static class ContractToDomain
         };
     }
 
-    private static Domain.Bet ToDomain(this Contract.BetContract contract)
+    private static Bet ToDomain(this BetContract contract)
     {
-        return new Domain.Bet
+        return new Bet
         {
             Id = contract.Id,
             Stake = contract.Stake,
@@ -29,15 +30,15 @@ public static class ContractToDomain
         };
     }
 
-    private static Domain.BetSelection ToDomain(this Contract.BetSelectionContract contract)
+    private static BetSelection ToDomain(this BetSelectionContract contract)
     {
-        return new Domain.BetSelection
+        return new BetSelection
         {
             Id = contract.Id,
             EventId = contract.EventId,
             MarketName = contract.MarketName,
             Outcome = contract.Outcome,
-            Odds = contract.Odds,
+            Odds = contract.Odds
         };
     }
 }

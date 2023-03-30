@@ -5,8 +5,8 @@ namespace Slip.Core.Exceptions;
 
 public class BetTypeInvalidStateException : OdinException
 {
-    public BetTypeInvalidStateException(IEnumerable<Enumeration> eventStatusEnumerable) 
-        : base($"Possible values for BetType: {String.Join(",", eventStatusEnumerable.Select(s => s.Name))}")
+    public BetTypeInvalidStateException(IEnumerable<Enumeration> eventStatusEnumerable)
+        : base($"Possible values for BetType: {string.Join(",", eventStatusEnumerable.Select(s => s.Name))}")
     {
     }
 }

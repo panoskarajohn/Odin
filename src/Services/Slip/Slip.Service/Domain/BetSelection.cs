@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Slip.Service.Domain;
+﻿namespace Slip.Service.Domain;
 
 public class BetSelection
 {
@@ -9,7 +7,7 @@ public class BetSelection
     public string MarketName { get; set; }
     public string Outcome { get; set; }
     public decimal Odds { get; set; }
-    
+
     public virtual Bet Bet { get; set; }
     public long BetId { get; set; }
 }

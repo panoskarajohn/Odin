@@ -13,13 +13,13 @@ public static class GetTodayMatchesResponseMappings
             document.Markets?.Select(m => m.ToDto()));
     }
 
-    static GetTodayMatchesResponse.MarketResponseDto ToDto(this MarketDocument document)
+    private static GetTodayMatchesResponse.MarketResponseDto ToDto(this MarketDocument document)
     {
         return new GetTodayMatchesResponse.MarketResponseDto(document.Name,
             document.SelectionDocuments?.Select(s => s.ToDto()));
     }
 
-    static GetTodayMatchesResponse.SelectionResponseDto ToDto(this SelectionDocument document)
+    private static GetTodayMatchesResponse.SelectionResponseDto ToDto(this SelectionDocument document)
     {
         return new GetTodayMatchesResponse.SelectionResponseDto(document.Name, document.Price);
     }

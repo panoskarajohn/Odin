@@ -10,10 +10,10 @@ namespace Event.Application.SportMatch.Features.RegisterMarkets;
 
 public class RegisterMarketsCommandHandler : ICommandHandler<RegisterMarketsCommand>
 {
-    private readonly ILogger<RegisterMarketsCommandHandler> _logger;
-    private readonly IMatchRepository _matchRepository;
-    private readonly IMarketTemplateRepository _marketTemplateRepository;
     private readonly IContext _context;
+    private readonly ILogger<RegisterMarketsCommandHandler> _logger;
+    private readonly IMarketTemplateRepository _marketTemplateRepository;
+    private readonly IMatchRepository _matchRepository;
 
     public RegisterMarketsCommandHandler(ILogger<RegisterMarketsCommandHandler> logger,
         IMatchRepository matchRepository, IMarketTemplateRepository marketTemplateRepository, IContext context)
@@ -46,7 +46,7 @@ public class RegisterMarketsCommandHandler : ICommandHandler<RegisterMarketsComm
 
             if (marketTemplate is null)
                 throw new TemplateNotFound(market.Name, match.Category);
-            
+
             UpdateLimitsFromTemplate(ref market, marketTemplate);
             markets.Add(market);
         }
@@ -55,7 +55,7 @@ public class RegisterMarketsCommandHandler : ICommandHandler<RegisterMarketsComm
         match.AddDomainEvent(new MarketsRegisteredEvent());
         await _matchRepository.Update(match, _context.Identity.Id.ToString());
     }
-    
+
     private void UpdateLimitsFromTemplate(ref Market market, Core.Models.MarketTemplate? marketTemplate)
     {
         if (marketTemplate is null) return;

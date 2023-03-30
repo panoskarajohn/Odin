@@ -1,8 +1,3 @@
-using System.Net;
-using Grpc.Core;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Polly;
 using Shared.Cqrs;
 using Shared.Jwt;
 using Shared.Logging;
@@ -59,23 +54,27 @@ app
     .UsePrometheus()
     .UseRabbitMq();
 
-app.MapGet("/", e => e.Response.WriteAsync("Hello from Slip.Api"));
-app.MapPost("/buildSlip", async (BuildSlipCommand buildSlipCommand, CancellationToken cancellationToken ,IDispatcher dispatcher) =>
-{
-    await dispatcher.SendAsync(buildSlipCommand, cancellationToken);
-    return Results.NoContent();
-})
+app.MapGet("/ping", e => e.Response.WriteAsync("pong"))
+    .WithName("ping")
+    .WithTags("ping");
+
+app.MapPost("/buildSlip",
+        async (BuildSlipCommand buildSlipCommand, CancellationToken cancellationToken, IDispatcher dispatcher) =>
+        {
+            await dispatcher.SendAsync(buildSlipCommand, cancellationToken);
+            return Results.NoContent();
+        })
     .RequireAuthorization()
     .WithTags("Slip")
     .WithName("Build Slip");
 
 app.MapPost("/placeBet",
-    async (CancellationToken cancellationToken, IDispatcher dispatcher) =>
-    {
-        var placeBetCommand = new PlaceBetCommand();
-        await dispatcher.SendAsync(placeBetCommand, cancellationToken);
-        return Results.NoContent();
-    })
+        async (CancellationToken cancellationToken, IDispatcher dispatcher) =>
+        {
+            var placeBetCommand = new PlaceBetCommand();
+            await dispatcher.SendAsync(placeBetCommand, cancellationToken);
+            return Results.NoContent();
+        })
     .RequireAuthorization()
     .WithTags("Slip")
     .WithName("Place Bet");

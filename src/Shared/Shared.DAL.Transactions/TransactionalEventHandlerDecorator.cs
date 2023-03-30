@@ -15,5 +15,7 @@ internal sealed class TransactionalEventHandlerDecorator<T> : IEventHandler<T> w
     }
 
     public Task HandleAsync(T @event, CancellationToken cancellationToken = default)
-        => _unitOfWork.ExecuteAsync(() => _handler.HandleAsync(@event, cancellationToken), cancellationToken);
+    {
+        return _unitOfWork.ExecuteAsync(() => _handler.HandleAsync(@event, cancellationToken), cancellationToken);
+    }
 }

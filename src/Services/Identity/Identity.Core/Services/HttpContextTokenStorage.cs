@@ -13,19 +13,16 @@ internal sealed class HttpContextTokenStorage : ITokenStorage
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public void Set(JsonWebToken jwt) => _httpContextAccessor.HttpContext?.Items.TryAdd(TokenKey, jwt);
+    public void Set(JsonWebToken jwt)
+    {
+        _httpContextAccessor.HttpContext?.Items.TryAdd(TokenKey, jwt);
+    }
 
     public JsonWebToken? Get()
     {
-        if (_httpContextAccessor.HttpContext is null)
-        {
-            return null;
-        }
+        if (_httpContextAccessor.HttpContext is null) return null;
 
-        if (_httpContextAccessor.HttpContext.Items.TryGetValue(TokenKey, out var jwt))
-        {
-            return jwt as JsonWebToken;
-        }
+        if (_httpContextAccessor.HttpContext.Items.TryGetValue(TokenKey, out var jwt)) return jwt as JsonWebToken;
 
         return null;
     }

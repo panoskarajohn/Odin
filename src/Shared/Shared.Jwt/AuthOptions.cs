@@ -5,7 +5,7 @@ internal class AuthOptions
     public string Algorithm { get; set; } = string.Empty;
     public CertificateOptions? Certificate { get; set; }
     public JwtOptions? Jwt { get; set; }
-    
+
     public sealed class CertificateOptions
     {
         public string Location { get; set; } = string.Empty;

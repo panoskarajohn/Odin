@@ -5,7 +5,7 @@ namespace Shared.Common;
 public static class DateTimeExtensions
 {
     /// <summary>
-    /// Checks if dateTime is from the future
+    ///     Checks if dateTime is from the future
     /// </summary>
     /// <param name="dateTime"></param>
     public static bool UtcTimeIsFromFuture(this DateTime dateTime)
@@ -14,9 +14,9 @@ public static class DateTimeExtensions
         var utcNow = DateTime.UtcNow;
         return utcNow < dateTimeUtc;
     }
-    
+
     /// <summary>
-    /// Checks if dateTime is from the past
+    ///     Checks if dateTime is from the past
     /// </summary>
     /// <param name="dateTime"></param>
     public static bool UtcTimeIsFromPast(this DateTime dateTime)
@@ -25,11 +25,10 @@ public static class DateTimeExtensions
         var utcNow = DateTime.UtcNow;
         return utcNow > dateTimeUtc;
     }
-    
-    
+
 
     /// <summary>
-    /// Converts UTC to timezone 
+    ///     Converts UTC to timezone
     /// </summary>
     /// <param name="dateTime"></param>
     /// <param name="timezone"></param>
@@ -38,7 +37,7 @@ public static class DateTimeExtensions
     {
         if (string.IsNullOrEmpty(timezone))
             throw new ArgumentNullException(nameof(timezone));
-        
+
         if (dateTime.Kind != DateTimeKind.Utc)
             throw new InvalidOperationException("Datetime is not of Universal time zone");
 
@@ -46,6 +45,5 @@ public static class DateTimeExtensions
         var instant = Instant.FromDateTimeUtc(dateTime);
         var result = instant.InZone(dateTimeZone).ToDateTimeUnspecified();
         return result;
-
     }
 }

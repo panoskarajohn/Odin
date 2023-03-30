@@ -10,17 +10,18 @@ public abstract class BaseAggregateRoot<TId> : Entity<TId>, IAggregate
 
     public void AddDomainEvent(IDomainEvent domainEvent)
     {
-        if (!_domainEvents.Any())
-        {
-            Version++;
-        }
+        if (!_domainEvents.Any()) Version++;
 
         _domainEvents.Add(domainEvent);
     }
 
     public void RemoveDomainEvent(IDomainEvent domainEvent)
-        => _domainEvents?.Remove(domainEvent);
+    {
+        _domainEvents?.Remove(domainEvent);
+    }
 
     public void ClearDomainEvents()
-        => _domainEvents?.Clear();
+    {
+        _domainEvents?.Clear();
+    }
 }

@@ -3,9 +3,9 @@
 public class RedisKeys
 {
     private const string SlipKey = "slip";
-    public RedisKeys()
-    {
-    }
 
-    public string BuildKey(string key) => $"{SlipKey}#{key}";
+    public string BuildKey(string key)
+    {
+        return $"{SlipKey}#{key}";
+    }
 }

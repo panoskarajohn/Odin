@@ -6,7 +6,7 @@ namespace Shared.DAL.Postgres.Internals;
 public sealed class PostgresUnitOfWork<T> : IUnitOfWork where T : DbContext
 {
     private readonly T _dbContext;
-    private readonly ILogger<PostgresUnitOfWork<T>> _logger; 
+    private readonly ILogger<PostgresUnitOfWork<T>> _logger;
 
     public PostgresUnitOfWork(T dbContext, ILogger<PostgresUnitOfWork<T>> logger)
     {
@@ -18,7 +18,7 @@ public sealed class PostgresUnitOfWork<T> : IUnitOfWork where T : DbContext
     {
         var transaction = await _dbContext.Database.BeginTransactionAsync(cancellationToken);
         _logger.LogInformation($"Database Transaction {transaction.TransactionId} started");
-        
+
         try
         {
             await action();

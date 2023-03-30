@@ -10,15 +10,9 @@ public sealed class ContextAccessor
         set
         {
             var holder = Holder.Value;
-            if (holder != null)
-            {
-                holder.Context = null;
-            }
+            if (holder != null) holder.Context = null;
 
-            if (value != null)
-            {
-                Holder.Value = new ContextHolder {Context = value};
-            }
+            if (value != null) Holder.Value = new ContextHolder {Context = value};
         }
     }
 

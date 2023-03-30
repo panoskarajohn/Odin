@@ -15,8 +15,12 @@ internal class MessageSubscriber : IMessageSubscriber
     public Func<IServiceProvider, object, object, Task> Handle { get; }
 
     public static MessageSubscriber Subscribe(Type type, Func<IServiceProvider, object, object, Task> handle)
-        => new(MessageSubscriberAction.Subscribe, type, handle);
+    {
+        return new(MessageSubscriberAction.Subscribe, type, handle);
+    }
 
     public static MessageSubscriber Unsubscribe(Type type)
-        => new(MessageSubscriberAction.Unsubscribe, type);
+    {
+        return new(MessageSubscriberAction.Unsubscribe, type);
+    }
 }

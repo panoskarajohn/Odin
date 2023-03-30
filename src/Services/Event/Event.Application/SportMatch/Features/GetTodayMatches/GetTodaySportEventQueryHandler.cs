@@ -1,6 +1,4 @@
-﻿using Event.Application.SportMatch.Dtos;
-using Event.Application.SportMatch.Mapping;
-using Event.Core.Enumerations;
+﻿using Event.Core.Enumerations;
 using Event.Infrastructure.Mongo;
 using MongoDB.Driver;
 using Shared.Cqrs.Queries;
@@ -8,7 +6,9 @@ using Shared.Mongo.Repositories;
 
 namespace Event.Application.SportMatch.Features.GetTodayMatches;
 
-public class GetTodaySportEventQueryHandler : IQueryHandler<GetTodayMatchesQuery, IEnumerable<GetTodayMatchesResponse.MatchResponseDto>>
+public class
+    GetTodaySportEventQueryHandler : IQueryHandler<GetTodayMatchesQuery,
+        IEnumerable<GetTodayMatchesResponse.MatchResponseDto>>
 {
     private readonly IMongoRepository<MatchDocument, long> _repository;
 

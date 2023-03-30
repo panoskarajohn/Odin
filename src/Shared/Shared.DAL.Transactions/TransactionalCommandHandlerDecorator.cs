@@ -17,5 +17,7 @@ internal sealed class TransactionalCommandHandlerDecorator<T> : ICommandHandler<
     }
 
     public Task HandleAsync(T command, CancellationToken cancellationToken = default)
-        => _unitOfWork.ExecuteAsync(() => _handler.HandleAsync(command, cancellationToken), cancellationToken);
+    {
+        return _unitOfWork.ExecuteAsync(() => _handler.HandleAsync(command, cancellationToken), cancellationToken);
+    }
 }

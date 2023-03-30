@@ -7,6 +7,5 @@ public class InvalidStakeException : OdinException
 {
     public InvalidStakeException() : base($"Stake must be positive and less than {Stake.MaxStakeValue}")
     {
-        
     }
 }

@@ -18,20 +18,11 @@ internal sealed class ContextProvider : IContextProvider
 
     public object Get(IDictionary<string, object> headers)
     {
-        if (headers is null)
-        {
-            return null;
-        }
+        if (headers is null) return null;
 
-        if (!headers.TryGetValue(HeaderName, out var context))
-        {
-            return null;
-        }
+        if (!headers.TryGetValue(HeaderName, out var context)) return null;
 
-        if (context is byte[] bytes)
-        {
-            return _serializer.Deserialize(bytes);
-        }
+        if (context is byte[] bytes) return _serializer.Deserialize(bytes);
 
         return null;
     }

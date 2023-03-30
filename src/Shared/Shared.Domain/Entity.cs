@@ -2,7 +2,10 @@
 
 public abstract class Entity<TId> : IEntity<TId>
 {
-    protected Entity(TId id) => Id = id;
+    protected Entity(TId id)
+    {
+        Id = id;
+    }
 
     protected Entity()
     {

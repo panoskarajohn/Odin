@@ -1,6 +1,4 @@
-﻿using Event.Application.SportMatch.Dtos;
-
-namespace Event.Application.SportMatch.Features.GetTodayMatches;
+﻿namespace Event.Application.SportMatch.Features.GetTodayMatches;
 
 public class GetTodayMatchesResponse
 {
@@ -12,6 +10,6 @@ public class GetTodayMatchesResponse
 
     public record MarketResponseDto(string Name,
         IEnumerable<SelectionResponseDto> Selections);
-    
+
     public record SelectionResponseDto(string Name, decimal Price);
 }

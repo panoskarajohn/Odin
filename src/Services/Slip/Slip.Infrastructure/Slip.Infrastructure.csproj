@@ -7,12 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Shared\Shared.Redis\Shared.Redis.csproj" />
-      <ProjectReference Include="..\Slip.Core\Slip.Core.csproj" />
+        <ProjectReference Include="..\..\..\Shared\Shared.Redis\Shared.Redis.csproj"/>
+        <ProjectReference Include="..\Slip.Core\Slip.Core.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
+        <PackageReference Include="Polly.Extensions.Http" Version="3.0.0"/>
     </ItemGroup>
 
 </Project>

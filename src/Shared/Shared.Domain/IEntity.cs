@@ -6,5 +6,4 @@ public interface IEntity<out TId>
     DateTime LastModified { get; }
     DateTime CreatedAt { get; }
     int? ModifiedBy { get; }
-    
 }

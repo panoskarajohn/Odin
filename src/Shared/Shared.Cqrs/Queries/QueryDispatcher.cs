@@ -2,7 +2,7 @@
 
 namespace Shared.Cqrs.Queries;
 
-internal sealed partial class QueryDispatcher : IQueryDispatcher
+internal sealed class QueryDispatcher : IQueryDispatcher
 {
     private readonly IServiceProvider _serviceProvider;
 

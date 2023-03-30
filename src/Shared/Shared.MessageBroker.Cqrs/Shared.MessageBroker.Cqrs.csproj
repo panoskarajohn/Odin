@@ -7,11 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Shared.MessageBroker\Shared.MessageBroker.csproj" />
+        <ProjectReference Include="..\Shared.MessageBroker\Shared.MessageBroker.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
+        <PackageReference Include="Polly.Extensions.Http" Version="3.0.0"/>
     </ItemGroup>
 
 </Project>

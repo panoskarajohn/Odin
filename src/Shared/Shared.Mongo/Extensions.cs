@@ -14,22 +14,23 @@ using Shared.Mongo.Seeder;
 
 namespace Shared.Mongo;
 
-public static partial class Extensions
+public static class Extensions
 {
     private const string SectionName = "mongo";
-    
+
     /// <summary>
-    /// Integrates mongo db
+    ///     Integrates mongo db
     /// </summary>
     /// <param name="services"></param>
     /// <param name="configuration"></param>
     /// <param name="seederType">Should inherit from IMongoDbSeeder</param>
-    public static IServiceCollection AddMongo(this IServiceCollection services, IConfiguration configuration, Type seederType = null)
+    public static IServiceCollection AddMongo(this IServiceCollection services, IConfiguration configuration,
+        Type seederType = null)
     {
         var options = configuration.GetOptions<MongoOptions>(SectionName);
         services.AddSingleton(options);
 
-        services.AddSingleton<IMongoClient>(sp 
+        services.AddSingleton<IMongoClient>(sp
             => new MongoClient(options.ConnectionString));
 
         services.AddTransient(sp =>
@@ -40,23 +41,19 @@ public static partial class Extensions
 
         services.AddInitializer<MongoInitializer>();
         services.AddTransient<IMongoSessionFactory, MongoSessionFactory>();
-        
+
         if (seederType is null)
-        {
             services.AddTransient<IMongoSeeder, MongoSeeder>();
-        }
         else
-        {
             services.AddTransient(typeof(IMongoSeeder), seederType);
-        }
-        
+
         RegisterConventions();
-        
+
         return services;
     }
 
     /// <summary>
-    /// Registers base implementation to a repository 
+    ///     Registers base implementation to a repository
     /// </summary>
     /// <param name="services"></param>
     /// <param name="collectionName"></param>
@@ -75,6 +72,7 @@ public static partial class Extensions
 
         return services;
     }
+
     private static void RegisterConventions()
     {
         BsonSerializer.RegisterSerializer(typeof(decimal), new DecimalSerializer(BsonType.Decimal128));
@@ -84,7 +82,7 @@ public static partial class Extensions
         {
             new CamelCaseElementNameConvention(),
             new IgnoreExtraElementsConvention(true),
-            new EnumRepresentationConvention(BsonType.String),
+            new EnumRepresentationConvention(BsonType.String)
         }, _ => true);
     }
 }

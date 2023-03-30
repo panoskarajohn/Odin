@@ -6,10 +6,6 @@ namespace Event.Core.Models;
 
 public class MarketTemplate : BaseAggregateRoot<long>
 {
-    public MarketName MarketName { get; }
-    public Category Category { get; }
-    public StakeLimits StakeLimits { get; private set; }
-    
     private MarketTemplate(MarketName marketName, Category category, long? id = null)
     {
         Id = id ?? SnowFlakIdGenerator.NewId();
@@ -17,12 +13,16 @@ public class MarketTemplate : BaseAggregateRoot<long>
         Category = category;
         CreatedAt = DateTime.UtcNow;
     }
-    
+
+    public MarketName MarketName { get; }
+    public Category Category { get; }
+    public StakeLimits StakeLimits { get; private set; }
+
     public static MarketTemplate Create(MarketName marketName, Category category, long? id = null)
     {
-        return new(marketName, category, id);
+        return new MarketTemplate(marketName, category, id);
     }
-    
+
     public MarketTemplate WithStakeLimits(decimal minStake, decimal maxStake)
     {
         StakeLimits = StakeLimits.Create(minStake, maxStake);

@@ -1,4 +1,6 @@
-﻿namespace Slip.Infrastructure.RedisDtos;
+﻿using Slip.Core.ValueObjects;
+
+namespace Slip.Infrastructure.RedisDtos;
 
 public class Slip
 {
@@ -27,7 +29,7 @@ public class Selection
 
 public static class RedistMapping
 {
-    public static Core.Models.Slip ToDomain(this RedisDtos.Slip redisSlip)
+    public static Core.Models.Slip ToDomain(this Slip redisSlip)
     {
         var slip = Core.Models.Slip.Create(Guid.Parse(redisSlip.UserId), Guid.Parse(redisSlip.Id));
 
@@ -38,13 +40,14 @@ public static class RedistMapping
 
             foreach (var betSelection in redisSlipBet.Selections)
             {
-                var selection = Core.ValueObjects.BetSelection.Create(betSelection.EventId, betSelection.MarketName, betSelection.Outcome, betSelection.Odds);
+                var selection = BetSelection.Create(betSelection.EventId, betSelection.MarketName, betSelection.Outcome,
+                    betSelection.Odds);
                 bet.AddSelection(selection);
             }
-            
+
             slip.AddBet(bet);
         }
-        
+
         return slip;
     }
 }

@@ -11,12 +11,12 @@ namespace Shared.Web;
 public abstract class BaseController : ControllerBase
 {
     protected const string BaseApiPath = "api/v{version:apiVersion}";
-    private IMapper _mapper;
     private IDispatcher _dispatcher;
-    
+    private IMapper _mapper;
+
     protected IDispatcher Dispatcher =>
         _dispatcher ??= HttpContext.RequestServices.GetService<IDispatcher>()!;
 
-    protected IMapper Mapper => 
+    protected IMapper Mapper =>
         _mapper ??= HttpContext.RequestServices.GetService<IMapper>()!;
 }

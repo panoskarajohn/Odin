@@ -1,5 +1,4 @@
-﻿using System.Threading.RateLimiting;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Slip.Service.Domain;
 
@@ -12,7 +11,7 @@ public class SlipConfiguration : IEntityTypeConfiguration<Domain.Slip>
         builder
             .HasKey(s => s.Id)
             .HasName("PK_Slip");
-        
+
         builder
             .HasMany(s => s.Bets)
             .WithOne(b => b.Slip)
@@ -20,9 +19,9 @@ public class SlipConfiguration : IEntityTypeConfiguration<Domain.Slip>
     }
 }
 
-public class BetConfiguration : IEntityTypeConfiguration<Domain.Bet>
+public class BetConfiguration : IEntityTypeConfiguration<Bet>
 {
-    public void Configure(EntityTypeBuilder<Domain.Bet> builder)
+    public void Configure(EntityTypeBuilder<Bet> builder)
     {
         builder.HasKey(b => b.Id).HasName("PK_Bet");
 
@@ -32,9 +31,9 @@ public class BetConfiguration : IEntityTypeConfiguration<Domain.Bet>
     }
 }
 
-public class BetSelectionConfiguration : IEntityTypeConfiguration<Domain.BetSelection>
+public class BetSelectionConfiguration : IEntityTypeConfiguration<BetSelection>
 {
-    public void Configure(EntityTypeBuilder<Domain.BetSelection> builder)
+    public void Configure(EntityTypeBuilder<BetSelection> builder)
     {
         builder.HasKey(bs => bs.Id).HasName("PK_BetSelection");
 

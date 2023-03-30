@@ -8,9 +8,9 @@ namespace Slip.Infrastructure.Repositories;
 
 public class RedisSlipRepository : ISlipRepository
 {
+    private readonly IDatabase _database;
     private readonly ILogger<RedisSlipRepository> _logger;
     private readonly IConnectionMultiplexer _redis;
-    private readonly IDatabase _database;
     private readonly RedisKeys _redisKeys;
 
     public RedisSlipRepository(ILogger<RedisSlipRepository> logger, IConnectionMultiplexer redis, RedisKeys redisKey)
@@ -20,16 +20,13 @@ public class RedisSlipRepository : ISlipRepository
         _database = _redis.GetDatabase();
         _redisKeys = redisKey;
     }
-    
+
     public async Task<Core.Models.Slip> GetSlipAsync(string userId, CancellationToken cancellationToken)
     {
         var key = _redisKeys.BuildKey(userId);
         var data = await _database.StringGetAsync(key);
 
-        if (data.IsNullOrEmpty)
-        {
-            return null;
-        }
+        if (data.IsNullOrEmpty) return null;
 
         var dto = JsonSerializer.Deserialize<RedisDtos.Slip>(data, new JsonSerializerOptions
         {
@@ -59,7 +56,7 @@ public class RedisSlipRepository : ISlipRepository
         var key = _redisKeys.BuildKey(userId);
         return await _database.KeyDeleteAsync(userId);
     }
-    
+
     private IServer GetServer()
     {
         var endpoint = _redis.GetEndPoints();

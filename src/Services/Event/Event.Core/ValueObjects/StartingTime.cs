@@ -12,7 +12,14 @@ public record StartingTime
     }
 
     public DateTime Value { get; }
-    
-    public static implicit operator DateTime(StartingTime category) => category.Value;
-    public static implicit operator StartingTime(DateTime value) => new(value);
+
+    public static implicit operator DateTime(StartingTime category)
+    {
+        return category.Value;
+    }
+
+    public static implicit operator StartingTime(DateTime value)
+    {
+        return new(value);
+    }
 }

@@ -43,19 +43,14 @@ public class RabbitMqExchangeInitializer : IInitializer
                 _options.Exchange.AutoDelete);
 
             if (_options.DeadLetter?.Enabled is true && _options.DeadLetter?.Declare is true)
-            {
                 channel.ExchangeDeclare(
                     $"{_options.DeadLetter.Prefix}{_options.Exchange.Name}{_options.DeadLetter.Suffix}",
                     ExchangeType.Direct, _options.Exchange.Durable, _options.Exchange.AutoDelete);
-            }
         }
 
         foreach (var exchange in exchanges)
         {
-            if (exchange.Equals(_options.Exchange?.Name, StringComparison.InvariantCultureIgnoreCase))
-            {
-                continue;
-            }
+            if (exchange.Equals(_options.Exchange?.Name, StringComparison.InvariantCultureIgnoreCase)) continue;
 
             Log(exchange, DefaultType);
             channel.ExchangeDeclare(exchange, DefaultType, true);
@@ -68,10 +63,7 @@ public class RabbitMqExchangeInitializer : IInitializer
 
     private void Log(string exchange, string type)
     {
-        if (!_loggerEnabled)
-        {
-            return;
-        }
+        if (!_loggerEnabled) return;
 
         _logger.LogInformation($"Declaring an exchange: '{exchange}', type: '{type}'.");
     }

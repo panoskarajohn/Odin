@@ -2,4 +2,4 @@
 
 namespace Slip.Application.Commands.PlaceBet;
 
-public record PlaceBetCommand() : ICommand;
+public record PlaceBetCommand : ICommand;

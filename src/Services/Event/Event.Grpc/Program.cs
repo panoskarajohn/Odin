@@ -1,14 +1,13 @@
+using System.Net;
 using Event.Application;
 using Event.Grpc.Services;
-using Microsoft.AspNetCore;
-using Shared.Cqrs;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Shared.Grpc;
 using Shared.Logging;
 using Shared.Metrics;
 using Shared.Prometheus;
 using Shared.Web;
-using System.Net;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,36 +28,28 @@ builder.Services
     .AddCustomGrpc();
 
 builder.Services.AddEventApplication(configuration);
-host.UseLogging();
-
 webHost.ConfigureKestrel(options =>
 {
     var ports = GetDefinedPorts(configuration);
+
     (int httpPort, int grpcPort) GetDefinedPorts(IConfiguration config)
     {
-        var grpcPort = config.GetValue("GRPC_PORT", 4081);
-        var port = config.GetValue("PORT", 4000);
+        var grpcPort = config.GetValue("GRPC_PORT", 81);
+        var port = config.GetValue("PORT", 80);
         return (port, grpcPort);
     }
 
-    options.Listen(IPAddress.Any, ports.httpPort, listenOptions =>
-    {
-        listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
-    });
-    options.Listen(IPAddress.Any, ports.grpcPort, listenOptions =>
-    {
-        listenOptions.Protocols = HttpProtocols.Http2;
-    });
+    options.Listen(IPAddress.Any, ports.httpPort,
+        listenOptions => { listenOptions.Protocols = HttpProtocols.Http1AndHttp2; });
+    options.Listen(IPAddress.Any, ports.grpcPort, listenOptions => { listenOptions.Protocols = HttpProtocols.Http2; });
 });
+host.UseLogging();
 
 var app = builder.Build();
 
 app.MapGrpcService<EventGrpcService>();
-
-app.MapGet("/",
-    () =>
-        "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
-
+app.MapGrpcHealthChecksService();
+app.MapGet("",() => "Hello World!");
 app
     .UseApplication()
     .UseLogging()

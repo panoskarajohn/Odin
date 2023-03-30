@@ -10,10 +10,7 @@ internal sealed class ShaHasher : IShaHasher
         using var sha512 = SHA256.Create();
         var bytes = sha512.ComputeHash(Encoding.UTF8.GetBytes(data));
         var builder = new StringBuilder();
-        foreach (var @byte in bytes)
-        {
-            builder.Append(@byte.ToString("x2"));
-        }
+        foreach (var @byte in bytes) builder.Append(@byte.ToString("x2"));
 
         return builder.ToString();
     }
@@ -23,10 +20,7 @@ internal sealed class ShaHasher : IShaHasher
         using var sha512 = SHA512.Create();
         var bytes = sha512.ComputeHash(Encoding.UTF8.GetBytes(data));
         var builder = new StringBuilder();
-        foreach (var @byte in bytes)
-        {
-            builder.Append(@byte.ToString("x2"));
-        }
+        foreach (var @byte in bytes) builder.Append(@byte.ToString("x2"));
 
         return builder.ToString();
     }

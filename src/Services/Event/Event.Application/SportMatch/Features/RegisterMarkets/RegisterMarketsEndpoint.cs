@@ -9,7 +9,7 @@ namespace Event.Application.SportMatch.Features.RegisterMarkets;
 [Route(BaseApiPath + "/match/market")]
 public class RegisterMarketsEndpoint : BaseController
 {
-    [HttpPut()]
+    [HttpPut]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

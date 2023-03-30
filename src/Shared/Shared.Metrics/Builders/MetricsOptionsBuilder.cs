@@ -53,5 +53,7 @@ internal sealed class MetricsOptionsBuilder : IMetricsOptionsBuilder
     }
 
     public MetricsOptions Build()
-        => _options;
+    {
+        return _options;
+    }
 }

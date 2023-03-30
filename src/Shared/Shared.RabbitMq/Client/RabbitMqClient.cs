@@ -47,30 +47,24 @@ internal sealed class RabbitMqClient : IRabbitMqClient
             lock (_lockObject)
             {
                 if (_channelsCount >= _maxChannels)
-                {
                     throw new InvalidOperationException(
                         $"Cannot create RabbitMQ producer channel for thread: {threadId} " +
                         $"(reached the limit of {_maxChannels} channels). " +
                         "Modify `MaxProducerChannels` setting to allow more channels.");
-                }
 
                 channel = _connection.CreateModel();
                 _channels.TryAdd(threadId, channel);
                 _channelsCount++;
                 if (_loggerEnabled)
-                {
                     _logger.LogTrace(
                         $"Created a channel for thread: {threadId}, total channels: {_channelsCount}/{_maxChannels}");
-                }
             }
         }
         else
         {
             if (_loggerEnabled)
-            {
                 _logger.LogTrace(
                     $"Reused a channel for thread: {threadId}, total channels: {_channelsCount}/{_maxChannels}");
-            }
         }
 
         var body = _serializer.Serialize(message);
@@ -85,35 +79,22 @@ internal sealed class RabbitMqClient : IRabbitMqClient
         properties.Timestamp = new AmqpTimestamp(DateTimeOffset.UtcNow.ToUnixTimeSeconds());
         properties.Headers = new Dictionary<string, object>();
 
-        if (_contextEnabled)
-        {
-            IncludeMessageContext(messageContext, properties);
-        }
+        if (_contextEnabled) IncludeMessageContext(messageContext, properties);
 
-        if (!string.IsNullOrWhiteSpace(spanContext))
-        {
-            properties.Headers.Add(_spanContextHeader, spanContext);
-        }
+        if (!string.IsNullOrWhiteSpace(spanContext)) properties.Headers.Add(_spanContextHeader, spanContext);
 
         if (headers is not null)
-        {
             foreach (var (key, value) in headers)
             {
-                if (string.IsNullOrWhiteSpace(key) || value is null)
-                {
-                    continue;
-                }
+                if (string.IsNullOrWhiteSpace(key) || value is null) continue;
 
                 properties.Headers.TryAdd(key, value);
             }
-        }
 
         if (_loggerEnabled)
-        {
             _logger.LogTrace($"Publishing a message with routing key: '{conventions.RoutingKey}' " +
                              $"to exchange: '{conventions.Exchange}' " +
                              $"[id: '{properties.MessageId}', correlation id: '{properties.CorrelationId}']");
-        }
 
         channel.BasicPublish(conventions.Exchange, conventions.RoutingKey, properties, body.ToArray());
     }

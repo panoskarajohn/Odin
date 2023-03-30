@@ -1,6 +1,4 @@
-﻿using Slip.Service.Domain;
-
-namespace Slip.Service.Contract;
+﻿namespace Slip.Service.Contract;
 
 public class BetContract
 {

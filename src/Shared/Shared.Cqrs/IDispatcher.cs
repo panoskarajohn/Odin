@@ -1,6 +1,4 @@
-﻿
-
-using Shared.Cqrs.Commands;
+﻿using Shared.Cqrs.Commands;
 using Shared.Cqrs.Events;
 using Shared.Cqrs.Queries;
 

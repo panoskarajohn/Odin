@@ -1,12 +1,9 @@
-﻿using System.Text.Json.Serialization;
-using Slip.Service.DAL;
-
-namespace Slip.Service.Domain;
+﻿namespace Slip.Service.Domain;
 
 public class Bet
 {
     public long Id { get; set; }
-    
+
     public decimal Stake { get; set; }
     public string BetType { get; set; }
     public decimal Winnings { get; set; }

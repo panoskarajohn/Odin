@@ -7,13 +7,13 @@ namespace Identity.Core.DAL;
 
 internal sealed class UsersDataInitializer : IDataInitializer
 {
+    private readonly UsersDbContext _dbContext;
+    private readonly ILogger<UsersDataInitializer> _logger;
+
     private readonly HashSet<string> _permissions = new()
     {
         "users"
     };
-
-    private readonly UsersDbContext _dbContext;
-    private readonly ILogger<UsersDataInitializer> _logger;
 
     public UsersDataInitializer(UsersDbContext dbContext, ILogger<UsersDataInitializer> logger)
     {
@@ -23,10 +23,7 @@ internal sealed class UsersDataInitializer : IDataInitializer
 
     public async Task InitAsync()
     {
-        if (await _dbContext.Roles.AnyAsync())
-        {
-            return;
-        }
+        if (await _dbContext.Roles.AnyAsync()) return;
 
         await AddRolesAsync();
         await _dbContext.SaveChangesAsync();

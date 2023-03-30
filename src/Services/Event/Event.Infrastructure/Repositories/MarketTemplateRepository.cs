@@ -43,6 +43,6 @@ public class MarketTemplateRepository : IMarketTemplateRepository
     {
         return _repository
             .UpdateAsync(marketTemplate.ToDocument(),
-            m => m.Id == marketTemplate.Id && m.Version < marketTemplate.Version);
+                m => m.Id == marketTemplate.Id && m.Version < marketTemplate.Version);
     }
 }

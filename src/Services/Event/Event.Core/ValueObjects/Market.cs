@@ -4,11 +4,11 @@ namespace Event.Core.ValueObjects;
 
 public record Market
 {
-    public Market(string name,IEnumerable<Selection> selections)
+    public Market(string name, IEnumerable<Selection> selections)
     {
         Name = name;
         Selections = selections ?? throw new MarketShouldContainSelectionsException();
-        Limits = new();
+        Limits = new MarketLimits();
     }
 
     public MarketName Name { get; }

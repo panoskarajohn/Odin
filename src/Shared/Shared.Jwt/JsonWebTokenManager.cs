@@ -5,24 +5,24 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Web.Clock;
 
-
 namespace Shared.Jwt;
 
 internal sealed class JsonWebTokenManager : IJsonWebTokenManager
 {
     private static readonly Dictionary<string, IEnumerable<string>> EmptyClaims = new();
+    private readonly string? _audience;
 
-    private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler = new();
-
-    private readonly string? _issuer;
+    private readonly IUtcClock _clock;
 
     private readonly TimeSpan _expiry;
 
-    private readonly IUtcClock _clock;
-    private readonly SigningCredentials _signingCredentials;
-    private readonly string? _audience;
+    private readonly string? _issuer;
 
-    public JsonWebTokenManager(IOptions<AuthOptions> authOptions,IUtcClock clock, SecurityKeyDetails securityKeyDetails)
+    private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler = new();
+    private readonly SigningCredentials _signingCredentials;
+
+    public JsonWebTokenManager(IOptions<AuthOptions> authOptions, IUtcClock clock,
+        SecurityKeyDetails securityKeyDetails)
     {
         Guard.Against.Null(authOptions, nameof(authOptions));
         _clock = Guard.Against.Null(clock, nameof(clock));
@@ -31,51 +31,41 @@ internal sealed class JsonWebTokenManager : IJsonWebTokenManager
         _expiry = authOptions.Value.Jwt.Expiry ?? TimeSpan.FromHours(1);
         _signingCredentials = new SigningCredentials(securityKeyDetails.Key, securityKeyDetails.Algorithm);
     }
-    
+
     /// <summary>
-    /// Creates a new JWT token
+    ///     Creates a new JWT token
     /// </summary>
     /// <param name="userId"></param>
     /// <param name="email"></param>
     /// <param name="role"></param>
     /// <param name="claims"></param>
     /// <returns></returns>
-    public JsonWebToken CreateToken(string userId, string? email = null, string? role = null, IDictionary<string, IEnumerable<string>>? claims = null)
+    public JsonWebToken CreateToken(string userId, string? email = null, string? role = null,
+        IDictionary<string, IEnumerable<string>>? claims = null)
     {
         var now = _clock.Current();
 
-        var jwtClaims = new List<Claim>()
+        var jwtClaims = new List<Claim>
         {
             new(JwtRegisteredClaimNames.Sub, userId),
             new(JwtRegisteredClaimNames.UniqueName, userId)
         };
 
-        if (!string.IsNullOrEmpty(email))
-        {
-            jwtClaims.Add(new(JwtRegisteredClaimNames.Email, email));
-        }
+        if (!string.IsNullOrEmpty(email)) jwtClaims.Add(new Claim(JwtRegisteredClaimNames.Email, email));
 
-        if (!string.IsNullOrWhiteSpace(role))
-        {
-            jwtClaims.Add(new(ClaimTypes.Role, role));
-        }
-        
-        if (!string.IsNullOrWhiteSpace(_audience))
-        {
-            jwtClaims.Add(new Claim(JwtRegisteredClaimNames.Aud, _audience));
-        }
-        
+        if (!string.IsNullOrWhiteSpace(role)) jwtClaims.Add(new Claim(ClaimTypes.Role, role));
+
+        if (!string.IsNullOrWhiteSpace(_audience)) jwtClaims.Add(new Claim(JwtRegisteredClaimNames.Aud, _audience));
+
         if (claims?.Any() is true)
         {
             var customClaims = new List<Claim>();
             foreach (var (claim, values) in claims)
-            {
                 customClaims.AddRange(values.Select(value => new Claim(claim, value)));
-            }
 
             jwtClaims.AddRange(customClaims);
         }
-        
+
         var expires = now.Add(_expiry);
 
         var jwt = new JwtSecurityToken(
@@ -85,7 +75,7 @@ internal sealed class JsonWebTokenManager : IJsonWebTokenManager
             expires: expires,
             signingCredentials: _signingCredentials
         );
-        
+
         var token = _jwtSecurityTokenHandler.WriteToken(jwt);
 
         return new JsonWebToken
@@ -97,6 +87,5 @@ internal sealed class JsonWebTokenManager : IJsonWebTokenManager
             Role = role ?? string.Empty,
             Claims = claims ?? EmptyClaims
         };
-        
     }
 }

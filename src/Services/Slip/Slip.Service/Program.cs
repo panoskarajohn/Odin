@@ -1,6 +1,7 @@
 using Shared.Cqrs;
 using Shared.DAL.Postgres;
 using Shared.DAL.Transactions;
+using Shared.Grpc.Polly;
 using Shared.Logging;
 using Shared.MessageBroker.Cqrs;
 using Shared.RabbitMq;
@@ -9,11 +10,9 @@ using Slip.Service;
 using Slip.Service.DAL;
 using Slip.Service.Events.Externals;
 using Slip.Service.Protos;
-using RetryPolicy = Shared.Grpc.Polly.RetryPolicy;
 
-
-IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices((hostContext,services) =>
+var host = Host.CreateDefaultBuilder(args)
+    .ConfigureServices((hostContext, services) =>
     {
         var configuration = hostContext.Configuration;
         services.AddHostedService<Worker>();

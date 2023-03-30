@@ -1,8 +1,5 @@
-using System.Net;
 using Event.Application;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.Extensions.Options;
 using Shared.IdGenerator;
 using Shared.Jwt;
 using Shared.Logging;
@@ -51,7 +48,6 @@ if (app.Environment.IsDevelopment())
 app
     .UseApplication()
     .UseAuthorization()
-    .UseAuthorization()
     .UseErrorHandling()
     .UseLogging()
     .UseMetrics()
@@ -66,5 +62,6 @@ if (env.IsDevelopment())
 
 app.MapControllers();
 app.MapGet("/", e => e.Response.WriteAsync("Hello from Event.Api"));
+app.MapGet("/ping", () => "pong").WithTags("API").WithName("Pong");
 
 app.Run();

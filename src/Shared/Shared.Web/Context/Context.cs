@@ -5,14 +5,7 @@ namespace Shared.Web.Context;
 
 public class Context : IContext
 {
-    public Guid RequestId { get; } = Guid.NewGuid();
-    public Guid CorrelationId { get; }
-    public string TraceId { get; }
-    public string IpAddress { get; }
-    public string UserAgent { get; }
-    public IIdentityContext Identity { get; }
-
-    public Context() : this(Guid.NewGuid(), $"{Guid.NewGuid():N}", null)
+    public Context() : this(Guid.NewGuid(), $"{Guid.NewGuid():N}")
     {
     }
 
@@ -33,4 +26,10 @@ public class Context : IContext
     }
 
     public static IContext Empty => new Context();
+    public Guid RequestId { get; } = Guid.NewGuid();
+    public Guid CorrelationId { get; }
+    public string TraceId { get; }
+    public string IpAddress { get; }
+    public string UserAgent { get; }
+    public IIdentityContext Identity { get; }
 }

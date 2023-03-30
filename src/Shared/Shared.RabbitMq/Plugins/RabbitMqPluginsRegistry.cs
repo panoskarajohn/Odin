@@ -5,7 +5,9 @@ internal sealed class RabbitMqPluginsRegistry : IRabbitMqPluginsRegistry, IRabbi
     private readonly LinkedList<RabbitMqPluginChain> _plugins;
 
     public RabbitMqPluginsRegistry()
-        => _plugins = new LinkedList<RabbitMqPluginChain>();
+    {
+        _plugins = new LinkedList<RabbitMqPluginChain>();
+    }
 
     public IRabbitMqPluginsRegistry Add<TPlugin>() where TPlugin : class, IRabbitMqPlugin
     {
@@ -14,5 +16,7 @@ internal sealed class RabbitMqPluginsRegistry : IRabbitMqPluginsRegistry, IRabbi
     }
 
     LinkedList<RabbitMqPluginChain> IRabbitMqPluginsRegistryAccessor.Get()
-        => _plugins;
+    {
+        return _plugins;
+    }
 }

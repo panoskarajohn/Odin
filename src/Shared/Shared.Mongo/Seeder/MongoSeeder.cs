@@ -13,10 +13,7 @@ internal class MongoSeeder : IMongoSeeder
     {
         var cursor = await database.ListCollectionsAsync();
         var collections = await cursor.ToListAsync();
-        if (collections.Any())
-        {
-            return;
-        }
+        if (collections.Any()) return;
 
         await Task.CompletedTask;
     }

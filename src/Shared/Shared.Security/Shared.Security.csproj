@@ -7,14 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-      <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
-      <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0"/>
+        <PackageReference Include="Polly.Extensions.Http" Version="3.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Shared.Common\Shared.Common.csproj" />
-      <ProjectReference Include="..\Shared.Web\Shared.Web.csproj" />
+        <ProjectReference Include="..\Shared.Common\Shared.Common.csproj"/>
+        <ProjectReference Include="..\Shared.Web\Shared.Web.csproj"/>
     </ItemGroup>
 
 </Project>

@@ -31,10 +31,8 @@ internal sealed class RabbitMqPluginsExecutor : IRabbitMqPluginsExecutor
             var plugin = _serviceProvider.GetService(chain.PluginType);
 
             if (plugin is null)
-            {
                 throw new InvalidOperationException(
                     $"RabbitMq plugin of type {chain.PluginType.Name} was not registered");
-            }
 
             plugins.AddLast(plugin as IRabbitMqPlugin);
         }
