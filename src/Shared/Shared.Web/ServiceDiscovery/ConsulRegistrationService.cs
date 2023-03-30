@@ -88,7 +88,7 @@ public class ConsulRegistrationService : IHostedService
         }
         : new AgentServiceCheck
         {
-            HTTP = $"{_serviceUrl}:{_serviceUrl.Port}",
+            HTTP = $"{_serviceUrl.OriginalString}/{_options.HealthCheck.Endpoint}",
             Interval = _options.HealthCheck.Interval,
             DeregisterCriticalServiceAfter = _options.HealthCheck.DeregisterInterval,
             Timeout = TimeSpan.FromSeconds(10)

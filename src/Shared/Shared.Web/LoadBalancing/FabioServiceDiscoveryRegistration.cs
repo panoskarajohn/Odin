@@ -13,7 +13,7 @@ internal sealed class FabioServiceDiscoveryRegistration : IServiceDiscoveryRegis
 
         if (isGrpc)
         {
-            Tags = new []{$"urlprefix-/{serviceName} proto=grpc strip=/{serviceName}"};
+            Tags = new []{"urlprefix-/Event/GetEvent","proto=grpc", "tlsskipverify=true"};
         }
         else
         {

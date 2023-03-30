@@ -13,7 +13,7 @@ public static class RetryPolicy
         HttpStatusCode.ServiceUnavailable,
         HttpStatusCode.InternalServerError,
         HttpStatusCode.TooManyRequests,
-        HttpStatusCode.RequestTimeout
+        HttpStatusCode.RequestTimeout,
     };
 
     private static StatusCode[] _gRpcErrors =
@@ -23,7 +23,7 @@ public static class RetryPolicy
         StatusCode.NotFound,
         StatusCode.ResourceExhausted,
         StatusCode.Unavailable,
-        StatusCode.Unknown
+        StatusCode.Unknown,
     };
 
     public static Func<HttpRequestMessage, IAsyncPolicy<HttpResponseMessage>> RetryFunc => request =>

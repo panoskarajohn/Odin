@@ -172,6 +172,7 @@ services:
     restart: unless-stopped
     environment:
       - FABIO_REGISTRY_CONSUL_ADDR=consul:8500
+      - FABIO_SERVER_GRPC_ADDR=:9999
     networks:
       - odin
     ports:

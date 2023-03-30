@@ -54,7 +54,10 @@ app
     .UsePrometheus()
     .UseRabbitMq();
 
-app.MapGet("/", e => e.Response.WriteAsync("Hello from Slip.Api"));
+app.MapGet("/ping", e => e.Response.WriteAsync("pong"))
+    .WithName("ping")
+    .WithTags("ping");
+
 app.MapPost("/buildSlip",
         async (BuildSlipCommand buildSlipCommand, CancellationToken cancellationToken, IDispatcher dispatcher) =>
         {

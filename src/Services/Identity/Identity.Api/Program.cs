@@ -56,7 +56,7 @@ app
     .UseMetrics()
     .UsePrometheus();
 
-app.MapGet("/", e => e.Response.WriteAsync("Hello from Identity.Api"));
+app.MapGet("/ping", e => e.Response.WriteAsync("pong"));
 
 
 app.MapPost("api/v1/identity/sign-up", async (SignUp command, IDispatcher dispatcher) =>
