@@ -1,3 +1,4 @@
+using Scrutor;
 using Shared.Cqrs;
 using Shared.DAL.Postgres;
 using Shared.DAL.Transactions;
@@ -17,6 +18,7 @@ IHost host = Host.CreateDefaultBuilder(args)
     {
         var configuration = hostContext.Configuration;
         services.AddHostedService<Worker>();
+        services.AddSlipChainOfHandlers();
 
         services.AddGrpcClient<Event.EventClient>(options =>
         {
