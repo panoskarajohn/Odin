@@ -7,7 +7,6 @@ public class SlipCheckAgainstGrpc : ISlipChain
 {
     private readonly Event.EventClient _eventGrpcClient;
     private readonly ILogger<SlipCheckAgainstGrpc> _logger;
-    
     public SlipCheckAgainstGrpc(Event.EventClient eventGrpcClient, ILogger<SlipCheckAgainstGrpc> logger)
     {
         _eventGrpcClient = eventGrpcClient;
