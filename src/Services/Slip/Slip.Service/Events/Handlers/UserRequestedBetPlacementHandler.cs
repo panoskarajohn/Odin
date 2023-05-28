@@ -1,4 +1,5 @@
 ﻿using Shared.Cqrs.Events;
+using Slip.Core.Repositories;
 using Slip.Service.Chain.SlipChain;
 using Slip.Service.DAL;
 using Slip.Service.Events.Externals;
@@ -10,15 +11,17 @@ namespace Slip.Service.Events.Handlers;
 public class UserRequestedBetPlacementHandler : IEventHandler<UserRequestedBetPlacement>
 {
     private readonly ILogger<UserRequestedBetPlacementHandler> _logger;
+    private readonly ISlipRepository _slipRepository;
     private readonly SlipContext _slipContext;
     private readonly IEnumerable<ISlipChain> _slipChain;
     public UserRequestedBetPlacementHandler(ILogger<UserRequestedBetPlacementHandler> logger, 
         SlipContext slipContext, 
-        Event.EventClient eventGrpcClient, IEnumerable<ISlipChain> slipChain)
+        Event.EventClient eventGrpcClient, IEnumerable<ISlipChain> slipChain, ISlipRepository slipRepository)
     {
         _logger = logger;
         _slipContext = slipContext;
         _slipChain = slipChain;
+        _slipRepository = slipRepository;
     }
     
     public async Task HandleAsync(UserRequestedBetPlacement @event, CancellationToken cancellationToken = default)
@@ -38,6 +41,8 @@ public class UserRequestedBetPlacementHandler : IEventHandler<UserRequestedBetPl
         }
 
         await _slipContext.Slips.AddAsync(slip, cancellationToken);
+        await _slipRepository.DeleteSlipAsync(slip.UserId, cancellationToken);
+        
     }
     
     

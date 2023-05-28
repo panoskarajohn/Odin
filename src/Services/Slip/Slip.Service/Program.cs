@@ -6,6 +6,7 @@ using Shared.Logging;
 using Shared.MessageBroker.Cqrs;
 using Shared.RabbitMq;
 using Shared.Web;
+using Slip.Infrastructure;
 using Slip.Service;
 using Slip.Service.DAL;
 using Slip.Service.Events.Externals;
@@ -19,6 +20,7 @@ IHost host = Host.CreateDefaultBuilder(args)
         var configuration = hostContext.Configuration;
         services.AddHostedService<Worker>();
         services.AddSlipChainOfHandlers();
+        services.AddSlipInfrastructure(configuration);
 
         services.AddGrpcClient<Event.EventClient>(options =>
         {

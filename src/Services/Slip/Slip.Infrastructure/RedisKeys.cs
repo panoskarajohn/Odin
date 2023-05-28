@@ -7,5 +7,5 @@ public class RedisKeys
     {
     }
 
-    public string BuildKey(string key) => $"{SlipKey}#{key}";
+    public string BuildSlipKey(string key) => $"{SlipKey}#{key}";
 }

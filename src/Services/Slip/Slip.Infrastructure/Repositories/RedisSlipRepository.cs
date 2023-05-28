@@ -23,7 +23,7 @@ public class RedisSlipRepository : ISlipRepository
     
     public async Task<Core.Models.Slip> GetSlipAsync(string userId, CancellationToken cancellationToken)
     {
-        var key = _redisKeys.BuildKey(userId);
+        var key = _redisKeys.BuildSlipKey(userId);
         var data = await _database.StringGetAsync(key);
 
         if (data.IsNullOrEmpty)
@@ -41,7 +41,7 @@ public class RedisSlipRepository : ISlipRepository
 
     public async Task UpdateSlipAsync(Core.Models.Slip slip, CancellationToken cancellationToken)
     {
-        var key = _redisKeys.BuildKey(slip.UserId);
+        var key = _redisKeys.BuildSlipKey(slip.UserId);
         var serialized = JsonSerializer.Serialize(slip);
         var created = await _database.StringSetAsync(key, serialized, TimeSpan.FromHours(2));
 
@@ -56,8 +56,9 @@ public class RedisSlipRepository : ISlipRepository
 
     public async Task<bool> DeleteSlipAsync(string userId, CancellationToken cancellationToken)
     {
-        var key = _redisKeys.BuildKey(userId);
-        return await _database.KeyDeleteAsync(userId);
+        var key = _redisKeys.BuildSlipKey(userId);
+        _logger.LogInformation("Deleting slip with key {Key}", key);
+        return await _database.KeyDeleteAsync(key);
     }
     
     private IServer GetServer()

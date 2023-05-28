@@ -17,7 +17,7 @@ public class SlipCheckAgainstGrpc : ISlipChain
     {
         try
         {
-            if(slip.Bets is null)
+            if(slip.Bets is null || !slip.Bets.Any())
                 throw new InvalidOperationException("Slip must have at least one bet");
             
             return await ValidateBets(slip.Bets);
@@ -35,7 +35,6 @@ public class SlipCheckAgainstGrpc : ISlipChain
         {
             foreach (var betSelection in bet.Selections)
             {
-                _logger.LogInformation("Validating bet event {EventId}", betSelection.EventId);
                 var request = new GetEventRequest() { Id = betSelection.EventId };
                 var @event = await _eventGrpcClient.GetEventAsync(request);
                 if (@event is null)
